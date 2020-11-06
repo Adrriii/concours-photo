@@ -28,4 +28,4 @@ services:
         ports: 
             - "3306:3306"
         volumes:
-        - ./db/sql:/var/db
+            - ./db/sql:/var/db

@@ -1,0 +1,6 @@
+use photodb;
+
+CREATE TABLE user (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(24) NOT NULL UNIQUE,
+)

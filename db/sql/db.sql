@@ -1,0 +1,2 @@
+CREATE DATABASE photodb
+    CHARACTER SET 'utf8_bin';

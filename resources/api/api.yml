@@ -673,7 +673,7 @@ paths:
           schema:
             type: string
         - in: query
-          name: direction
+          name: user
           description: pass an optional user filter
           required: false
           schema:
@@ -900,7 +900,7 @@ components:
 
 
     UserSetting:
-      description: 'A dictionnary of settings for a user'
+      description: 'A KeyValue for one of the user''s settings'
       type: object
       required:
         - name

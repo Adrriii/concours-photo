@@ -21,10 +21,10 @@ services:
         image: bitnami/mariadb
         restart: always
         environment:
-            MARIADB_DATABASE: 'm2web'
-            MARIADB_USER: 'm2web'
-            MARIADB_PASSWORD: 'm2web'
-            MARIADB_ROOT_PASSWORD: 'm2web'
+            MARIADB_DATABASE: 'photodb'
+            MARIADB_USER: 'photodb'
+            MARIADB_PASSWORD: 'photodb'
+            MARIADB_ROOT_PASSWORD: 'photodb'
         ports: 
             - "3306:3306"
         volumes: 

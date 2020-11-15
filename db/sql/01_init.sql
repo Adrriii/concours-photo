@@ -1,0 +1,2 @@
+CREATE DATABASE IF NOT EXISTS `photodb`;
+GRANT ALL ON *.* TO 'photodb'@'%' WITH GRANT OPTION;

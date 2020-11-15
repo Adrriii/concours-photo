@@ -1,0 +1,945 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/Adrriii/Untitled/1.0.0
+info:
+  description: This is the API for Concours Photo
+  version: "1.0.0"
+  title: Concours Photo API
+  contact:
+    email: groupe1@m2web.fr
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: Authentification
+    description: 'Operations to grant or remove privileges'
+  - name: Navigation
+    description: 'Interactions used to navigate'
+  - name: Posts
+    description: 'Interactions with posts'
+  - name: Comments
+    description: 'Interactions with comments'
+  - name: Users
+    description: 'Interactions with other users and self'
+  - name: Themes
+    description: 'Interactions with themes'
+  - name: Labels
+    description: 'Labels managements'
+  
+    
+paths:
+  /logout:
+    get:
+      tags:
+        - Authentification
+      security:
+        - BasicAuth: []
+      summary: End the user session.
+      responses:
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+          
+  /login:
+    post:
+      tags:
+        - Authentification
+      summary: 'Log user to the application.'
+
+      parameters:
+        - in: header
+          name: body
+          description: Credentials
+          required: true
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+            example:
+              username: chocorion
+              password: mySecretPassword
+      responses:
+        '405':
+          description: Invalid input.
+
+  /posts:
+    post:
+      tags:
+        - Posts
+      security:
+        - BasicAuth: []
+      summary: adds a post
+      operationId: addPost
+      description: Adds a post to the system
+      parameters:
+        - in: query
+          name: post
+          description: pass the post to create
+          required: true
+          schema:
+            $ref: '#/components/schemas/Post'
+      responses:
+        '201':
+          description: 'post created'
+        '400':
+          description: 'invalid input, object invalid'
+        '404':
+          description: 'post not found'
+        '409':
+          description: 'this post already exists'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+        description: Post to add
+          
+  /posts/{id}:
+    get:
+      tags:
+        - Posts
+      summary: get a full post
+      parameters:
+        - in: path
+          name: id
+          description: the post id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: found the post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+              
+        '404':
+          description: could not find the post
+
+  /posts/{id}/comments:
+    get:
+      tags:
+        - Posts
+      summary: get a post's comments
+      parameters:
+        - in: path
+          name: id
+          description: the post id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: found the post's comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '404':
+          description: could not find the post
+
+    post:
+      tags:
+        - Posts
+      security:
+        - BasicAuth: []
+      summary: comment on a post
+      parameters:
+        - in: path
+          name: id
+          description: the post id
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: parent
+          description: reply to a comment
+          required: false
+          schema:
+            $ref: '#/components/schemas/Comment'
+      responses:
+        '200':
+          description: 'comment successfuly sent'
+        '400':
+          description: 'something went wrong when publishing the comment'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '409':
+          description: 'comment already sent'
+  
+  /posts/{id}/comments/{comment_id}:
+    put:
+      tags:
+        - Posts
+      security:
+        - BasicAuth: []
+      summary: edit a comment
+      parameters:
+        - in: path
+          name: id
+          description: the post id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: comment_id
+          description: the comment id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'comment successfuly edited'
+        '400':
+          description: 'something went wrong when editing the comment'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: 'comment not found'
+          
+    delete:
+      tags:
+        - Posts
+      security:
+        - BasicAuth: []
+      summary: delete a comment
+      parameters:
+        - in: path
+          name: id
+          description: the post id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: comment_id
+          description: the comment id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'comment successfuly deleted'
+        '400':
+          description: 'something went wrong when deleting the comment'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: 'comment not found'
+
+  /posts/{id}/react:
+    put:
+      tags:
+        - Posts
+      security:
+        - BasicAuth: []
+      summary: change reaction
+      parameters:
+        - in: path
+          name: id
+          description: the post id
+          required: true
+          schema:
+            type: integer
+            
+        - in: query
+          name: reaction
+          description: the new type of reaction to give to this post
+          required: true
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: 'reaction successfuly changed'
+        '400':
+          description: 'something went wrong during the reaction'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: 'post not found'
+        '409':
+          description: 'you don"t has reacted to this post'
+
+    post:
+      tags:
+        - Posts
+      security:
+        - BasicAuth: []
+      summary: react to a post
+      parameters:
+        - in: path
+          name: id
+          description: the post id
+          required: true
+          schema:
+            type: integer
+            
+        - in: query
+          name: reaction
+          description: the type of reaction to give to this post
+          required: true
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: 'reaction successfuly casted'
+        '400':
+          description: 'something went wrong during the reaction'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: 'post not found'
+        '409':
+          description: 'you already reacted to this post'
+
+    delete:
+      tags:
+        - Posts
+      security:
+        - BasicAuth: []
+      summary: react to a post
+      parameters:
+        - in: path
+          name: id
+          description: the post id
+          required: true
+          schema:
+            type: integer
+            
+      responses:
+        '200':
+          description: 'reaction successfuly casted'
+        '400':
+          description: 'something went wrong during the reaction'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: 'post not found'
+        '409':
+          description: 'you already reacted to this post'
+
+  /feed:
+    get:
+      tags:
+        - Navigation
+      summary: searches and filters posts for displaying them in the main feed
+      operationId: searchPosts
+      description: |
+        By passing in the appropriate options, you can search for
+        posts in the system
+      parameters:
+        - in: query
+          name: sort
+          description: pass an optional sort string
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: direction
+          description: to return by ascending or descending
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: theme
+          description: the theme to categorize, defaults to current. can be null
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: label
+          description: the labels to keep
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: search sorted posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+        '400':
+          description: bad input parameter
+        
+  /user/{id}:
+    get:
+      tags:
+        - Users
+      summary: get user information
+      parameters:
+        - in: path
+          name: id
+          description: the user id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'user found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: 'bad input parameter'
+        '404':
+          description: 'user not found'
+          
+  /register:
+    post:
+      tags:
+        - Authentification
+      summary: register a new user
+      parameters:
+        - in: query
+          name: user
+          description: the user to create
+          required: true
+          schema:
+            $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: 'successfuly registred'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: 'something went wrong during user creation'
+  /me:
+    get:
+      tags:
+        - Users
+      security:
+        - BasicAuth: []
+      summary: get own user information and settings from the current session
+      responses:
+        '200':
+          description: 'user found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Me'
+        '400':
+          description: 'bad input parameter'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: 'user not found'
+    put:
+      tags:
+        - Users
+      security:
+        - BasicAuth: []
+      summary: modify own informations
+      parameters:
+        - in: query
+          name: user
+          description: the informations to update
+          required: true
+          schema:
+            $ref: '#/components/schemas/Me'
+      responses:
+        '200':
+          description: 'successfuly updated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Me'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '400':
+          description: 'something went wrong during user alteration'
+  
+  /labels:
+    get:
+      tags:
+        - Labels
+      summary: get labels
+      responses:
+        '200':
+          description: 'labels returned'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Label'
+        '400':
+          description: 'something went wrong when fetching labels'
+    post:
+      tags:
+        - Labels
+      security:
+        - BasicAuth: []
+      summary: add a new label to the website
+      parameters:
+        - in: query
+          name: label
+          description: the label
+          required: true
+          schema:
+            $ref: '#/components/schemas/Label'
+      responses:
+        '200':
+          description: 'label successfuly added'
+        '400':
+          description: 'something went wrong during label creation'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '409':
+          description: 'this label already exists'
+    delete:
+      tags:
+        - Labels
+      security:
+        - BasicAuth: []
+      summary: delete a label from the website
+      parameters:
+        - in: query
+          name: label
+          description: the label
+          required: true
+          schema:
+            $ref: '#/components/schemas/Label'
+      responses:
+        '200':
+          description: 'label successfuly delete'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: 'this label doesnt exist'
+  
+  /themes:
+    get:
+      tags:
+        - Themes
+      summary: get all themes
+      responses:
+        '200':
+          description: 'themes returned'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Label'
+        '400':
+          description: 'something went wrong when fetching themes'
+    post:
+      tags:
+        - Themes
+      security:
+        - BasicAuth: []
+      summary: add a new theme to the website
+      parameters:
+        - in: query
+          name: theme
+          description: the theme
+          required: true
+          schema:
+            $ref: '#/components/schemas/Theme'
+      responses:
+        '200':
+          description: 'label successfuly added'
+        '400':
+          description: 'something went wrong during theme creation'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '409':
+          description: 'this label already exists'
+  
+  /themes/current:
+    get:
+      tags:
+        - Themes
+      summary: get the current theme
+      responses:
+        '200':
+          description: 'current theme returned'
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Theme'
+        '400':
+          description: 'something went wrong when fetching themes'
+
+  /themes/proposals:
+    get:
+      tags:
+        - Themes
+      summary: Get current proposals 
+      responses:
+        '200':
+          description: 'proposal themes returned'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: '#/components/schemas/Theme'
+        '400':
+          description: 'Something went wrong when fetching proposals'
+
+  /themes/proposals/vote/:
+    get:
+      tags:
+        - Themes
+      summary: Get the proposal the user voted for 
+      responses:
+        '200':
+          description: 'proposal theme returned'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                    $ref: '#/components/schemas/Theme'
+        '400':
+          description: 'Something went wrong when fetching the user''s vote'
+    
+
+  /themes/proposals/vote/{proposal_id}:
+    post:
+      security:
+        - BasicAuth: []
+      tags:
+        - Themes
+      summary: Set the user's vote on a theme proposal
+      parameters:
+        - in: path
+          name: proposal_id
+          description: the proposal id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'labels returned'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Theme'
+        '400':
+          description: 'something went wrong when fetching labels'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+    delete:
+      security:
+        - BasicAuth: []
+      tags:
+        - Themes
+      summary: delete the user's vote
+      parameters:
+        - in: path
+          name: proposal_id
+          description: the proposal id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'successfuly delete vote'
+        '400':
+          description: 'something went wrong when deleting vote'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+          
+  /comments:
+    get:
+      tags:
+        - Comments
+      summary: search comments
+      parameters:
+        - in: query
+          name: post
+          description: pass an optional post filter
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: direction
+          description: pass an optional user filter
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'comments found'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '400':
+          description: 'something went wrong when searching for commments'
+    post:
+      tags:
+        - Comments
+      security:
+        - BasicAuth: []
+      summary: comment on a post
+      parameters:
+        - in: query
+          name: post
+          description: the post to comment on
+          required: true
+          schema:
+            $ref: '#/components/schemas/Post'
+        - in: query
+          name: parent
+          description: reply to a comment
+          required: false
+          schema:
+            $ref: '#/components/schemas/Comment'
+      responses:
+        '200':
+          description: 'comment successfuly sent'
+        '400':
+          description: 'something went wrong when publishing the comment'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '409':
+          description: 'comment already sent'
+    delete:
+      tags:
+        - Comments
+      security:
+        - BasicAuth: []
+      summary: delete a comment
+      parameters:
+        - in: query
+          name: comment
+          description: the comment to delete
+          required: true
+          schema:
+            $ref: '#/components/schemas/Comment'
+      responses:
+        '200':
+          description: 'comment successfuly deleted'
+        '400':
+          description: 'something went wrong when deleting the comment'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: 'comment not found'
+    put:
+      tags:
+        - Comments
+      security:
+        - BasicAuth: []
+      summary: edit a comment
+      parameters:
+        - in: query
+          name: comment
+          description: the comment to edit
+          required: true
+          schema:
+            $ref: '#/components/schemas/Comment'
+      responses:
+        '200':
+          description: 'comment successfuly edited'
+        '400':
+          description: 'something went wrong when editing the comment'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: 'comment not found'
+      
+  /search:
+    get:
+      tags:
+       - Navigation
+      summary: search
+      parameters:
+        - in: query
+          name: category
+          description: the kind of component to search for
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: term
+          description: the term to look for
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'search completed'
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  type: object
+        '400':
+          description: 'something went wrong when searching'
+           
+components:
+
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+      
+  responses:
+    UnauthorizedError:
+      description: Authentication information is missing or invalid
+      headers:
+        WWW_Authenticate:
+          schema:
+            type: string
+  schemas:
+    Post:
+      description: 'A photo Post by a user, about a theme, displayed in the main feed'
+      type: object
+      required:
+        - title
+        - reactions
+        - author
+        - photo
+        - label
+        - theme
+      properties:
+        title:
+          description: 'The title of the post'
+          type: string
+          example: Photo
+        reacted:
+          description: 'If a user requests the post, indicates his reaction on the post if it exists'
+          type: string
+          example: Like
+        reactions:
+          description: 'The amount of each reaction on this post'
+          type: array
+          items:
+            $ref: '#/components/schemas/ReactionsCount'
+        author:
+          $ref: '#/components/schemas/User'
+        label:
+          $ref: '#/components/schemas/Label'
+        theme:
+          $ref: '#/components/schemas/Theme'
+        photo:
+          $ref: '#/components/schemas/url'
+            
+    Comment:
+      description: 'A comment by a user on a post'
+      type: object
+      required:
+        - author
+        - post
+      properties:
+        author:
+          $ref: '#/components/schemas/User'
+        post:
+          $ref: '#/components/schemas/Post'
+        parent:
+          $ref: '#/components/schemas/Comment'
+          
+    User:
+      description: 'A user of the website'
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          description: 'The ID of the user provided by the database'
+          type: integer
+          example: 1
+        name:
+          description: 'The public username of the user'
+          type: string
+          example: 'PhotoLover1903'
+
+    UserSetting:
+      description: 'A dictionnary of settings for a user'
+      type: object
+      required:
+        - name
+        - value
+      properties:
+        name:
+          description: 'The key for a setting'
+          type: string
+          example: 'IsMailPublic'
+        value:
+          description: 'The value for a setting'
+          type: string
+          example: 'false'
+
+    Me:
+      description: 'All the informations available to a user about himself'
+      type: object
+      required:
+        - user
+        - settings
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        settings:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserSetting'
+
+    Label:
+      description: 'The name value of the label'
+      type: string
+      example: Nature
+      
+    Theme:
+      description: 'A theme for photos'
+      type: object
+      required:
+        - title
+        - photo
+        - state
+      properties:
+        title:
+          description: 'The title of this theme'
+          type: string
+          example: 'Gooses'
+        photo:
+          $ref: '#/components/schemas/url'
+        state:
+          description: 'Current state of the theme'
+          type: string
+          example: 'Active'
+      
+    ReactionsCount:
+      description: 'A KeyValue of a reaction and its amount'
+      type: object
+      required:
+        - reaction
+        - count
+      properties:
+        reaction:
+          description: 'A reaction type'
+          type: string
+          example: 'Like | Dislike'
+        count:
+          description: 'The amount of reactions'
+          type: integer
+          example: 156
+    url:
+      description: "A correctly formatted URL"
+      type: string
+      example: https://host.com/resource
+      pattern: 'https:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/=]*)'

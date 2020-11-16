@@ -773,19 +773,19 @@ paths:
           description: 'comment not found'
       
 
-  /search:
+  /search/{item}/{term}:
     get:
       tags:
        - Navigation
       summary: 'Search for any content on the website'
       parameters:
-        - in: query
-          name: category
+        - in: path
+          name: item
           description: 'The type of component to search for. (Post, User, Comment)'
           required: true
           schema:
             type: string
-        - in: query
+        - in: path
           name: term
           description: 'The term to look up'
           required: true

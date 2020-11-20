@@ -36,7 +36,7 @@ paths:
         - Authentification
       security:
         - BasicAuth: []
-      summary: End the user session.
+      summary: 'End the user session.'
       responses:
         '401':
           $ref: '#/components/responses/UnauthorizedError'
@@ -72,9 +72,9 @@ paths:
         - Posts
       security:
         - BasicAuth: []
-      summary: adds a post
+      summary: 'Adds a post'
       operationId: addPost
-      description: Adds a post to the system
+      description: Adds a post to the application
       parameters:
         - in: query
           name: post
@@ -102,7 +102,7 @@ paths:
     get:
       tags:
         - Posts
-      summary: get a full post
+      summary: 'Get a specific post'
       parameters:
         - in: path
           name: id
@@ -125,7 +125,7 @@ paths:
     get:
       tags:
         - Posts
-      summary: get a post's comments
+      summary: 'Get a post''s comments'
       parameters:
         - in: path
           name: id
@@ -150,7 +150,7 @@ paths:
         - Posts
       security:
         - BasicAuth: []
-      summary: comment on a post
+      summary: 'Comment on a post'
       parameters:
         - in: path
           name: id
@@ -180,7 +180,7 @@ paths:
         - Posts
       security:
         - BasicAuth: []
-      summary: edit a comment
+      summary: 'Edit a comment'
       parameters:
         - in: path
           name: id
@@ -209,7 +209,7 @@ paths:
         - Posts
       security:
         - BasicAuth: []
-      summary: delete a comment
+      summary: 'Delete a comment'
       parameters:
         - in: path
           name: id
@@ -239,7 +239,7 @@ paths:
         - Posts
       security:
         - BasicAuth: []
-      summary: change reaction
+      summary: 'Change reaction'
       parameters:
         - in: path
           name: id
@@ -271,7 +271,7 @@ paths:
         - Posts
       security:
         - BasicAuth: []
-      summary: react to a post
+      summary: 'React to a post'
       parameters:
         - in: path
           name: id
@@ -303,7 +303,7 @@ paths:
         - Posts
       security:
         - BasicAuth: []
-      summary: react to a post
+      summary: 'Remove the reaction to a post'
       parameters:
         - in: path
           name: id
@@ -328,7 +328,7 @@ paths:
     get:
       tags:
         - Navigation
-      summary: searches and filters posts for displaying them in the main feed
+      summary: 'Searches and filters posts for displaying them in the main feed'
       operationId: searchPosts
       description: |
         By passing in the appropriate options, you can search for
@@ -376,7 +376,7 @@ paths:
     get:
       tags:
         - Users
-      summary: get user information
+      summary: 'Get user information'
       parameters:
         - in: path
           name: id
@@ -400,7 +400,7 @@ paths:
     post:
       tags:
         - Authentification
-      summary: register a new user
+      summary: 'Register a new user'
       parameters:
         - in: query
           name: user
@@ -423,7 +423,7 @@ paths:
         - Users
       security:
         - BasicAuth: []
-      summary: get own user information and settings from the current session
+      summary: 'Get own user information and settings from the current session'
       responses:
         '200':
           description: 'user found'
@@ -442,7 +442,7 @@ paths:
         - Users
       security:
         - BasicAuth: []
-      summary: modify own informations
+      summary: 'Modify own informations'
       parameters:
         - in: query
           name: user
@@ -466,7 +466,7 @@ paths:
     get:
       tags:
         - Labels
-      summary: get labels
+      summary: 'Get labels'
       responses:
         '200':
           description: 'labels returned'
@@ -483,7 +483,7 @@ paths:
         - Labels
       security:
         - BasicAuth: []
-      summary: add a new label to the website
+      summary: 'Add a new label to the website'
       parameters:
         - in: query
           name: label
@@ -505,7 +505,7 @@ paths:
         - Labels
       security:
         - BasicAuth: []
-      summary: delete a label from the website
+      summary: 'Delete a label from the website'
       parameters:
         - in: query
           name: label
@@ -525,7 +525,7 @@ paths:
     get:
       tags:
         - Themes
-      summary: get all themes
+      summary: 'Get all themes'
       responses:
         '200':
           description: 'themes returned'
@@ -542,7 +542,7 @@ paths:
         - Themes
       security:
         - BasicAuth: []
-      summary: add a new theme to the website
+      summary: 'Add a new theme to the website'
       parameters:
         - in: query
           name: theme
@@ -564,7 +564,7 @@ paths:
     get:
       tags:
         - Themes
-      summary: get the current theme
+      summary: 'Get the current theme'
       responses:
         '200':
           description: 'current theme returned'
@@ -579,7 +579,7 @@ paths:
     get:
       tags:
         - Themes
-      summary: Get current proposals 
+      summary: 'Get the current proposals'
       responses:
         '200':
           description: 'proposal themes returned'
@@ -596,7 +596,7 @@ paths:
     get:
       tags:
         - Themes
-      summary: Get the proposal the user voted for 
+      summary: 'Get the proposal the user voted for'
       responses:
         '200':
           description: 'proposal theme returned'
@@ -616,7 +616,7 @@ paths:
         - BasicAuth: []
       tags:
         - Themes
-      summary: Set the user's vote on a theme proposal
+      summary: 'Set the user''s vote on a theme proposal'
       parameters:
         - in: path
           name: proposal_id
@@ -643,7 +643,7 @@ paths:
         - BasicAuth: []
       tags:
         - Themes
-      summary: delete the user's vote
+      summary: 'Delete the user''s vote'
       parameters:
         - in: path
           name: proposal_id
@@ -664,7 +664,7 @@ paths:
     get:
       tags:
         - Comments
-      summary: search comments
+      summary: 'Search for comments for a post or a user'
       parameters:
         - in: query
           name: post
@@ -689,23 +689,25 @@ paths:
                   $ref: '#/components/schemas/Comment'
         '400':
           description: 'something went wrong when searching for commments'
+          
+  /comments/{parent_id}/reply:
     post:
       tags:
         - Comments
       security:
         - BasicAuth: []
-      summary: comment on a post
+      summary: 'Comment on a post'
       parameters:
-        - in: query
-          name: post
-          description: the post to comment on
+        - in: path
+          name: parent_id
+          description: reply to a comment
           required: true
           schema:
-            $ref: '#/components/schemas/Post'
+            type: integer
         - in: query
-          name: parent
-          description: reply to a comment
-          required: false
+          name: commnet
+          description: 'The comment to add'
+          required: true
           schema:
             $ref: '#/components/schemas/Comment'
       responses:
@@ -717,19 +719,21 @@ paths:
           $ref: '#/components/responses/UnauthorizedError'
         '409':
           description: 'comment already sent'
+
+  /comments/{id}:
     delete:
       tags:
         - Comments
       security:
         - BasicAuth: []
-      summary: delete a comment
+      summary: 'Delete a comment'
       parameters:
-        - in: query
-          name: comment
+        - in: path
+          name: id
           description: the comment to delete
           required: true
           schema:
-            $ref: '#/components/schemas/Comment'
+            type: integer
       responses:
         '200':
           description: 'comment successfuly deleted'
@@ -744,8 +748,14 @@ paths:
         - Comments
       security:
         - BasicAuth: []
-      summary: edit a comment
+      summary: 'Edit a comment'
       parameters:
+        - in: path
+          name: id
+          description: the comment to edit
+          required: true
+          schema:
+            type: integer
         - in: query
           name: comment
           description: the comment to edit
@@ -762,21 +772,22 @@ paths:
         '404':
           description: 'comment not found'
       
+
   /search:
     get:
       tags:
        - Navigation
-      summary: search
+      summary: 'Search for any content on the website'
       parameters:
         - in: query
           name: category
-          description: the kind of component to search for
+          description: 'The type of component to search for. (Post, User, Comment)'
           required: true
           schema:
             type: string
         - in: query
           name: term
-          description: the term to look for
+          description: 'The term to look up'
           required: true
           schema:
             type: string
@@ -818,6 +829,10 @@ components:
         - label
         - theme
       properties:
+        id:
+          description: 'The ID of the comment, provided by the database'
+          type: integer
+          example: 1
         title:
           description: 'The title of the post'
           type: string
@@ -847,6 +862,10 @@ components:
         - author
         - post
       properties:
+        id:
+          description: 'The ID of the comment, provided by the database'
+          type: integer
+          example: 1
         author:
           $ref: '#/components/schemas/User'
         post:
@@ -859,15 +878,26 @@ components:
       type: object
       required:
         - name
+        - victories
+        - score
       properties:
         id:
-          description: 'The ID of the user provided by the database'
+          description: 'The ID of the user, provided by the database'
           type: integer
           example: 1
         name:
           description: 'The public username of the user'
           type: string
           example: 'PhotoLover1903'
+        victories:
+          description: 'Number of victories'
+          type: integer
+          example: 42
+        score:
+          description: 'Total score based on reactions'
+          type: integer
+          example: 645
+
 
     UserSetting:
       description: 'A dictionnary of settings for a user'
@@ -911,7 +941,12 @@ components:
         - title
         - photo
         - state
+        - date
       properties:
+        id:
+          description: 'The ID of the theme, provided by the database'
+          type: integer
+          example: 1
         title:
           description: 'The title of this theme'
           type: string
@@ -921,7 +956,13 @@ components:
         state:
           description: 'Current state of the theme'
           type: string
-          example: 'Active'
+          example: 'Active | Concluded | Proposed'
+        date:
+          description: 'Starting date of the theme'
+          type: string
+          example: '2020-04-21'
+        winner:
+          $ref: '#/components/schemas/User'
       
     ReactionsCount:
       description: 'A KeyValue of a reaction and its amount'

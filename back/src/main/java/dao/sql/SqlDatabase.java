@@ -5,9 +5,9 @@ import java.util.List;
 
 public class SqlDatabase {
     private static final String DB_HOST = "db";
-    private static final String DB_USERNAME = "cdp";
-    private static final String DB_PASSWORD = "cdp";
-    private static final String DB_NAME = "cdp";
+    private static final String DB_USERNAME = "photodb";
+    private static final String DB_PASSWORD = "photodb";
+    private static final String DB_NAME = "photodb";
     private static final int DB_PORT = 3306;
 
     private static final String BACKUP_HOST = "localhost";

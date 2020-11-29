@@ -7,5 +7,6 @@ public class Api extends ResourceConfig {
     public Api() {
         packages("", "routes");
         register(CorsFilter.class);
+        register(new ApplicationBinder());
     }
 }

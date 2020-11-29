@@ -7,5 +7,5 @@ VALUES
     ("gender","Not provided"),
     ("location","Not provided"),
     ("bio",""),
-    ("victories",""),
-    ("points","");
+    ("victories","0"),
+    ("points","0");

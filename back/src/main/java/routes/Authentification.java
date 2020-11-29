@@ -44,14 +44,15 @@ class Authentification {
     @Consumes("application/json")
     public Response register(
         @Context HttpServletRequest req,
-        @PathParam("user") User user
+        @PathParam("user") User user,
+        @PathParam("passwordHash") String passwordHash
     ) {
         try {
             userDao.getByUsername(user.username);
 
             return Response.status(400).entity("This username is already taken !");
         } catch (Exception e) {
-            userDao.insert(user);
+            userDao.insert(user, );
             
             HttpSession session = req.getSession(true);
             session.setAttribute("user", currentUser);

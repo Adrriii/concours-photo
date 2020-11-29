@@ -1,6 +1,6 @@
 package model;
 
-public enum Setting {
+public enum SettingName {
     MAIL("mail"),
     BIRTHDAY("birthday"),
     GENDER("gender"),

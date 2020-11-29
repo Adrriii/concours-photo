@@ -2,7 +2,7 @@ use photodb;
 
 CREATE TABLE user_setting (
     user int UNSIGNED,
-    setting text UNSIGNED,
+    setting VARCHAR(24),
     value text,
     public boolean,
 

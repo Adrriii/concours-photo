@@ -1,6 +1,6 @@
 use photodb;
 
-INSERT INTO setting (label)
+INSERT INTO setting (label, default_value)
 VALUES
     ("mail","Not provided"),
     ("birthday","Not provided"),

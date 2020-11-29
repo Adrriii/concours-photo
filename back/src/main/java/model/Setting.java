@@ -1,16 +1,16 @@
 package model;
 
 public class Setting {
-    public final String label;
-    public final String default_value;
+    public final SettingName label;
+    public final String defaultValue;
 
     public Setting() {
         this(null,null);
     }
 
-    public UserSetting(String label, String default_value) {
+    public UserSetting(SettingName label, String defaultValue) {
         this.label = label;
-        this.default_value = default_value;   
+        this.defaultValue = defaultValue;   
     }
 
 }

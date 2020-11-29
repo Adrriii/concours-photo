@@ -7,5 +7,11 @@ public enum SettingName {
     LOCATION("location"),
     BIO("bio"),
     VICTORIES("victories"),
-    POINTS("points")
+    POINTS("points");
+
+    String value;
+
+    SettingName(String value) {
+        this.value = value;
+    }
 }

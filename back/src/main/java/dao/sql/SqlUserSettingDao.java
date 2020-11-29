@@ -18,7 +18,8 @@ public class SqlUserSettingDao extends SqlDao<UserSetting> implements UserSettin
         return new UserSetting(
             getInteger(resultSet, "user"),
             resultSet.getBoolean("public"),
-            resultSet.getString("value")
+            resultSet.getString("value"),
+            resultSet.getString("setting")
         );
     }
 
@@ -30,7 +31,7 @@ public class SqlUserSettingDao extends SqlDao<UserSetting> implements UserSettin
         List<Object> opt = Arrays.asList(userId);
 
         for (UserSetting userSetting : queryAllObjects(statement, opt)) {
-                userSettings.put(SettingName.valueOf(set.getString("label")), userSetting);
+            userSettings.put(SettingName.valueOf(userSetting.setting), userSetting);
         }
 
         return userSettings;

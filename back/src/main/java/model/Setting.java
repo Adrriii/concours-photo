@@ -1,19 +1,16 @@
 package model;
 
-public class UserSetting {
-    public final Integer userId;
-    public final Boolean isPublic;
+public class Setting {
+    public final String label;
+    public final String default_value;
 
-    public final String value;
-
-    public UserSetting() {
-        this(null,null,null);
+    public Setting() {
+        this(null,null);
     }
 
-    public UserSetting(Integer userId, Boolean isPublic, String value) {
-        this.userId = userId;
-        this.isPublic = isPublic;
-        this.value = value;        
+    public UserSetting(String label, String default_value) {
+        this.label = label;
+        this.default_value = default_value;   
     }
 
 }

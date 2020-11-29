@@ -19,6 +19,7 @@ services:
 
     db:
         image: bitnami/mariadb
+        container_name: photo_db
         restart: always
         environment:
             MARIADB_DATABASE: 'photodb'
@@ -34,7 +35,7 @@ services:
         depends_on:
             - db
         image: phpmyadmin/phpmyadmin
-        container_name: phpmyadmin
+        container_name: photo_phpmyadmin
         restart: always
         ports:
             - '8080:80'

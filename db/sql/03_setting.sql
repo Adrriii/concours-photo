@@ -1,9 +1,8 @@
 use photodb;
 
 CREATE TABLE setting (
-    id int UNSIGNED AUTO_INCREMENT,
-    label text NOT NULL UNIQUE,
+    label VARCHAR(24),
     default_value text,
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (label)
 )

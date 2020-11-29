@@ -6,7 +6,7 @@ services:
             context: ./front
             dockerfile: ./Dockerfile
         ports: 
-            - "8000:80"
+            - "8080:80"
         image: front
     
     back:

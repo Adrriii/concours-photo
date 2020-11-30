@@ -1,15 +1,17 @@
 package dao;
 
-import dao.sql.SqlDao;
+import model.SettingName;
+import model.User;
+import model.UserSetting;
 
 public interface UserDao {
     User getById(int id) throws Exception;
     User getByUsername(String username) throws Exception;
 
-    void insert(User user, String hash) throws Exception;
+    User insert(User user, String hash) throws Exception;
     void update(User user) throws Exception;
 
-    void updateSetting(Setting setting, UserSetting value) throws Exception;
+    void updateSetting(SettingName setting, UserSetting value) throws Exception;
 
     User getByLogin(String username, String hash) throws Exception;
     void updateHash(User user, String hash) throws Exception;

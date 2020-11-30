@@ -8,7 +8,7 @@ public class Setting {
         this(null,null);
     }
 
-    public UserSetting(SettingName label, String defaultValue) {
+    public Setting(SettingName label, String defaultValue) {
         this.label = label;
         this.defaultValue = defaultValue;   
     }

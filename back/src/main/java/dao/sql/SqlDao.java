@@ -9,11 +9,8 @@ public abstract class SqlDao<T> {
     protected abstract T createObjectFromResult(ResultSet resultSet) throws SQLException;
 
     protected T queryFirstObject(String statement, List<Object> opt) throws SQLException {
-
-        PreparedStatement preparedStatement = SQLDatabase.prepare(statement, opt);
-
+        PreparedStatement preparedStatement = SqlDatabase.prepare(statement, opt);
         String sql = preparedStatement.toString();
-
         ResultSet resultSet = preparedStatement.executeQuery();
 
         if (resultSet.next()) {
@@ -29,11 +26,8 @@ public abstract class SqlDao<T> {
     }
 
     protected List<T> queryAllObjects(String statement, List<Object> opt) throws SQLException {
-
-        PreparedStatement preparedStatement = SQLDatabase.prepare(statement, opt);
-
+        PreparedStatement preparedStatement = SqlDatabase.prepare(statement, opt);
         ResultSet resultSet = preparedStatement.executeQuery();
-
         List<T> items = new ArrayList<>();
 
         while (resultSet.next()) {
@@ -55,7 +49,7 @@ public abstract class SqlDao<T> {
     }
 
     protected void exec(String statement, List<Object> items) throws SQLException {
-        SQLDatabase.exec(statement, items);
+        SqlDatabase.exec(statement, items);
     }
 
     protected void exec(String statement) throws SQLException {
@@ -63,16 +57,13 @@ public abstract class SqlDao<T> {
     }
 
     protected int doInsert(String statement, List<Object> opt) throws SQLException {
-        int id;
-
-        PreparedStatement preparedStatement = SQLDatabase.prepare(statement, opt);
-
+        PreparedStatement preparedStatement = SqlDatabase.prepare(statement, opt);
         String sql = preparedStatement.toString();
-
         preparedStatement.execute();
 
         ResultSet generatedKey = preparedStatement.getGeneratedKeys();
 
+        int id;
         // Try to get the generated id
         if (generatedKey.next()) {
             id = generatedKey.getInt(1);
@@ -85,7 +76,7 @@ public abstract class SqlDao<T> {
         generatedKey.close();
         preparedStatement.close();
 
-        preparedStatement = SQLDatabase.prepare("SELECT @id");
+        preparedStatement = SqlDatabase.prepare("SELECT @id");
 
         ResultSet rs = preparedStatement.executeQuery();
         if (rs.next()) {

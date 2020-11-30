@@ -1,15 +1,23 @@
 package dao.sql;
 
+import dao.UserDao;
+import model.Setting;
+import model.SettingName;
 import model.User;
+import model.UserSetting;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class SqlUserDao extends SqlDao<User> implements UserDao {
 
     @Override
     protected User createObjectFromResult(ResultSet resultSet) throws SQLException {
         int userId = getInteger(resultSet, "id");
-        HashMap<Setting, UserSetting> userSettings = new SqlUserSettingDAO().getAllForUser(userId);
+        HashMap<SettingName, UserSetting> userSettings = new SqlUserSettingDao().getAllForUser(userId);
 
         return new User(resultSet.getString("username"), userSettings, userId);
     }
@@ -31,25 +39,31 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
     }
 
     @Override
-    public void insert(User user, String hash) throws SQLException {
-        if(user.id != null) throw new SQLException(UserDaoException.ID_PROVIDED);
+    public User insert(User user, String hash) throws SQLException {
+        if(user.id != null) throw new SQLException(String.valueOf(UserDaoException.ID_PROVIDED));
 
         String statement = "INSERT INTO user (username, sha) VALUES (?,?)";
         List<Object> opt = Arrays.asList(user.username, hash);
 
         int userId = doInsert(statement, opt);
+        new SqlUserSettingDao().insertDefaultsForUser(userId);
 
-        return new User(user.username, );
+        return new User(user.username, new SqlUserSettingDao().getAllForUser(userId), userId);
     }
 
     @Override
     public void update(User user) throws SQLException {
-        if(user.id == null) throw new SQLException(UserDaoException.ID_NOT_PROVIDED);
+        if(user.id == null) throw new SQLException(String.valueOf(UserDaoException.ID_NOT_PROVIDED));
 
         String statement = "UPDATE user SET username=? WHERE id=?";
         List<Object> opt = Arrays.asList(user.id, user.username);
 
         exec(statement, opt);
+    }
+
+    @Override
+    public void updateSetting(SettingName setting, UserSetting value) throws Exception {
+
     }
 
     @Override
@@ -62,17 +76,22 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
 
     @Override
     public void updateHash(User user, String hash) throws SQLException {
-        if(user.id == null) throw new SQLException(UserDaoException.ID_NOT_PROVIDED);
+        if(user.id == null) throw new SQLException(String.valueOf(UserDaoException.ID_NOT_PROVIDED));
 
         String statement = "UPDATE user SET sha ? WHERE user=?";
         List<Object> opt = Arrays.asList(user.id, hash);
 
         exec(statement, opt);
     }
-
 }
 
 enum UserDaoException {
     ID_PROVIDED("The user ID was provided when it was not required"),
-    ID_NOT_PROVIDED("The user ID was not provided when it was required")
+    ID_NOT_PROVIDED("The user ID was not provided when it was required");
+
+    String value;
+
+    UserDaoException(String error) {
+        this.value = error;
+    }
 }

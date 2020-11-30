@@ -1,6 +1,5 @@
 package dao;
 
-import model.Setting;
 import model.SettingName;
 import model.UserSetting;
 

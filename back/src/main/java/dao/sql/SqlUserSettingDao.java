@@ -1,6 +1,7 @@
 package dao.sql;
 
 import dao.UserSettingDao;
+import model.Setting;
 import model.SettingName;
 import model.UserSetting;
 
@@ -40,11 +41,11 @@ public class SqlUserSettingDao extends SqlDao<UserSetting> implements UserSettin
     public void insertDefaultsForUser(int userId) throws SQLException {
         String statement = "SELECT * FROM setting";
 
-        new SqlSettingDao().queryAllObjects(statement).forEach(setting -> {
+        for (Setting setting : new SqlSettingDao().queryAllObjects(statement)) {
             String statementNested = "INSERT INTO user_setting (user, setting, public, value) VALUES (?,?,?,?)";
-            List<Object> opt = Arrays.asList(userId, setting.id, false, setting.defaultValue);
+            List<Object> opt = Arrays.asList(userId, setting.label, false, setting.defaultValue);
 
             exec(statementNested, opt);
-        });
+        }
     }
 }

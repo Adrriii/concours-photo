@@ -1,12 +1,18 @@
 package routes;
 
 import dao.UserDao;
-import jdk.internal.net.http.Response;
-import jdk.nashorn.internal.objects.annotations.Getter;
+import model.User;
+import services.AuthenticationService;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 
-class Authentification {
+@Path("")
+class Authentications {
     @Inject UserDao userDao;
 
     @POST
@@ -14,8 +20,8 @@ class Authentification {
     @Consumes("application/json")
     public Response login(
         @Context HttpServletRequest req,
-        @PathParam("username") String username,
-        @PathParam("passwordHash") String passwordHash
+        @FormParam("username") String username,
+        @FormParam("passwordHash") String passwordHash
     ) {
         try {
             User currentUser = userDao.getByLogin(username, passwordHash);
@@ -44,18 +50,23 @@ class Authentification {
     @Consumes("application/json")
     public Response register(
         @Context HttpServletRequest req,
-        @PathParam("user") User user,
-        @PathParam("passwordHash") String passwordHash
+        @FormParam("user") String username,
+        @FormParam("passwordHash") String passwordHash
     ) {
         try {
-            userDao.getByUsername(user.username);
+            userDao.getByUsername(username);
 
-            return Response.status(400).entity("This username is already taken !");
+            return Response.status(400).entity("This username is already taken !").build();
         } catch (Exception e) {
-            userDao.insert(user, );
-            
+            User newUser = null;
+            try {
+                newUser = AuthenticationService.registerUser(username, passwordHash);
+            } catch (Exception exception) {
+                return Response.status(500).entity("Unknown error : " + exception.getMessage()).build();
+            }
+
             HttpSession session = req.getSession(true);
-            session.setAttribute("user", currentUser);
+            session.setAttribute("user", newUser);
     
             return Response.status(Response.Status.OK).build();
         }

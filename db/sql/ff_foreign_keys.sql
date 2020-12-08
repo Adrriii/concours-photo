@@ -2,3 +2,6 @@ use photodb;
 
 ALTER TABLE user_setting ADD CONSTRAINT FK_US_user FOREIGN KEY (user) REFERENCES user(id);
 ALTER TABLE user_setting ADD CONSTRAINT FK_US_setting FOREIGN KEY (setting) REFERENCES setting(label);
+ALTER TABLE post ADD CONSTRAINT FK_POST_author FOREIGN KEY (author) REFERENCES user(id);
+ALTER TABLE post ADD CONSTRAINT FK_POST_label FOREIGN KEY (label) REFERENCES label(label);
+ALTER TABLE post ADD CONSTRAINT FK_POST_theme FOREIGN KEY (theme) REFERENCES theme(id);

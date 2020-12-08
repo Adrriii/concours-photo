@@ -31,7 +31,8 @@ public class Authentication {
             ).orElse(Response.status(Response.Status.NOT_FOUND).entity("User or password incorrect.").build());
 
         } catch (Exception e) {
-            return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+            e.printStackTrace();
+            return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage().toString()).build();
         }
     }
 
@@ -59,6 +60,7 @@ public class Authentication {
                     }
             ).orElse(Response.status(400).entity("This username is already taken !").build());
         } catch (Exception e) {
+            e.printStackTrace();
             return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }

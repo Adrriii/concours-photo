@@ -31,6 +31,7 @@ public class AuthenticationService {
             return Optional.empty();
 
         } catch (Exception e) {
+            e.printStackTrace();
             User newUser = new User(username, null);
             newUser = userDao.insert(newUser, hash(passwordHash));
 

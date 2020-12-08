@@ -63,7 +63,12 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
 
     @Override
     public void updateSetting(SettingName setting, UserSetting value) throws Exception {
+        if(value.userId == null) throw new SQLException(String.valueOf(UserDaoException.ID_NOT_PROVIDED));
 
+        String statement = "UPDATE user_setting set value = ?, public = ? WHERE user = ? AND setting = ?";
+        List<Object> opt = Arrays.asList(value.value, value.isPublic, value.userId, setting);
+
+        exec(statement, opt);
     }
 
     @Override

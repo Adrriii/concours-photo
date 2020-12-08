@@ -21,7 +21,7 @@ public class SqlDatabase {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        
+
         try {
             connection = DriverManager.getConnection(
                     "jdbc:mariadb://" + DB_HOST + ":" + DB_PORT + "/" + DB_NAME + "?user="

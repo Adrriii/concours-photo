@@ -17,11 +17,23 @@ public class AuthenticationService {
 
     public AuthenticationService() {}
 
+    private String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if(hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
+    }
+
     public String hash(String toHash) throws NoSuchAlgorithmException {
-        final MessageDigest digest = MessageDigest.getInstance("SHA3-256");
+        final MessageDigest digest = MessageDigest.getInstance("SHA-256");
         final byte[] hashBytes = digest.digest(toHash.getBytes(StandardCharsets.UTF_8));
 
-        return Arrays.toString(hashBytes);
+        return bytesToHex(hashBytes);
     }
 
     public Optional<User> registerUser(String username, String passwordHash) throws Exception {

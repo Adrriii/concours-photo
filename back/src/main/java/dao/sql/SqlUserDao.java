@@ -62,6 +62,16 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
     }
 
     @Override
+    public void delete(User user) throws SQLException {
+        if(user.id == null) throw new SQLException(String.valueOf(UserDaoException.ID_NOT_PROVIDED));
+
+        String statement = "DELETE FROM user WHERE id=?";
+        List<Object> opt = Arrays.asList(user.id);
+
+        exec(statement, opt);
+    }
+
+    @Override
     public void updateSetting(SettingName setting, UserSetting value) throws Exception {
         if(value.userId == null) throw new SQLException(String.valueOf(UserDaoException.ID_NOT_PROVIDED));
 

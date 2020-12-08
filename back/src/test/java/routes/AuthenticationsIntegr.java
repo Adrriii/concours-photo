@@ -15,7 +15,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AuthenticationsTest {
+class AuthenticationsIntegr {
     static CloseableHttpClient clients;
 
     @BeforeAll

@@ -41,7 +41,23 @@ class AuthenticationsTest {
         request.setEntity(new StringEntity("{\"username\": \"robin1\",\"passwordHash\":\"123456NRSTabép\"}", "UTF-8"));
 
         CloseableHttpResponse response = HttpClients.createDefault().execute(request);
-        System.out.println(EntityUtils.toString(response.getEntity()));
         assertEquals(200, response.getStatusLine().getStatusCode());
+    }
+
+    @Test
+    public void testRegisterUserThatAlreadyExist() throws IOException {
+        HttpPost request = new HttpPost("http://localhost:9000/api/v1/register");
+        request.addHeader("Content-Type", "application/json;charset=UTF-8");
+        request.setEntity(new StringEntity("{\"username\": \"robin2\",\"passwordHash\":\"123456NRSTabép\"}", "UTF-8"));
+
+        CloseableHttpResponse response = HttpClients.createDefault().execute(request);
+        assertEquals(200, response.getStatusLine().getStatusCode());
+
+        request = new HttpPost("http://localhost:9000/api/v1/register");
+        request.addHeader("Content-Type", "application/json;charset=UTF-8");
+        request.setEntity(new StringEntity("{\"username\": \"robin2\",\"passwordHash\":\"123456NRSTabép\"}", "UTF-8"));
+
+        response = HttpClients.createDefault().execute(request);
+        assertEquals(400, response.getStatusLine().getStatusCode());
     }
 }

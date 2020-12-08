@@ -16,19 +16,19 @@ public class Authentication {
 
     @POST
     @Path("login")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response login(
             @Context HttpServletRequest req,
-            @FormParam("username") String username,
-            @FormParam("passwordHash") String passwordHash
+            SimpleUser user
     ) {
+        System.out.println("Login request");
         try {
-            return authenticationService.loginUser(username, passwordHash).map(
-                    user -> {
-                        req.getSession(true).setAttribute("user", user);
+            return authenticationService.loginUser(user.username, user.passwordHash).map(
+                    userLog -> {
+                        req.getSession(true).setAttribute("user", userLog);
                         return Response.ok().build();
                     }
-            ).orElse(Response.status(Response.Status.NOT_FOUND).entity("User or password incorrect.").build());
+            ).orElse(Response.status(400).entity("User or password incorrect.").build());
 
         } catch (Exception e) {
             e.printStackTrace();

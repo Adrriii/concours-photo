@@ -83,7 +83,7 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
 
     @Override
     public User getByLogin(String username, String hash) throws SQLException {
-        String statement = "SELECT * FROM user as WHERE username=? AND sha=?";
+        String statement = "SELECT * FROM user WHERE username=? AND sha=?";
         List<Object> opt = Arrays.asList(username, hash);
 
         return queryFirstObject(statement, opt);

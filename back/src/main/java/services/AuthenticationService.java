@@ -54,6 +54,7 @@ public class AuthenticationService {
         try {
             return Optional.of(userDao.getByLogin(username, hash(passwordHash)));
         } catch (Exception e) {
+            e.printStackTrace();
             return Optional.empty();
         }
     }

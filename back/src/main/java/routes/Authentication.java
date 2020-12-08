@@ -3,6 +3,7 @@ package routes;
 import model.SimpleUser;
 import services.AuthenticationService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -21,7 +22,6 @@ public class Authentication {
             @Context HttpServletRequest req,
             SimpleUser user
     ) {
-        System.out.println("Login request");
         try {
             return authenticationService.loginUser(user.username, user.passwordHash).map(
                     userLog -> {
@@ -31,12 +31,12 @@ public class Authentication {
             ).orElse(Response.status(400).entity("User or password incorrect.").build());
 
         } catch (Exception e) {
-            e.printStackTrace();
             return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage().toString()).build();
         }
     }
 
     @GET
+    @RolesAllowed("user")
     @Path("logout")
     public Response logout(@Context HttpServletRequest req) {
         req.getSession(true).setAttribute("user", null);
@@ -60,7 +60,6 @@ public class Authentication {
                     }
             ).orElse(Response.status(400).entity("This username is already taken !").build());
         } catch (Exception e) {
-            e.printStackTrace();
             return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }

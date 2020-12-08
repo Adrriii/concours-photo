@@ -11,7 +11,7 @@ public class SqlDatabase {
     private static final int DB_PORT = 3306;
 
     private static final String BACKUP_HOST = "localhost";
-    private static final int BACKUP_PORT = 3307;
+    private static final int BACKUP_PORT = 3306;
 
     private static Connection connection;
 

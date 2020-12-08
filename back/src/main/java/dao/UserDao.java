@@ -10,6 +10,7 @@ public interface UserDao {
 
     User insert(User user, String hash) throws Exception;
     void update(User user) throws Exception;
+    void delete(User user) throws Exception;
 
     void updateSetting(SettingName setting, UserSetting value) throws Exception;
 

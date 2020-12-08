@@ -19,7 +19,7 @@ public class SqlUserSettingDao extends SqlDao<UserSetting> implements UserSettin
             getInteger(resultSet, "user"),
             resultSet.getBoolean("public"),
             resultSet.getString("value"),
-            SettingName.valueOf(resultSet.getString("setting"))
+            SettingName.valueOf(resultSet.getString("setting").toUpperCase())
         );
     }
 
@@ -27,7 +27,7 @@ public class SqlUserSettingDao extends SqlDao<UserSetting> implements UserSettin
     public HashMap<SettingName, UserSetting> getAllForUser(int userId) throws SQLException {
         HashMap<SettingName, UserSetting> userSettings = new HashMap<>();
 
-        String statement = "SELECT * FROM user_setting as us, setting as s WHERE us.setting = s.id AND user = ?";
+        String statement = "SELECT * FROM user_setting as us, setting as s WHERE us.setting = s.label AND user = ?";
         List<Object> opt = Arrays.asList(userId);
 
         for (UserSetting userSetting : queryAllObjects(statement, opt)) {
@@ -43,7 +43,7 @@ public class SqlUserSettingDao extends SqlDao<UserSetting> implements UserSettin
 
         for (Setting setting : new SqlSettingDao().queryAllObjects(statement)) {
             String statementNested = "INSERT INTO user_setting (user, setting, public, value) VALUES (?,?,?,?)";
-            List<Object> opt = Arrays.asList(userId, setting.label, false, setting.defaultValue);
+            List<Object> opt = Arrays.asList(userId, setting.label.toString().toLowerCase(), false, setting.defaultValue);
 
             exec(statementNested, opt);
         }

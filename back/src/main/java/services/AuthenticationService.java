@@ -33,7 +33,6 @@ public class AuthenticationService {
         } catch (Exception e) {
             User newUser = new User(username, null);
             newUser = userDao.insert(newUser, hash(passwordHash));
-            userSettingDao.insertDefaultsForUser(newUser.id);
 
             return Optional.of(newUser);
         }

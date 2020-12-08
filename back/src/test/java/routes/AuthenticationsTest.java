@@ -34,7 +34,7 @@ class AuthenticationsTest {
 
     @Test
     public void testRegister() throws IOException {
-        HttpPost request = new HttpPost("http://localhost:9000/api/v1/auth/register");
+        HttpPost request = new HttpPost("http://localhost:9000/api/v1/register");
         request.addHeader("content-type", "application/json");
         request.setEntity(new StringEntity("{username: \"robin\",passwordHash:\"123456NRSTabép\"}"));
 

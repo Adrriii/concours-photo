@@ -1,11 +1,13 @@
 package routes;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
+import org.apache.http.util.EntityUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -35,10 +37,11 @@ class AuthenticationsTest {
     @Test
     public void testRegister() throws IOException {
         HttpPost request = new HttpPost("http://localhost:9000/api/v1/register");
-        request.addHeader("content-type", "application/json");
-        request.setEntity(new StringEntity("{username: \"robin\",passwordHash:\"123456NRSTabép\"}"));
+        request.addHeader("Content-Type", "application/json;charset=UTF-8");
+        request.setEntity(new StringEntity("{\"username\": \"robin1\",\"passwordHash\":\"123456NRSTabép\"}", "UTF-8"));
 
         CloseableHttpResponse response = HttpClients.createDefault().execute(request);
+        System.out.println(EntityUtils.toString(response.getEntity()));
         assertEquals(200, response.getStatusLine().getStatusCode());
     }
 }

@@ -5,23 +5,22 @@ import services.AuthenticationService;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("")
-class Authentications {
+public class Authentication {
     @Inject AuthenticationService authenticationService;
 
     @POST
     @Path("login")
     @Consumes("application/json")
     public Response login(
-        @Context HttpServletRequest req,
-        @FormParam("username") String username,
-        @FormParam("passwordHash") String passwordHash
+            @Context HttpServletRequest req,
+            @FormParam("username") String username,
+            @FormParam("passwordHash") String passwordHash
     ) {
         try {
             return authenticationService.loginUser(username, passwordHash).map(
@@ -48,8 +47,8 @@ class Authentications {
     @Path("register")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response register(
-        @Context HttpServletRequest req,
-        SimpleUser user
+            @Context HttpServletRequest req,
+            SimpleUser user
     ) {
         System.out.println("Receive register request, user: " + user.username + ", password: " + user.passwordHash);
         try {

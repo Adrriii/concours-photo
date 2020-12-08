@@ -17,19 +17,23 @@ public class SqlDatabase {
 
     private static void openConnection() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            Class.forName ("org.mariadb.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        
+        try {
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://" + DB_HOST + ":" + DB_PORT + "/" + DB_NAME + "?user="
+                    "jdbc:mariadb://" + DB_HOST + ":" + DB_PORT + "/" + DB_NAME + "?user="
                     + DB_USERNAME + "&password=" + DB_PASSWORD
             );
         } catch (Exception ignored) {
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
                 connection = DriverManager.getConnection(
-                        "jdbc:mysql://" + BACKUP_HOST + ":" + BACKUP_PORT + "/" + DB_NAME + "?user="
+                        "jdbc:mariadb://" + BACKUP_HOST + ":" + BACKUP_PORT + "/" + DB_NAME + "?user="
                         + DB_USERNAME + "&password=" + DB_PASSWORD
                 );
-            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException exception) {
+            } catch (SQLException exception) {
                 throw new Error(exception);
             }
         }

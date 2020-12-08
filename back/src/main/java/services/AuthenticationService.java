@@ -15,7 +15,7 @@ public class AuthenticationService {
     @Inject UserDao userDao;
     @Inject UserSettingDao userSettingDao;
 
-    private AuthenticationService() {}
+    public AuthenticationService() {}
 
     public String hash(String toHash) throws NoSuchAlgorithmException {
         final MessageDigest digest = MessageDigest.getInstance("SHA3-256");

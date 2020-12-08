@@ -9,40 +9,41 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class AuthenticationService {
-    @Inject static UserDao userDao;
-    @Inject static UserSettingDao userSettingDao;
+    @Inject UserDao userDao;
+    @Inject UserSettingDao userSettingDao;
 
     private AuthenticationService() {}
 
-    public static String hash(String toHash) throws NoSuchAlgorithmException {
+    public String hash(String toHash) throws NoSuchAlgorithmException {
         final MessageDigest digest = MessageDigest.getInstance("SHA3-256");
         final byte[] hashBytes = digest.digest(toHash.getBytes(StandardCharsets.UTF_8));
 
         return Arrays.toString(hashBytes);
     }
 
-    public static User registerUser(String username, String passwordHash) throws Exception {
+    public Optional<User> registerUser(String username, String passwordHash) throws Exception {
         
         try {
             userDao.getByUsername(username);
+            return Optional.empty();
 
-            return null;
         } catch (Exception e) {
             User newUser = new User(username, null);
-            newUser = userDao.insert(newUser, AuthenticationService.hash(passwordHash));
+            newUser = userDao.insert(newUser, hash(passwordHash));
             userSettingDao.insertDefaultsForUser(newUser.id);
 
-            return newUser;
+            return Optional.of(newUser);
         }
     }
 
-    public static User loginUser(String username, String passwordHash) {
+    public Optional<User> loginUser(String username, String passwordHash) {
         try {
-            return userDao.getByLogin(username, AuthenticationService.hash(passwordHash));
+            return Optional.of(userDao.getByLogin(username, hash(passwordHash)));
         } catch (Exception e) {
-            return null;
+            return Optional.empty();
         }
     }
 }

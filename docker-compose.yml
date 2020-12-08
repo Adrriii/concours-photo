@@ -38,6 +38,6 @@ services:
         container_name: photo_phpmyadmin
         restart: always
         ports:
-            - '8080:80'
+            - '4242:80'
         environment:
             PMA_HOST: db

@@ -40,6 +40,10 @@
           <element id="library" level="project" name="Maven: org.javassist:javassist:3.25.0-GA" />
           <element id="library" level="project" name="Maven: org.glassfish.jersey.core:jersey-client:2.31" />
           <element id="library" level="project" name="Maven: org.glassfish.hk2.external:jakarta.inject:2.6.1" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.5.13" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.4.13" />
+          <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.11" />
         </element>
       </element>
       <element id="directory" name="META-INF">

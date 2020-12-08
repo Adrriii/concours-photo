@@ -1,5 +1,7 @@
 use photodb;
 
+-- Insert the user settings along with their default value
+
 INSERT INTO setting (label, default_value)
 VALUES
     ("mail","Not provided"),

@@ -4,11 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 
-export class AuthComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
     title: String = '';
     isSubmitting = false;

@@ -12,7 +12,6 @@ public class Hello {
 
     @GET
     public String helloWorld() throws Exception {
-        imageService.postImage("https://www.redwolf.in/image/catalog/stickers/bongo-cat-sticker.jpg");
         return "Hello world !";
     }
 }

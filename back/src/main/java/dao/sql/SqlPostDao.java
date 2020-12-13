@@ -21,14 +21,15 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
         Theme theme = new SqlThemeDao().getById(themeId);
 
         return new Post(
-                resultSet.getInt("id"),
-                resultSet.getString("title"),
-                resultSet.getString("reacted"),
-                    null,
-                author,
-                new Label(resultSet.getString("label")),
-                theme,
-                resultSet.getString("photo_url")
+            resultSet.getString("title"),
+            resultSet.getString("reacted"),
+            null,
+            author,
+            new Label(resultSet.getString("label")),
+            theme,
+            resultSet.getString("photo_url"),
+            resultSet.getString("photo_delete"),
+            resultSet.getInt("id")
         );
     }
 

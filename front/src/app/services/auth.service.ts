@@ -13,7 +13,7 @@ export class AuthService {
   constructor(private httpClient : HttpClient) { }
 
   createNewUser(username : string, password : string) {
-    return new Promise(
+    return new Promise<void>(
       (resolve, reject) => {
         this.httpClient
           .post("http://localhost:9000/register", 
@@ -24,9 +24,11 @@ export class AuthService {
           .subscribe(
             () => {
               console.log("user created successfully");
+              resolve();
             },
             (error) => {
               console.log("error");
+              reject();
             }
           );
       }
@@ -34,7 +36,7 @@ export class AuthService {
   }
 
   logInUser(username : string, password : string) {
-    return new Promise(
+    return new Promise<void>(
       (resolve, reject) => {
         this.httpClient
           .post("http://localhost:9000/login", 
@@ -45,9 +47,11 @@ export class AuthService {
           .subscribe(
             () => {
               console.log("user logged successfully");
+              resolve();
             },
             (error) => {
               console.log("error");
+              reject();
             }
           );
       }
@@ -55,16 +59,18 @@ export class AuthService {
   }
 
   logOutUser(username : string, password : string) {
-    return new Promise(
+    return new Promise<void>(
       (resolve, reject) => {
         this.httpClient
           .get<any[]>("http://localhost:9000/logout")
           .subscribe(
             (Response) => {
               console.log("user unlogged successfully");
+              resolve();
             },
             (error) => {
               console.log("error");
+              reject();
             }
           );
       }

@@ -1,10 +1,10 @@
-package dao.sql;
+package dao;
 
 import org.junit.jupiter.api.Test;
 
+import dao.sql.SqlUserDao;
 import model.User;
 
-import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SqlUserDaoTest {

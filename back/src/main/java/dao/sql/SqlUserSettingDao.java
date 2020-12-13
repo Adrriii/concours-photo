@@ -42,10 +42,18 @@ public class SqlUserSettingDao extends SqlDao<UserSetting> implements UserSettin
         String statement = "SELECT * FROM setting";
 
         for (Setting setting : new SqlSettingDao().queryAllObjects(statement)) {
-            String statementNested = "INSERT INTO user_setting (user, setting, public, value) VALUES (?,?,?,?)";
+            String statementNested = "INSERT INTO user_setting (user, setting, public, value) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE user=user";
             List<Object> opt = Arrays.asList(userId, setting.label.toString().toLowerCase(), false, setting.defaultValue);
 
             exec(statementNested, opt);
         }
+    }
+
+    @Override
+    public void update(UserSetting userSetting) throws SQLException {
+        String statement = "UPDATE user_setting SET public = ?, value = ? WHERE user = ? AND setting = ?";
+        List<Object> opt = Arrays.asList(userSetting.isPublic, userSetting.value, userSetting.userId, userSetting.setting.toString().toLowerCase());
+
+        exec(statement, opt);
     }
 }

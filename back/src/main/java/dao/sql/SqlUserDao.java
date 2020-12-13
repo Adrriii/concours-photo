@@ -16,7 +16,7 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
 
     @Override
     protected User createObjectFromResult(ResultSet resultSet) throws SQLException {
-        int userId = getInteger(resultSet, "id");
+        Integer userId = getInteger(resultSet, "id");
         HashMap<SettingName, UserSetting> userSettings = new SqlUserSettingDao().getAllForUser(userId);
 
         return new User(resultSet.getString("username"), userSettings, userId);
@@ -58,6 +58,10 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
         String statement = "UPDATE user SET username=? WHERE id=?";
         List<Object> opt = Arrays.asList(user.id, user.username);
 
+        for(UserSetting userSetting : user.settings.values()) {
+            new SqlUserSettingDao().update(userSetting);
+        }
+
         exec(statement, opt);
     }
 
@@ -67,16 +71,6 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
 
         String statement = "DELETE FROM user WHERE id=?";
         List<Object> opt = Arrays.asList(user.id);
-
-        exec(statement, opt);
-    }
-
-    @Override
-    public void updateSetting(SettingName setting, UserSetting value) throws Exception {
-        if(value.userId == null) throw new SQLException(String.valueOf(UserDaoException.ID_NOT_PROVIDED));
-
-        String statement = "UPDATE user_setting set value = ?, public = ? WHERE user = ? AND setting = ?";
-        List<Object> opt = Arrays.asList(value.value, value.isPublic, value.userId, setting);
 
         exec(statement, opt);
     }

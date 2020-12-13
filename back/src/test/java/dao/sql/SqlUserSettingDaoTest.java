@@ -1,8 +1,7 @@
-package dao;
+package dao.sql;
 
 import org.junit.jupiter.api.*;
 
-import dao.sql.*;
 import model.SettingName;
 import model.UserSetting;
 import model.User;

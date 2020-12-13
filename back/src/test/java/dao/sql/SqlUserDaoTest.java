@@ -1,8 +1,7 @@
-package dao;
+package dao.sql;
 
 import org.junit.jupiter.api.Test;
 
-import dao.sql.SqlUserDao;
 import model.User;
 
 import static org.junit.jupiter.api.Assertions.*;

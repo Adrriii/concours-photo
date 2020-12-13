@@ -148,9 +148,20 @@ iframe {
     margin: 0 auto;
 }
 
+.fullscreen {
+    position: fixed;
+    top: 54px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+    background: lime; /* Just to visualize the extent */
+}
+
+/*Background color*/
 .container-login100 {
     width: 100%;
-    min-height: 100vh;
+    min-height: 90vh;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -167,6 +178,7 @@ iframe {
     background: linear-gradient(-135deg, #c850c0, #4158d0);
 }
 
+/* Login form white card at mid */
 .wrap-login100 {
     width: 960px;
     background: #fff;
@@ -196,6 +208,8 @@ iframe {
 
 /*------------------------------------------------------------------
 [  ]*/
+
+/* Email/Password elements in login form size */
 .login100-form {
     width: 290px;
 }
@@ -303,7 +317,7 @@ iframe {
 }
 
 /*------------------------------------------------------------------
-[ Button ]*/
+[ Button Login ]*/
 
 .container-login100-form-btn {
     width: 100%;

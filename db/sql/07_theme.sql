@@ -6,6 +6,6 @@ CREATE TABLE theme (
     state TEXT NOT NULL,
     photo_url TEXT NOT NULL,
     winner int UNSIGNED,
-
+    date TEXT NOT NULL,
     PRIMARY KEY (id)
 )

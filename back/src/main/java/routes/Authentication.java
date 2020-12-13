@@ -3,6 +3,7 @@ package routes;
 import model.SimpleUser;
 import services.AuthenticationService;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("")
+@PermitAll
 public class Authentication {
     @Inject AuthenticationService authenticationService;
 

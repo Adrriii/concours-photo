@@ -1,13 +1,17 @@
 package routes;
 
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+
+import services.AbstractImageService;
 
 @Path("helloworld/")
 public class Hello {
+    @Inject AbstractImageService imageService;
+
     @GET
-    public String helloWorld() {
+    public String helloWorld() throws Exception {
         return "Hello world !";
     }
 }

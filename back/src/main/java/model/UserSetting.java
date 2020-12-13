@@ -17,4 +17,19 @@ public class UserSetting {
         this.setting = setting;
     }
 
+    @Override
+    public String toString() {
+        return "UserSetting ( userId: " + userId
+        + ", setting: " + setting 
+        + ", value: " + value 
+        + ", isPublic: " + isPublic 
+        + ")";
+    }
+
+    public boolean equals(UserSetting userSetting) {
+        return userSetting.isPublic.equals(isPublic)
+            && userSetting.userId.equals(userId)
+            && userSetting.setting.equals(setting)
+            && userSetting.value.equals(value);
+    }
 }

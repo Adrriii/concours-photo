@@ -23,6 +23,10 @@ public class User {
         this(username, settings, null);
     }
 
+    public User(String username) {
+        this(username, new HashMap<>(), null);
+    }
+
     public User getPublicProfile() {
         HashMap<SettingName, UserSetting> publicSettings = new HashMap<>();
         

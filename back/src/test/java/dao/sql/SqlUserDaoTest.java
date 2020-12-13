@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import model.User;
 
-import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SqlUserDaoTest {

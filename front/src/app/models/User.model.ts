@@ -1,3 +1,4 @@
 export class User {
-    // name
+    constructor(public username: string) {
+    }
 }

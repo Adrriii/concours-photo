@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule, Routes } from '@angular/router';
@@ -12,8 +11,8 @@ import { HeaderComponent } from './header/header.component';
 
 const appRoutes: Routes = [
   { path : '', component: HomeComponent },
-  { path : 'signin', component: LoginComponent },
-  { path : 'signup', component: RegisterComponent }
+  { path : 'login', component: LoginComponent },
+  { path : 'register', component: RegisterComponent }
 ]
 
 @NgModule({
@@ -26,7 +25,6 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     FontAwesomeModule,
     RouterModule.forRoot(appRoutes)
   ],

@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
             return;
         }
 
-        this.loading = true;
+        // this.loading = true;
         // this.registerService.register(this.form.value)
         //     .pipe(first())
         //     .subscribe(

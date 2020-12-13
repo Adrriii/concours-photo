@@ -5,6 +5,7 @@ import dao.UserSettingDao;
 import model.User;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

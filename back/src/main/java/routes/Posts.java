@@ -2,6 +2,7 @@ package routes;
 
 import dao.PostDao;
 import model.Post;
+import services.PostService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
@@ -12,8 +13,7 @@ import javax.ws.rs.core.Response;
 
 @Path("posts/")
 public class Posts {
-    //TODO Créer un service et l'utiliser à la place du dao
-    @Inject PostDao postDao;
+    @Inject PostService postService;
     
     @POST
     @RolesAllowed("user")

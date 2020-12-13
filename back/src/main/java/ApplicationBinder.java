@@ -8,6 +8,7 @@ import dao.sql.SqlUserDao;
 import dao.sql.SqlUserSettingDao;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import services.AuthenticationService;
+import services.PostService;
 
 public class ApplicationBinder extends AbstractBinder {
     @Override
@@ -18,5 +19,6 @@ public class ApplicationBinder extends AbstractBinder {
         bind(SqlSettingDao.class).to(SettingDao.class);
 
         bindAsContract(AuthenticationService.class);
+        bindAsContract(PostService.class);
     }
 }

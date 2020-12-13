@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,9 +31,15 @@ public class HttpImgur {
             false
     );
 
-    static HttpEntityEnclosingRequestBase prepare(HttpEntityEnclosingRequestBase request, List<NameValuePair> params) throws IOException {
-
+    static HttpRequestBase prepare(HttpRequestBase request) {
         request.addHeader("Authorization", "Client-ID "+CLIENT_ID);
+
+        return request;
+    }
+
+    static HttpEntityEnclosingRequestBase prepareEntity(HttpEntityEnclosingRequestBase request, List<NameValuePair> params) throws IOException {
+        prepare(request);
+
         request.setEntity(new UrlEncodedFormEntity(params));
 
         return request;
@@ -60,7 +67,7 @@ public class HttpImgur {
         return sb.toString();
     }
 
-    static JSONObject requestJSON(HttpEntityEnclosingRequestBase request) throws IOException {
+    static JSONObject requestJSON(HttpRequestBase request) throws IOException {
         HttpResponse response = HttpClientBuilder.create().build().execute(request);
         HttpEntity entity = response.getEntity();
         InputStream instream = entity.getContent();
@@ -72,11 +79,24 @@ public class HttpImgur {
         Boolean success = responseJSON.getBoolean("success");
         int status = responseJSON.getInt("status");
 
-        return responseJSON.getJSONObject("data");
+        JSONObject returned = null;
+        try {
+            returned = responseJSON.getJSONObject("data");
+        } catch(Exception ignore) {
+            returned = new JSONObject();
+            returned.append("response", responseJSON.get("data"));
+        }
+
+        return returned;
     }
 
     static JSONObject post(String endpoint, List<NameValuePair> params) throws IOException {
         HttpPost request = new HttpPost(BASE_URL + endpoint);
-        return requestJSON(prepare(request, params));
+        return requestJSON(prepareEntity(request, params));
+    }
+
+    static void delete(String endpoint) throws IOException {
+        HttpDelete request = new HttpDelete(BASE_URL + endpoint);
+        requestJSON(prepare(request));
     }
 }

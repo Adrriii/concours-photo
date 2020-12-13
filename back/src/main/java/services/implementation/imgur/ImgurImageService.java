@@ -22,5 +22,10 @@ public class ImgurImageService implements AbstractImageService {
 
         return new Image(response.getString("link"), response.getString("deletehash"));
     }
+
+    @Override
+    public void deleteImage(String image) throws Exception {
+        HttpImgur.delete("image/"+image);
+    }
     
 }

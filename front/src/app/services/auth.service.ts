@@ -33,7 +33,7 @@ export class AuthService {
     );
   }
 
-  logInNewUser(username : string, password : string) {
+  logInUser(username : string, password : string) {
     return new Promise(
       (resolve, reject) => {
         this.httpClient

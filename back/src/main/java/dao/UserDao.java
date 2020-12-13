@@ -12,8 +12,6 @@ public interface UserDao {
     void update(User user) throws Exception;
     void delete(User user) throws Exception;
 
-    void updateSetting(SettingName setting, UserSetting value) throws Exception;
-
     User getByLogin(String username, String hash) throws Exception;
     void updateHash(User user, String hash) throws Exception;
 }

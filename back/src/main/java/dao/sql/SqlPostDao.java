@@ -24,7 +24,7 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
                 resultSet.getInt("id"),
                 resultSet.getString("title"),
                 resultSet.getString("reacted"),
-                null,
+                    null,
                 author,
                 new Label(resultSet.getString("label")),
                 theme,

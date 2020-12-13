@@ -16,4 +16,31 @@ public class Theme {
         this.date = date;
         this.winner = winner;
     }
+
+    public Theme(String title, String photo, String state, String date, User winner) {
+        this(null, title, photo, state, date, winner);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if (o == null)
+            return false;
+
+        if (o instanceof Theme) {
+            Theme other = (Theme) o;
+
+            return  this.id.equals(other.id)        &&
+                    this.title.equals(other.title)  &&
+                    this.photo.equals(other.photo)  &&
+                    this.state.equals(other.state)  &&
+                    this.date.equals(other.date)    &&
+                    this.winner == other.winner;
+
+        }
+
+        return false;
+    }
 }

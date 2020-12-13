@@ -7,6 +7,7 @@ CREATE TABLE post (
     label VARCHAR(24),
     theme int UNSIGNED NOT NULL,
     photo_url TEXT NOT NULL,
+    delete_url TEXT NOT NULL,
 
     PRIMARY KEY (id)
 )

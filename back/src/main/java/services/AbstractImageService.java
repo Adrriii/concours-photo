@@ -2,7 +2,9 @@ package services;
 
 import java.io.InputStream;
 
+import model.Image;
+
 public interface AbstractImageService {
-    String postImage(InputStream imageData) throws Exception;
-    String postImage(String imageUrl) throws Exception;
+    Image postImage(InputStream imageData) throws Exception;
+    Image postImage(String imageUrl) throws Exception;
 }

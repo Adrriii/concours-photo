@@ -1,10 +1,8 @@
 package services.implementation.imgur;
 
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
 import services.AbstractImageService;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

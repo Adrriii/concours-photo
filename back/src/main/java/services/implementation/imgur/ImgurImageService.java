@@ -15,16 +15,8 @@ import model.Image;
 public class ImgurImageService implements AbstractImageService {
 
     @Override
-    public Image postImage(InputStream imageData) throws Exception {
-
-        //System.out.println(HttpImgur.postItem("upload", imageData).toString());
-
-        return new Image();
-    }
-
-    @Override
-    public Image postImage(String imageUrl) throws Exception {
-        List<NameValuePair> params = Arrays.asList(new BasicNameValuePair("image", imageUrl));
+    public Image postImage(String image) throws Exception {
+        List<NameValuePair> params = Arrays.asList(new BasicNameValuePair("image", image));
         
         JSONObject response = HttpImgur.post("image", params);
 

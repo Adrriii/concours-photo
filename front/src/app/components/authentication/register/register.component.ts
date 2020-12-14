@@ -56,18 +56,5 @@ export class RegisterComponent implements OnInit {
                 console.log('Error in log : ' + error);
             }
         );
-
-        // this.loading = true;
-        // this.registerService.register(this.form.value)
-        //     .pipe(first())
-        //     .subscribe(
-        //         data => {
-        //             this.router.navigate(['../login'], { relativeTo: this.route });
-        //         },
-        //         error => {
-        //             this.alertService.error(error);
-        //             this.loading = false;
-        //         });
     }
-
 }

@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
+import { FeedComponent } from './components/feed/feed.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AuthService } from './services/auth.service';
     LoginComponent,
     HomeComponent,
     RegisterComponent,
-    HeaderComponent
+    HeaderComponent,
+    FeedComponent
   ],
     imports: [
         BrowserModule,

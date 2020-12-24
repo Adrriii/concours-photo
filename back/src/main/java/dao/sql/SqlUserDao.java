@@ -1,7 +1,6 @@
 package dao.sql;
 
 import dao.UserDao;
-import model.Setting;
 import model.SettingName;
 import model.User;
 import model.UserSetting;

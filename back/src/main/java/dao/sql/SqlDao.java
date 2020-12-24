@@ -8,6 +8,27 @@ public abstract class SqlDao<T> {
 
     protected abstract T createObjectFromResult(ResultSet resultSet) throws SQLException;
 
+    protected Integer queryFirstInt(String statement, List<Object> opt) throws SQLException {
+        PreparedStatement preparedStatement = SqlDatabase.prepare(statement, opt);
+        String sql = preparedStatement.toString();
+        preparedStatement.execute();
+
+        ResultSet generatedKey = preparedStatement.getGeneratedKeys();
+
+        int id;
+        if (generatedKey.next()) {
+            id = generatedKey.getInt(1);
+            generatedKey.close();
+            preparedStatement.close();
+            return id;
+        }
+
+        generatedKey.close();
+        preparedStatement.close();
+
+        throw new SQLException("Could not get result : " + sql);
+    }
+
     protected T queryFirstObject(String statement, List<Object> opt) throws SQLException {
         PreparedStatement preparedStatement = SqlDatabase.prepare(statement, opt);
         String sql = preparedStatement.toString();
@@ -57,37 +78,23 @@ public abstract class SqlDao<T> {
     }
 
     protected int doInsert(String statement, List<Object> opt) throws SQLException {
-        PreparedStatement preparedStatement = SqlDatabase.prepare(statement, opt);
-        String sql = preparedStatement.toString();
-        preparedStatement.execute();
+        try {
+            return queryFirstInt(statement, opt);
+        } catch (SQLException SQLexception) {
 
-        ResultSet generatedKey = preparedStatement.getGeneratedKeys();
+            PreparedStatement preparedStatement = SqlDatabase.prepare("SELECT @id");
 
-        int id;
-        // Try to get the generated id
-        if (generatedKey.next()) {
-            id = generatedKey.getInt(1);
-            generatedKey.close();
-            preparedStatement.close();
-            return id;
+            ResultSet rs = preparedStatement.executeQuery();
+            int id;
+            if (rs.next()) {
+                id = rs.getInt(1);
+                rs.close();
+                preparedStatement.close();
+                return id;
+            }
+
+            throw SQLexception;
         }
-
-        // If not auto-incremented, still try to get last insert id
-        generatedKey.close();
-        preparedStatement.close();
-
-        preparedStatement = SqlDatabase.prepare("SELECT @id");
-
-        ResultSet rs = preparedStatement.executeQuery();
-        if (rs.next()) {
-            id = rs.getInt(1);
-            rs.close();
-            preparedStatement.close();
-            return id;
-        }
-
-
-        throw new SQLException("Could not insert : " + sql);
     }
 
     protected Integer getInteger(ResultSet set, String columnName) throws SQLException {

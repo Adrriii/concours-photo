@@ -64,4 +64,43 @@ public class SqlCommentDao extends SqlDao<Comment> implements CommentDao {
 
         return queryFirstObject(statement, opt);
     }
+
+    @Override
+    public Comment insert(Comment comment) throws Exception {
+        String statement = "INSERT INTO comment (author, post, parent) VALUES (?, ?, ?)";
+
+        List<Object> opt = Arrays.asList(
+                comment.author.id,
+                comment.post.id,
+                (comment.parent == null)? null : comment.parent.id
+        );
+
+        int commentId = doInsert(statement, opt);
+
+        return new Comment(commentId, comment.author, comment.post, comment.parent);
+    }
+
+    @Override
+    public Comment update(Comment comment) throws Exception {
+        String statement = "UPDATE comment SET author=?, post=?, parent=? WHERE id=?";
+
+        List<Object> opt = Arrays.asList(
+                comment.author.id,
+                comment.post.id,
+                (comment.parent == null)? null : comment.parent.id,
+                comment.id
+        );
+
+        exec(statement, opt);
+
+        return comment;
+    }
+
+    @Override
+    public void delete(int commentId) throws Exception {
+        String statement = "DELETE FROM comment WHERE id=?";
+        List<Object> opt = Arrays.asList(commentId);
+
+        exec(statement, opt);
+    }
 }

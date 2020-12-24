@@ -29,19 +29,19 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
             new Label(resultSet.getString("label")),
             theme,
             resultSet.getString("photo_url"),
-            resultSet.getString("photo_delete"),
+            resultSet.getString("delete_url"),
             resultSet.getInt("id")
         );
     }
 
     @Override
     public Post insert(Post post) throws SQLException {
-        String statement = "INSERT INTO post (title, author, label, theme photo_url, delete_url) VALUES (?, ?, ?, ?, ?, ?)";
+        String statement = "INSERT INTO post (title, author, label, theme, photo_url, delete_url) VALUES (?, ?, ?, ?, ?, ?)";
         List<Object> opt = Arrays.asList(
             post.title,
-            post.author,
-            post.label,
-            post.theme,
+            post.author.id,
+            post.label != null ? post.label.label : null,
+            post.theme.id,
             post.photo,
             post.photo_delete
         );

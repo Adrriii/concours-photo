@@ -1,9 +1,7 @@
 package dao.sql;
 
 import dao.ReactionDao;
-import model.Reaction;
-import model.Reactions;
-import model.ReactionName;
+import model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,11 +14,11 @@ public class SqlReactionDao extends SqlDao<Reaction> implements ReactionDao {
     protected Reaction createObjectFromResult(ResultSet resultSet) throws SQLException {
         return new Reaction(getInteger(resultSet, "user"), 
                             getInteger(resultSet, "post"),
-                            ReactionName.valueOf(resultSet.getString("reaction").toUpperCase()));
+                            ReactionName.valueOf(resultSet.getString("value").toUpperCase()));
     }
 
     @Override
-    public Reaction get(int user, int post) throws Exception {
+    public Reaction get(int user, int post) throws SQLException {
         String statement = "SELECT * FROM reaction WHERE user=? AND post=?";
         List<Object> opt = Arrays.asList(user, post);
 
@@ -28,7 +26,7 @@ public class SqlReactionDao extends SqlDao<Reaction> implements ReactionDao {
     }
 
     @Override
-    public Reaction getForUser(int user) throws Exception {
+    public Reaction getForUser(int user) throws SQLException {
         String statement = "SELECT * FROM reaction WHERE user=?";
         List<Object> opt = Arrays.asList(user);
 
@@ -36,7 +34,7 @@ public class SqlReactionDao extends SqlDao<Reaction> implements ReactionDao {
     }
 
     @Override
-    public Reaction getForPost(int post) throws Exception {
+    public Reaction getForPost(int post) throws SQLException {
         String statement = "SELECT * FROM reaction WHERE post=?";
         List<Object> opt = Arrays.asList(post);
 
@@ -44,11 +42,27 @@ public class SqlReactionDao extends SqlDao<Reaction> implements ReactionDao {
     }
 
     @Override
-    public Reactions getReactionsForPost(int post, ReactionName reaction) throws Exception {
-        String statement = "SELECT COUNT(reaction) FROM reaction WHERE post=? AND reaction=?";
+    public void react(User user, Post post, ReactionName reaction) throws SQLException {
+        String statement = "REPLACE INTO reaction (user, post, value) VALUES (?,?,?)";
+        List<Object> opt = Arrays.asList(user.id, post.id, reaction.toString().toLowerCase());
+
+        exec(statement, opt);
+    }
+
+    @Override
+    public void delete(User user, Post post) throws SQLException {
+        String statement = "DELETE FROM reaction WHERE user=? AND post=?";
+        List<Object> opt = Arrays.asList(user.id, post.id);
+
+        exec(statement, opt);
+    }
+
+    @Override
+    public Reactions getReactionsForPost(int post, ReactionName reaction) throws SQLException {
+        String statement = "SELECT COUNT(value) FROM reaction WHERE post=? AND value=?";
         String reactionName = reaction.toString().toLowerCase();
 
-        List<Object> opt = Arrays.asList(post, reactionName);
+        List<Object> opt = Arrays.asList(post, reactionName.toString().toLowerCase());
 
         return new Reactions(reactionName, queryFirstInt(statement, opt));
     }

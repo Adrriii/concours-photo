@@ -90,7 +90,9 @@ public abstract class SqlDao<T> {
                 id = rs.getInt(1);
                 rs.close();
                 preparedStatement.close();
-                return id;
+                if(id != 0) {
+                    return id;
+                }
             }
 
             throw SQLexception;

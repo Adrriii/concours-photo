@@ -17,8 +17,8 @@ public class SqlReactionsDao extends SqlDao<Reactions> implements ReactionsDao {
     }
 
     @Override
-    public List<Reactions> getAllReactionsForPost(int post) throws Exception {
-        String statement = "SELECT reaction,COUNT(reaction) as total FROM reaction WHERE post=? GROUP BY reaction";
+    public List<Reactions> getAllReactionsForPost(int post) throws SQLException {
+        String statement = "SELECT value as reaction,COUNT(value) as total FROM reaction WHERE post=? GROUP BY reaction";
 
         List<Object> opt = Arrays.asList(post);
 

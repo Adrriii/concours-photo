@@ -11,3 +11,4 @@ VALUES
     ("bio",""),
     ("victories","0"),
     ("points","0");
+

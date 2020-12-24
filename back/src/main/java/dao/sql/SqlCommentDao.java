@@ -22,10 +22,11 @@ public class SqlCommentDao extends SqlDao<Comment> implements CommentDao {
         Comment parent = (parentId == null)? null : getById(parentId);
 
         return new Comment(
-                resultSet.getInt("id"),
                 author,
                 post,
-                parent
+                parent,
+                resultSet.getString("content"),
+                resultSet.getInt("id")
         );
     }
 
@@ -67,27 +68,29 @@ public class SqlCommentDao extends SqlDao<Comment> implements CommentDao {
 
     @Override
     public Comment insert(Comment comment) throws Exception {
-        String statement = "INSERT INTO comment (author, post, parent) VALUES (?, ?, ?)";
-
-        List<Object> opt = Arrays.asList(
-                comment.author.id,
-                comment.post.id,
-                (comment.parent == null)? null : comment.parent.id
-        );
-
-        int commentId = doInsert(statement, opt);
-
-        return new Comment(commentId, comment.author, comment.post, comment.parent);
-    }
-
-    @Override
-    public Comment update(Comment comment) throws Exception {
-        String statement = "UPDATE comment SET author=?, post=?, parent=? WHERE id=?";
+        String statement = "INSERT INTO comment (author, post, parent, content) VALUES (?, ?, ?, ?)";
 
         List<Object> opt = Arrays.asList(
                 comment.author.id,
                 comment.post.id,
                 (comment.parent == null)? null : comment.parent.id,
+                comment.content
+        );
+
+        int commentId = doInsert(statement, opt);
+
+        return new Comment(comment.author, comment.post, comment.parent, comment.content, commentId);
+    }
+
+    @Override
+    public Comment update(Comment comment) throws Exception {
+        String statement = "UPDATE comment SET author=?, post=?, parent=?, content=? WHERE id=?";
+
+        List<Object> opt = Arrays.asList(
+                comment.author.id,
+                comment.post.id,
+                (comment.parent == null)? null : comment.parent.id,
+                comment.content,
                 comment.id
         );
 

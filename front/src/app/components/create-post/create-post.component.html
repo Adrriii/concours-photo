@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>{{"Create a new post"}}</h2>
+
+<mat-dialog-content [formGroup]="form">
+
+    <mat-form-field>
+        <input matInput
+               placeholder="Title of the photo"
+               formControlName="title">
+    </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button class="mat-raised-button"(click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+</mat-dialog-actions>

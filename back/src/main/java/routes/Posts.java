@@ -32,13 +32,21 @@ public class Posts {
     @RolesAllowed("user")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addPost(Post post) {
-        return Response.ok().build();
+        try {
+            return postService.addOne(post)
+                    .map(newPost -> Response.ok(newPost).build())
+                    .orElse(Response.status(400).entity("Bad post format").build());
+        } catch (Exception e) {
+            return Response.status(500).entity(e.getMessage()).build();
+        }
     }
 
     @GET
     @Path("{id}")
     public Response getById(@PathParam("id") int id) {
-        return Response.ok().build();
+        return postService.getById(id)
+                .map(post -> Response.ok(post).build())
+                .orElse(Response.status(400).entity("Post not found").build());
     }
 
     @PUT

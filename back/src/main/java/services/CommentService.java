@@ -22,6 +22,10 @@ public class CommentService {
 
         try {
             parent = commentDao.getById(parentId);
+
+            if (comment.parent != null && comment.parent.id == parent.id)
+                throw new Exception();
+
         } catch (Exception e) {
             return Optional.empty();
         }

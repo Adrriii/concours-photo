@@ -1,7 +1,6 @@
 package dao.sql;
 
 import dao.UserDao;
-import model.Setting;
 import model.SettingName;
 import model.User;
 import model.UserSetting;
@@ -47,7 +46,7 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
 
         int userId = doInsert(statement, opt);
         new SqlUserSettingDao().insertDefaultsForUser(userId);
-
+        
         return new User(user.username, new SqlUserSettingDao().getAllForUser(userId), userId);
     }
 

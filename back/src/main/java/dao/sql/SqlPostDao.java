@@ -76,11 +76,4 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
 
         exec(statement, opt);
     }
-
-    @Override
-    public void delete(Post post) throws SQLException {
-        String statement = "DELETE from post WHERE id=?";
-        List<Object> opt = Arrays.asList(post.id);
-        exec(statement, opt);
-    }
 }

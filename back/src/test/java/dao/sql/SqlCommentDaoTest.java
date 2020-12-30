@@ -58,4 +58,25 @@ class SqlCommentDaoTest {
         assertEquals(newComment.content, inserted.content);
     }
 
+    @Test
+    public void TestUpdate() throws Exception {
+        Comment comment = new Comment(
+                user, post, null, "Super ce test pour update !"
+        );
+
+        comment = dao.insert(comment);
+        comment = new Comment(
+                user, post, null, "new content !", comment.id
+        );
+
+        Comment updated = dao.update(comment);
+
+        assertEquals(comment.id, updated.id);
+        assertEquals(comment.parent, updated.parent);
+        assertEquals(comment.author, updated.author);
+        assertEquals(comment.post, updated.post);
+        assertEquals(comment.content, updated.content);
+    }
+
+
 }

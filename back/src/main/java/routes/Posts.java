@@ -1,5 +1,6 @@
 package routes;
 
+import model.Comment;
 import model.Post;
 import model.User;
 import services.AuthenticationService;
@@ -13,6 +14,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,7 +25,9 @@ public class Posts {
     @Inject PostService postService;
     @Inject ReactionService reactionService;
     @Inject AuthenticationService authenticationService;
-    
+
+    @Context private ResourceContext resourceContext;
+
     @POST
     @RolesAllowed("user")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -76,5 +80,31 @@ public class Posts {
         }
     }
 
-    
+    @GET
+    @Path("{id}/comments")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllComments(@PathParam("id") int id) {
+        return resourceContext.getResource(Comments.class).getAllCommentsForPost(id);
+    }
+
+    @POST
+    @Path("{id}/comments")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addComment(@PathParam("id") int id, Comment comment) {
+        return resourceContext.getResource(Comments.class).replyToPost(id, comment);
+    }
+
+    @PUT
+    @Path("{id}/comments/{commentId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modifyComment(@PathParam("id") int id, Comment comment) {
+        return resourceContext.getResource(Comments.class).modify(id, comment);
+    }
+
+    @DELETE
+    @Path("{id}/comments/{commentId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modifyComment(@PathParam("id") int id) {
+        return resourceContext.getResource(Comments.class).delete(id);
+    }
 }

@@ -2,6 +2,8 @@ package dao;
 
 import model.User;
 
+import java.util.Optional;
+
 public interface UserDao {
     User getById(int id) throws Exception;
     User getByUsername(String username) throws Exception;

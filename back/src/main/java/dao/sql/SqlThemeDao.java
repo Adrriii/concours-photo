@@ -6,8 +6,10 @@ import model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
     @Override
@@ -27,11 +29,56 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
     }
 
     @Override
+    public List<Theme> getAll() throws SQLException {
+        String statement = "SELECT * FROM theme";
+        return queryAllObjects(statement);
+    }
+
+    @Override
+    public Optional<Theme> getCurrent() throws SQLException {
+        String statement = "SELECT * FROM theme WHERE state='current'";
+        List<Theme> themes = queryAllObjects(statement);
+
+        if (themes.size() == 0)
+            return Optional.empty();
+
+        return Optional.of(themes.get(0));
+    }
+
+    @Override
+    public List<Theme> getProposals() throws Exception {
+        String statement = "SELECT * FROM theme WHERE state='proposal'";
+        return queryAllObjects(statement);
+    }
+
+    @Override
     public Theme getById(int id) throws SQLException {
         String statement = "SELECT * from theme WHERE id=?";
         List<Object> opt = Arrays.asList(id);
 
         return queryFirstObject(statement, opt);
+    }
+
+    @Override
+    public Optional<Theme> getCurrentTheme(User user) throws SQLException {
+        String statement = "SELECT theme FROM user WHERE id=?";
+        List<Object> opt = Arrays.asList(user.id);
+
+        List<Theme> themes = queryAllObjects(statement, opt);
+
+        if (themes.size() == 0)
+            return Optional.empty();
+
+        return Optional.of(themes.get(0));
+
+    }
+
+    @Override
+    public void setUserVote(User user, Integer themeId) throws SQLException {
+        String statement = "UPDATE user SET theme=? WHERE id=?";
+        List<Object> opt = Arrays.asList(themeId, user.id);
+
+        exec(statement, opt);
     }
 
     @Override

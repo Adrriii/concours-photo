@@ -8,6 +8,7 @@ import model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 
 public class SqlPostDao extends SqlDao<Post> implements PostDao {
@@ -46,5 +47,12 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
     @Override
     public Post getById(int integer) {
         return null;
+    }
+
+    @Override
+    public void delete(Post post) throws SQLException {
+        String statement = "DELETE from post WHERE id=?";
+        List<Object> opt = Arrays.asList(post.id);
+        exec(statement, opt);
     }
 }

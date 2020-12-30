@@ -1,10 +1,12 @@
 package dao.sql;
 
 import model.*;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +16,11 @@ class SqlCommentDaoTest {
     static User user;
     static Post post;
 
+    @AfterAll
+    public static void afterAll() throws SQLException {
+        new SqlUserDao().delete(user);
+        new SqlPostDao().delete(post);
+    }
 
     @BeforeAll
     public static void beforeAll() throws Exception {
@@ -39,13 +46,20 @@ class SqlCommentDaoTest {
                 "nop",
                 "delete"
         );
+        post = new SqlPostDao().insert(post);
     }
 
     @Test
     public void TestInsert() {
+        System.out.println("Post is " + post);
+        System.out.println("User is " + user);
+
         Comment newComment = new Comment(
             user, post, null, "Super ce test !"
         );
+
+        System.out.println("Comment post is -> " + newComment.post);
+        System.out.println("Comment user is -> " + newComment.author);
 
         Comment inserted = assertDoesNotThrow(() -> dao.insert(newComment));
 

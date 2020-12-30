@@ -1,10 +1,7 @@
 package dao.sql;
 
 import dao.PostDao;
-import model.Label;
-import model.Post;
-import model.Theme;
-import model.User;
+import model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,16 +18,19 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
         int themeId = resultSet.getInt("theme");
         Theme theme = new SqlThemeDao().getById(themeId);
 
+        int postId = resultSet.getInt("id");
+        List<Reactions> reactions = new SqlReactionsDao().getAllReactionsForPost(postId);
+
         return new Post(
             resultSet.getString("title"),
             null,
-            null,
+            reactions,
             author,
             new Label(resultSet.getString("label")),
             theme,
             resultSet.getString("photo_url"),
             resultSet.getString("delete_url"),
-            resultSet.getInt("id")
+            postId
         );
     }
 

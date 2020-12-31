@@ -2,6 +2,7 @@ package dao;
 
 import model.Post;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface PostDao {

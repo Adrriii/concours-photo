@@ -9,6 +9,7 @@ public class ApplicationBinder extends AbstractBinder {
     protected void configure() {
         bind(SqlUserDao.class).to(UserDao.class);
         bind(SqlPostDao.class).to(PostDao.class);
+        bind(SqlThemeDao.class).to(ThemeDao.class);
         bind(SqlUserSettingDao.class).to(UserSettingDao.class);
         bind(SqlSettingDao.class).to(SettingDao.class);
         bind(ImgurImageService.class).to(AbstractImageService.class);
@@ -18,5 +19,7 @@ public class ApplicationBinder extends AbstractBinder {
         bindAsContract(AuthenticationService.class);
         bindAsContract(PostService.class);
         bindAsContract(ReactionService.class);
+        bindAsContract(CommentService.class);
+        bindAsContract(ThemeService.class);
     }
 }

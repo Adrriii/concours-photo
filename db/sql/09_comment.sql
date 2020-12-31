@@ -6,6 +6,7 @@ CREATE TABLE comment (
     author int UNSIGNED NOT NULL,
     post int UNSIGNED NOT NULL,
     parent int UNSIGNED,
+    content TEXT NOT NULL,
 
     PRIMARY KEY (id)
 )

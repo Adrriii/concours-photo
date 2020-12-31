@@ -1,5 +1,6 @@
 package routes;
 
+import model.Comment;
 import model.Post;
 import model.User;
 import services.AuthenticationService;
@@ -13,6 +14,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -23,18 +25,28 @@ public class Posts {
     @Inject PostService postService;
     @Inject ReactionService reactionService;
     @Inject AuthenticationService authenticationService;
-    
+
+    @Context private ResourceContext resourceContext;
+
     @POST
     @RolesAllowed("user")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addPost(Post post) {
-        return Response.ok().build();
+        try {
+            return postService.addOne(post)
+                    .map(newPost -> Response.ok(newPost).build())
+                    .orElse(Response.status(400).entity("Bad post format").build());
+        } catch (Exception e) {
+            return Response.status(500).entity(e.getMessage()).build();
+        }
     }
 
     @GET
     @Path("{id}")
     public Response getById(@PathParam("id") int id) {
-        return Response.ok().build();
+        return postService.getById(id)
+                .map(post -> Response.ok(post).build())
+                .orElse(Response.status(400).entity("Post not found").build());
     }
 
     @PUT
@@ -76,5 +88,31 @@ public class Posts {
         }
     }
 
-    
+    @GET
+    @Path("{id}/comments")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllComments(@PathParam("id") int id) {
+        return resourceContext.getResource(Comments.class).getAllCommentsForPost(id);
+    }
+
+    @POST
+    @Path("{id}/comments")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addComment(@PathParam("id") int id, Comment comment) {
+        return resourceContext.getResource(Comments.class).replyToPost(id, comment);
+    }
+
+    @PUT
+    @Path("{id}/comments/{commentId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modifyComment(@PathParam("id") int id, Comment comment) {
+        return resourceContext.getResource(Comments.class).modify(id, comment);
+    }
+
+    @DELETE
+    @Path("{id}/comments/{commentId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modifyComment(@PathParam("id") int id) {
+        return resourceContext.getResource(Comments.class).delete(id);
+    }
 }

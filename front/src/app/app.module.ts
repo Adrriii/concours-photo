@@ -19,6 +19,8 @@ import { CreatePostComponent } from './components/create-post/create-post.compon
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgxFileDropModule } from 'ngx-file-drop';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         ReactiveFormsModule,
         BrowserAnimationsModule,
         MatDialogModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        NgxFileDropModule,
+        ToastrModule.forRoot()
     ],
   providers: [
     AuthService,

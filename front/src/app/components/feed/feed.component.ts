@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {CreatePostComponent} from '../create-post/create-post.component';
+import {CreatePostComponent} from './create-post/create-post.component';
 
 @Component({
   selector: 'app-feed',

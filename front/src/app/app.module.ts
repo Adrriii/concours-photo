@@ -9,11 +9,18 @@ import { LoginComponent } from './components/authentication/login/login.componen
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/authentication/register/register.component';
 import { HeaderComponent } from './components/header/header.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
+import { FeedComponent } from './components/feed/feed.component';
+import { CreatePostComponent } from './components/create-post/create-post.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgxFileDropModule } from 'ngx-file-drop';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -21,7 +28,9 @@ import { AuthService } from './services/auth.service';
     LoginComponent,
     HomeComponent,
     RegisterComponent,
-    HeaderComponent
+    HeaderComponent,
+    FeedComponent,
+    CreatePostComponent,
   ],
     imports: [
         BrowserModule,
@@ -30,6 +39,11 @@ import { AuthService } from './services/auth.service';
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        NgxFileDropModule,
+        ToastrModule.forRoot()
     ],
   providers: [
     AuthService,

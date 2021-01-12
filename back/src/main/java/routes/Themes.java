@@ -32,10 +32,12 @@ public class Themes {
     @POST
     @RolesAllowed("user")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addTheme(Theme theme) {
-        return themeService.proposeTheme(theme)
+    public Response addTheme(@Context HttpServletRequest req, Theme theme) {
+        return authenticationService.getCurrentUser(req).map(currentUser ->
+            themeService.proposeTheme(theme, currentUser)
                 .map(newTheme -> Response.ok(newTheme).build())
-                .orElse(Response.status(400).entity("Bad theme format or theme already exist").build());
+                .orElse(Response.status(400).entity("Bad theme format or theme already exists").build())
+        ).orElse(Response.status(400).entity("User not logged in!").build());
     }
 
     @GET
@@ -76,7 +78,7 @@ public class Themes {
                     } catch (Exception e) {
                         return Response.status(500).entity(e.getMessage()).build();
                     }
-                }).orElse(Response.status(400).entity("User not logged !").build());
+                }).orElse(Response.status(400).entity("User not logged in!").build());
     }
 
     @POST
@@ -91,7 +93,7 @@ public class Themes {
             }
 
             return Response.ok().build();
-        }).orElse(Response.status(400).entity("Bad proposal id or user not logged").build());
+        }).orElse(Response.status(400).entity("Bad proposal id or user not logged in.").build());
     }
 
     @DELETE
@@ -106,6 +108,6 @@ public class Themes {
             }
 
             return Response.ok().build();
-        }).orElse(Response.status(400).entity("User not logged.").build());
+        }).orElse(Response.status(400).entity("User not logged in!").build());
     }
 }

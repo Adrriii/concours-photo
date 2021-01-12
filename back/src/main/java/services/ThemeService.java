@@ -32,8 +32,12 @@ public class ThemeService {
         }
     }
 
-    public Optional<Theme> proposeTheme(Theme proposed) {
+    public Optional<Theme> proposeTheme(Theme proposed, User currentUser) {
         try {
+            // Cannot propose if already proposed a theme
+            if(themeDao.getUserProposal(currentUser).isPresent())
+                return Optional.empty();
+
             Theme theme = new Theme(proposed.title, 
                                         proposed.photo,
                                         "proposal", 
@@ -55,7 +59,7 @@ public class ThemeService {
     }
 
     public Optional<Theme> getCurrentUserVote(User user) throws Exception {
-        return themeDao.getCurrentTheme(user);
+        return themeDao.getUserThemeVote(user);
     }
 
     public void setUserVote(User user, Integer themeId) throws Exception {

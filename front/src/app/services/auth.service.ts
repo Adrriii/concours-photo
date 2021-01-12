@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { sha256 } from 'js-sha256';
 import { User } from '../models/User.model';
+import {environment} from '../../environments/environment.prod';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthService {
         return new Promise<void>(
             (resolve, reject) => {
                 this.httpClient
-                    .post('http://localhost:9000/api/v1/register',
+                    .post(environment.apiBaseUrl + 'register',
                         {
                             username,
                             passwordHash : sha256(password)
@@ -40,7 +41,7 @@ export class AuthService {
         return new Promise<void>(
             (resolve, reject) => {
                 this.httpClient
-                    .post('http://localhost:9000/api/v1/login',
+                    .post(environment.apiBaseUrl + 'login',
                         {
                             username,
                             passwordHash : sha256(password)
@@ -64,7 +65,7 @@ export class AuthService {
         return new Promise<void>(
             (resolve, reject) => {
                 this.httpClient
-                    .get<any[]>('http://localhost:9000/api/v1/logout')
+                    .get<any[]>(environment.apiBaseUrl + 'logout')
                     .subscribe(
                         (Response) => {
                             console.log('user logged out successfully');

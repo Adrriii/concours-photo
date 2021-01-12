@@ -43,7 +43,7 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
             post.label != null ? post.label.label : null,
             post.theme.id,
             post.photo,
-            post.photo_delete
+            post.photoDelete
         );
 
         int insertedId = doInsert(statement, opt);

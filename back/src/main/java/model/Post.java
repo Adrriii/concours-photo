@@ -11,9 +11,9 @@ public class Post {
     public final Label label;
     public final Theme theme;
     public final String photo;
-    public final String photo_delete;
+    public final String photoDelete;
 
-    public Post(String title, String reacted, List<Reactions> reactions, User author, Label label, Theme theme, String photo, String photo_delete, Integer id) {
+    public Post(String title, String reacted, List<Reactions> reactions, User author, Label label, Theme theme, String photo, String photoDelete, Integer id) {
         this.id = id;
         this.title = title;
         this.reacted = reacted;
@@ -22,10 +22,10 @@ public class Post {
         this.label = label;
         this.theme = theme;
         this.photo = photo;
-        this.photo_delete = photo_delete;
+        this.photoDelete = photoDelete;
     }
 
-    public Post(String title, String reacted, List<Reactions> reactions, User author, Label label, Theme theme, String photo, String photo_delete) {
-        this(title, reacted, reactions, author, label, theme, photo, photo_delete, null);
+    public Post(String title, String reacted, List<Reactions> reactions, User author, Label label, Theme theme, String photo, String photoDelete) {
+        this(title, reacted, reactions, author, label, theme, photo, photoDelete, null);
     }
 }

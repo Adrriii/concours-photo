@@ -24,7 +24,8 @@ public class PostService {
         } catch (Exception e) {
             return Optional.empty();
         }
-
-        return Optional.of(post);
+        System.out.println("[PostService - getById] -> " + post);
+        
+        return Optional.ofNullable(post);
     }
 }

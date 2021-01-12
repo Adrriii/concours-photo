@@ -86,7 +86,7 @@ export class CreatePostComponent implements OnInit {
                     .subscribe(data => {
                         // Sanitized logo returned from backend
                     });
-                this.toastr.success('You posted your picture !.');
+                this.toastr.success('You posted your picture !');
             });
         }
 

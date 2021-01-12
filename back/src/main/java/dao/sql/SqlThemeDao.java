@@ -15,8 +15,10 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
     @Override
     protected Theme createObjectFromResult(ResultSet resultSet) throws SQLException {
         Integer winnerId = getInteger(resultSet, "winner");
+        Integer authorId = getInteger(resultSet, "author");
 
         User winner = (winnerId == null)? null : new SqlUserDao().getById(winnerId);
+        User author = (authorId == null)? null : new SqlUserDao().getById(authorId);
 
         return new Theme(
                 resultSet.getInt("id"),
@@ -24,7 +26,8 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
                 resultSet.getString("photo_url"),
                 resultSet.getString("state"),
                 resultSet.getString("date"),
-                winner
+                winner,
+                author
         );
     }
 
@@ -37,18 +40,22 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
     @Override
     public Optional<Theme> getCurrent() throws SQLException {
         String statement = "SELECT * FROM theme WHERE state='current'";
-        List<Theme> themes = queryAllObjects(statement);
 
-        if (themes.size() == 0)
-            return Optional.empty();
-
-        return Optional.of(themes.get(0));
+        return queryFirstOptional(statement);
     }
 
     @Override
-    public List<Theme> getProposals() throws Exception {
+    public List<Theme> getProposals() throws SQLException {
         String statement = "SELECT * FROM theme WHERE state='proposal'";
         return queryAllObjects(statement);
+    }
+
+    @Override
+    public Optional<Theme> getUserProposal(User user) throws SQLException {
+        String statement = "SELECT * FROM theme WHERE state='proposal' AND author = ?";
+        List<Object> opt = Arrays.asList(user.id);
+
+        return queryFirstOptional(statement, opt);
     }
 
     @Override
@@ -60,17 +67,11 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
     }
 
     @Override
-    public Optional<Theme> getCurrentTheme(User user) throws SQLException {
+    public Optional<Theme> getUserThemeVote(User user) throws SQLException {
         String statement = "SELECT theme FROM user WHERE id=?";
         List<Object> opt = Arrays.asList(user.id);
 
-        List<Theme> themes = queryAllObjects(statement, opt);
-
-        if (themes.size() == 0)
-            return Optional.empty();
-
-        return Optional.of(themes.get(0));
-
+        return queryFirstOptional(statement, opt);
     }
 
     @Override

@@ -11,3 +11,12 @@ VALUES
     ("bio",""),
     ("victories","0"),
     ("points","0");
+
+
+-- Insert default necessary values
+
+INSERT INTO label (label) VALUES ("");
+
+INSERT INTO theme (title, state, photo_url, winner, date)
+VALUES
+    ("Current theme", "active", "url", null, "2020-12-24");

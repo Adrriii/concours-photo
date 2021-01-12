@@ -2,6 +2,7 @@ package dao.sql;
 
 import java.sql.*;
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
 
 public abstract class SqlDao<T> {
@@ -67,6 +68,19 @@ public abstract class SqlDao<T> {
 
     protected List<T> queryAllObjects(String statement) throws SQLException {
         return queryAllObjects(statement, null);
+    }
+
+    protected Optional<T> queryFirstOptional(String statement, List<Object> opt) throws SQLException {
+        List<T> results = queryAllObjects(statement, opt);
+
+        if (results.size() == 0)
+            return Optional.empty();
+
+        return Optional.of(results.get(0));
+    }
+
+    protected Optional<T> queryFirstOptional(String statement) throws SQLException {
+        return queryFirstOptional(statement, null); 
     }
 
     protected void exec(String statement, List<Object> items) throws SQLException {

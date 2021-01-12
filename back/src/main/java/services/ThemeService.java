@@ -32,6 +32,20 @@ public class ThemeService {
         }
     }
 
+    public Optional<Theme> proposeTheme(Theme proposed) {
+        try {
+            Theme theme = new Theme(proposed.title, 
+                                        proposed.photo,
+                                        "proposal", 
+                                        proposed.date, 
+                                        proposed.winner);
+
+            return Optional.of(themeDao.insert(theme));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
     public Optional<Theme> getCurrent() throws Exception {
         return themeDao.getCurrent();
     }

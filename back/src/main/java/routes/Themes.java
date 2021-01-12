@@ -33,7 +33,7 @@ public class Themes {
     @RolesAllowed("user")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addTheme(Theme theme) {
-        return themeService.addOne(theme)
+        return themeService.proposeTheme(theme)
                 .map(newTheme -> Response.ok(newTheme).build())
                 .orElse(Response.status(400).entity("Bad theme format or theme already exist").build());
     }

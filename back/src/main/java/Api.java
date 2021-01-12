@@ -1,6 +1,7 @@
 import filters.AuthRequestFilter;
 import filters.CorsFilter;
 import org.glassfish.jersey.logging.LoggingFeature;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
@@ -19,5 +20,7 @@ public class Api extends ResourceConfig {
         register(new ApplicationBinder());
         register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.INFO,
                 LoggingFeature.Verbosity.PAYLOAD_ANY, 10000));
+
+        packages("com.tf.core").register(MultiPartFeature.class);
     }
 }

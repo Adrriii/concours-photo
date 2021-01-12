@@ -17,4 +17,8 @@ export class PostsService {
     getById(id: number): Observable<Post> {
         return this.httpClient.get<Post>(environment.apiBaseUrl + `posts/${id}`);
     }
+
+    sendPost(data: FormData): Observable<Post> {
+        return this.httpClient.post<Post>(environment.apiBaseUrl + 'posts/', data);
+    }
 }

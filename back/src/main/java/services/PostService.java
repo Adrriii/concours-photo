@@ -13,7 +13,7 @@ public class PostService {
         if (post.id != null)
             return Optional.empty();
 
-        return Optional.of(postDao.insert(post));
+        return Optional.ofNullable(postDao.insert(post));
     }
 
     public Optional<Post> getById(int id) {
@@ -24,8 +24,7 @@ public class PostService {
         } catch (Exception e) {
             return Optional.empty();
         }
-        System.out.println("[PostService - getById] -> " + post);
-        
+
         return Optional.ofNullable(post);
     }
 }

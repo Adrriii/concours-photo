@@ -3,10 +3,13 @@ package routes;
 import model.Comment;
 import model.Post;
 import model.User;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import services.AuthenticationService;
 import services.PostService;
 import services.ReactionService;
 
+import java.io.InputStream;
 import java.util.Optional;
 
 import javax.annotation.security.PermitAll;
@@ -28,10 +31,18 @@ public class Posts {
 
     @Context private ResourceContext resourceContext;
 
+
     @POST
-    @RolesAllowed("user")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response addPost(Post post) {
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addPost(
+            @FormDataParam("file") InputStream uploadedInputStream,
+            @FormDataParam("file") FormDataContentDisposition fileDetails,
+            @FormDataParam("post") Post post
+    ) {
+        System.out.println("[Posts - Route] -> Receive request...");
+        System.out.println("Filename is -> " + fileDetails.getFileName());
+
         try {
             return postService.addOne(post)
                     .map(newPost -> Response.ok(newPost).build())
@@ -39,6 +50,21 @@ public class Posts {
         } catch (Exception e) {
             return Response.status(500).entity(e.getMessage()).build();
         }
+
+/*
+        String uploadedFileLocation = "/Users/temp/" + fileDetails.getFileName();
+
+        // save it
+        writeToFile(uploadedInputStream, uploadedFileLocation);
+
+        String output = "File uploaded to : " + uploadedFileLocation;
+
+        ResponseBean responseBean = new ResponseBean();
+
+        responseBean.setCode(StatusConstants.SUCCESS_CODE);
+        responseBean.setMessage(fileDetails.getFileName());
+        responseBean.setResult(null);
+        return responseBean;*/
     }
 
     @GET

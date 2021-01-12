@@ -11,6 +11,10 @@
 
 <!--</mat-dialog-content>-->
     <div class="center">
+        <input class="effect-button" type="text" placeholder="Title">
+        <span class="focus-border">
+                <i></i>
+              </span>
         <ngx-file-drop dropZoneLabel="Drop files here"
                        (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
             <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">

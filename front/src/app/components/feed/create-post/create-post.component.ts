@@ -34,29 +34,28 @@ export class CreatePostComponent implements OnInit {
             this.files.pop();
         }
 
-        for (const droppedFile of files) {
-            // Is it a file ?
-            if (droppedFile.fileEntry.isFile && this.isFileAllowed(droppedFile.fileEntry.name)) {
-                this.toastr.success('File successfully dropped.');
+        const droppedFile = files[0];
+        // Is it a file ?
+        if (droppedFile.fileEntry.isFile && this.isFileAllowed(droppedFile.fileEntry.name)) {
+            this.toastr.success('File successfully dropped.');
 
-                this.currentFile = droppedFile;
+            this.currentFile = droppedFile;
 
-                const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-                const reader = new FileReader();
-                fileEntry.file((file: File) => {
-                    reader.readAsDataURL(file);
-                    reader.onload = () => {
-                        this.imagePreview = reader.result;
-                    };
+            const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+            const reader = new FileReader();
+            fileEntry.file((file: File) => {
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    this.imagePreview = reader.result;
+                };
 
-                    // Access the real file
-                    console.log(droppedFile.relativePath, file);
-                });
-            } else {
-                this.toastr.error('Only files in ".jpg", ".jpeg", ".png" format are accepted and directories are not allowed.');
-                this.imagePreview = null;
-                this.files.pop();
-            }
+                // Access the real file
+                console.log(droppedFile.relativePath, file);
+            });
+        } else {
+            this.toastr.error('Only files in ".jpg", ".jpeg", ".png" format are accepted and directories are not allowed.');
+            this.imagePreview = null;
+            this.files.pop();
         }
     }
 

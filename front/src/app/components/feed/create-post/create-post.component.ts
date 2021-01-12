@@ -4,6 +4,9 @@ import {MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatDialogConfig} from '@angula
 import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
 import { ToastrService } from 'ngx-toastr';
 
+// TODO à delete quand il y aura le service
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-create-post',
   templateUrl: './create-post.component.html',
@@ -11,10 +14,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CreatePostComponent implements OnInit {
     form: FormGroup;
-    public files: NgxFileDropEntry[] = [];
+    files: NgxFileDropEntry[] = [];
     imagePreview: string | ArrayBuffer;
+    currentFile: NgxFileDropEntry;
 
     constructor(
+        private httpClient: HttpClient, // TODO à delete quand il y aura le service
         private formBuilder: FormBuilder,
         private dialogRef: MatDialogRef<CreatePostComponent>,
         @Inject(MAT_DIALOG_DATA) data,
@@ -25,7 +30,7 @@ export class CreatePostComponent implements OnInit {
         this.files = files;
 
         // Only one file required on create post
-        if(this.files.length > 1){
+        if (this.files.length > 1){
             this.files.pop();
         }
 
@@ -33,6 +38,8 @@ export class CreatePostComponent implements OnInit {
             // Is it a file ?
             if (droppedFile.fileEntry.isFile && this.isFileAllowed(droppedFile.fileEntry.name)) {
                 this.toastr.success('File successfully dropped.');
+
+                this.currentFile = droppedFile;
 
                 const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
                 const reader = new FileReader();
@@ -42,33 +49,13 @@ export class CreatePostComponent implements OnInit {
                         this.imagePreview = reader.result;
                     };
 
-                    // Here you can access the real file
+                    // Access the real file
                     console.log(droppedFile.relativePath, file);
-
-                    /**
-                     // You could upload it like this:
-                     const formData = new FormData()
-                     formData.append('logo', file, relativePath)
-
-                     // Headers
-                     const headers = new HttpHeaders({
-            'security-token': 'mytoken'
-          })
-
-                     this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-                     .subscribe(data => {
-            // Sanitized logo returned from backend
-          })
-                     **/
-
                 });
             } else {
                 this.toastr.error('Only files in ".jpg", ".jpeg", ".png" format are accepted and directories are not allowed.');
                 this.imagePreview = null;
                 this.files.pop();
-                // It was a directory (empty directories are added, otherwise only files)
-                //const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-                //console.log(droppedFile.relativePath, fileEntry);
             }
         }
     }
@@ -88,6 +75,21 @@ export class CreatePostComponent implements OnInit {
     }
 
     save(): void {
+        if (this.files.length === 1) {
+            // TODO à REMPLACER quand il y aura le service
+            const fileEntry = this.currentFile.fileEntry as FileSystemFileEntry;
+            fileEntry.file((file: File) => {
+                const formData = new FormData();
+                formData.append('logo', file, this.currentFile.relativePath);
+
+                this.httpClient.post('http://localhost:9000/api/v1/posts', formData)
+                    .subscribe(data => {
+                        // Sanitized logo returned from backend
+                    });
+                this.toastr.success('You posted your picture !');
+            });
+        }
+
         this.dialogRef.close(this.form.value);
     }
 
@@ -100,7 +102,7 @@ export class CreatePostComponent implements OnInit {
         const allowedFiles = ['.jpg', '.jpeg', '.png'];
         const regex = /(?:\.([^.]+))?$/;
         const extension = regex.exec(fileName);
-        if (undefined !== extension && extension !== null) {
+        if (extension !== undefined && extension !== null) {
             for (const ext of allowedFiles) {
                 if (ext === extension[0].toLowerCase()) {
                     isFileAllowed = true;

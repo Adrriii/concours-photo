@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { FeedComponent } from './components/feed/feed.component';
-import { CreatePostComponent } from './components/create-post/create-post.component';
+import { CreatePostComponent } from './components/feed/create-post/create-post.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';

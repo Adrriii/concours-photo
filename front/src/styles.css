@@ -5,31 +5,6 @@ body{
     background: url("https://www.toptal.com/designers/subtlepatterns/patterns/geometry2.png");
 }
 
-h2 {
-    font-family: 'Damion', cursive;
-    font-weight: 400;
-    color: #4caf50;
-    font-size: 35px;
-    text-align: center;
-    position: relative;
-}
-h2:before {
-    position: absolute;
-    content: '';
-    width: 100%;
-    left: 0;
-    top: 22px;
-    background: #4caf50;
-    height: 1px;
-}
-h2 i {
-    font-style: normal;
-    background: #fff;
-    position: relative;
-    padding: 10px;
-}
-:focus{outline: none;}
-
 .ngx-file-drop__drop-zone {
     height: 100px;
     margin: auto;

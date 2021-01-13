@@ -14,7 +14,6 @@ import java.util.Optional;
 
 public class AuthenticationService {
     @Inject UserDao userDao;
-    @Inject UserSettingDao userSettingDao;
 
     public AuthenticationService() {}
 
@@ -54,14 +53,6 @@ public class AuthenticationService {
     public Optional<User> loginUser(String username, String passwordHash) {
         try {
             return Optional.of(userDao.getByLogin(username, hash(passwordHash)));
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-    }
-
-    public Optional<User> getCurrentUser(HttpServletRequest req) {
-        try {
-            return Optional.ofNullable((User) req.getSession(true).getAttribute("user"));
         } catch (Exception e) {
             return Optional.empty();
         }

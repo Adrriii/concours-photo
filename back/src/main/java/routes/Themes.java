@@ -1,22 +1,24 @@
 package routes;
 
+import filters.JWTTokenNeeded;
 import model.Theme;
 import services.AuthenticationService;
 import services.ThemeService;
+import services.UserService;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("themes")
-@PermitAll
 public class Themes {
-    @Inject AuthenticationService authenticationService;
+    @Inject UserService userService;
     @Inject ThemeService themeService;
 
     @GET
@@ -30,7 +32,6 @@ public class Themes {
     }
 
     @POST
-    @RolesAllowed("user")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addTheme(Theme theme) {
         return themeService.addOne(theme)
@@ -63,11 +64,11 @@ public class Themes {
     }
 
     @GET
-    @RolesAllowed("user")
     @Path("proposals/vote")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserVote(@Context HttpServletRequest req) {
-        return authenticationService.getCurrentUser(req)
+    @JWTTokenNeeded
+    public Response getUserVote(@Context ContainerRequestContext ctx) {
+        return userService.getUserFromRequestContext(ctx)
                 .map(currentUser -> {
                     try {
                         return themeService.getCurrentUserVote(currentUser)
@@ -80,10 +81,9 @@ public class Themes {
     }
 
     @POST
-    @RolesAllowed("user")
     @Path("proposals/vote/{proposalId}")
-    public Response setUserProposal(@Context HttpServletRequest req, @PathParam("proposalId") int proposalId) {
-        return authenticationService.getCurrentUser(req).map(user -> {
+    public Response setUserProposal(@Context ContainerRequestContext ctx, @PathParam("proposalId") int proposalId) {
+        return userService.getUserFromRequestContext(ctx).map(user -> {
             try {
                 themeService.setUserVote(user, proposalId);
             } catch (Exception e) {
@@ -95,10 +95,9 @@ public class Themes {
     }
 
     @DELETE
-    @RolesAllowed("user")
     @Path("proposals/vote/{proposalId}")
-    public Response removeUserProposal(@Context HttpServletRequest req) {
-        return authenticationService.getCurrentUser(req).map(user -> {
+    public Response removeUserProposal(@Context ContainerRequestContext ctx) {
+        return userService.getUserFromRequestContext(ctx).map(user -> {
             try {
                 themeService.deleteUserVote(user);
             } catch (Exception e) {

@@ -3,6 +3,8 @@ import dao.sql.*;
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import services.*;
 import services.implementation.imgur.ImgurImageService;
+import util.KeyGenerator;
+import util.SimpleKeyGenerator;
 
 public class ApplicationBinder extends AbstractBinder {
     @Override
@@ -16,10 +18,13 @@ public class ApplicationBinder extends AbstractBinder {
         bind(SqlCommentDao.class).to(CommentDao.class);
         bind(SqlReactionDao.class).to(ReactionDao.class);
 
+        bind(SimpleKeyGenerator.class).to(KeyGenerator.class);
+
         bindAsContract(AuthenticationService.class);
         bindAsContract(PostService.class);
         bindAsContract(ReactionService.class);
         bindAsContract(CommentService.class);
         bindAsContract(ThemeService.class);
+        bindAsContract(UserService.class);
     }
 }

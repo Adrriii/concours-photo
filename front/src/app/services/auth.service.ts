@@ -45,15 +45,18 @@ export class AuthService {
                         {
                             username,
                             passwordHash : sha256(password)
+                        }, {
+                            responseType: 'text'
                         })
                     .subscribe(
-                        () => {
-                            console.log('user logged successfully');
+                        data => {
+                            console.log('user logged successfully, data is : ' + data);
                             this.me = new User(username);
+                            localStorage.setItem('jwt', data);
                             resolve();
                         },
-                        (error) => {
-                            console.log('Error in user log : ' + error);
+                        error => {
+                            console.log('Error in user log : ' + JSON.stringify(error));
                             reject();
                         }
                     );
@@ -70,6 +73,7 @@ export class AuthService {
                         (Response) => {
                             console.log('user logged out successfully');
                             this.me = null;
+                            localStorage.clear();
                             resolve();
                         },
                         (error) => {

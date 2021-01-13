@@ -56,7 +56,7 @@ public class Authentication {
             return authenticationService.loginUser(user.username, user.passwordHash).map(
                     userLog -> {
                         String token = issueToken(userLog.username);
-                        return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
+                        return Response.status(200).entity(token).build();
                     }
             ).orElse(Response.status(400).entity("User or password incorrect.").build());
 

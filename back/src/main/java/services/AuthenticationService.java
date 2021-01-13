@@ -58,12 +58,4 @@ public class AuthenticationService {
             return Optional.empty();
         }
     }
-
-    public Optional<User> getCurrentUser(HttpServletRequest req) {
-        try {
-            return Optional.ofNullable((User) req.getSession(true).getAttribute("user"));
-        } catch (Exception e) {
-            return Optional.empty();
-        }
-    }
 }

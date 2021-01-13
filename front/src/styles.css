@@ -1,14 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css?family=Damion|Muli:400,600');
 body{
-    font-family: 'Muli', sans-serif;
+    font-family: 'Damion', sans-serif;
     background: url("https://www.toptal.com/designers/subtlepatterns/patterns/geometry2.png");
 }
 
-.ngx-file-drop__drop-zone {
-    height: 100px;
+::-webkit-scrollbar{
+    width: 20px;
+}
+
+::-webkit-scrollbar-thumb{
+    border-radius:30px;
+    background: -webkit-gradient(linear, left top, left bottom, from(white), to(#4caf50));
+    box-shadow: inset 2px 2px 2px rgba(255,255,255,0.25), inset -2px -2px -2px rgba(0,0,0,0.25);
+}
+
+::-webkit-scrollbar-track{
+    background: linear-gradient(to right, #201c29, #201c29 1px, #100e17 1px, #100e17);
+}
+
+.drop-zone {
+    height: 200px;
     margin: auto;
-    border: 2px dotted #0782d0;
+    border: 2px dotted #4caf50;
     border-radius: 30px;
 }
 
@@ -16,12 +30,12 @@ body{
     background-color: rgba(147, 147, 147, 0.5);
 }
 
-.ngx-file-drop__content {
+.drop-content {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100px;
-    color: #0782d0;
+    color: #4caf50;
 }
 
 .ngx-file-drop__drop-zone-label {

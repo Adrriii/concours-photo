@@ -34,11 +34,17 @@ public class JWTTokenNeededFilter implements ContainerRequestFilter {
 
         try {
             Key key = keyGenerator.generateKey();
-            System.out.println("Key is " + key);
-            System.out.println("Token is " + token);
 
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            // Jwts.parser().setSigningKey(key).parseClaimsJws(token);
+
+            String username = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
+
+            requestContext.setProperty("username", username);
         } catch (Exception e) {
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build());
         }

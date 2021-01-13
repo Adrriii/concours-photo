@@ -11,21 +11,25 @@
 
 <!--</mat-dialog-content>-->
     <div class="center">
-        <div class="input-container">
+        <div class="input-container input-effect">
             <input class="effect-button" type="text" placeholder="Title">
             <span class="focus-border"><i></i></span>
         </div>
         <ngx-file-drop dropZoneLabel="Drop files here"
+                       [dropZoneClassName] = "'drop-zone'"
+                       [contentClassName] = "'drop-content'"
                        (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
             <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
                 Drag and drop your picture here
                 <div>
-                    <span><button type="button" (click)="openFileSelector()">Browse Files</button></span>
+                    <button type="button" class="btn-file" (click)="openFileSelector()">Browse Files</button>
                 </div>
 
             </ng-template>
         </ngx-file-drop>
+
         <img [src]="imagePreview">
+
         <div class="upload-table">
             <table class="table">
                 <thead>
@@ -42,7 +46,18 @@
         </div>
     </div>
 
+<h2>Choisissez un tag</h2>
+<div class="select">
+    <select name="format" id="format">
+        <option>test</option>
+        <option>test</option>
+        <option>test</option>
+        <option>test</option>
+        <option>test</option>
+    </select>
+</div>
+
 <mat-dialog-actions>
-    <button class="mat-raised-button mat-primary" (click)="close()">Close</button>
-    <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+    <button class="button-self-made" (click)="close()">Close</button>
+    <button class="button-self-made" (click)="save()">Save</button>
 </mat-dialog-actions>

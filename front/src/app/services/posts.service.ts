@@ -21,4 +21,8 @@ export class PostsService {
     post(data: FormData): Observable<Post> {
         return this.httpClient.post<Post>(environment.apiBaseUrl + 'posts/', data, {withCredentials: true});
     }
+
+    sendPost(data: FormData): Observable<Post> {
+        return this.httpClient.post<Post>(environment.apiBaseUrl + 'posts/', data);
+    }
 }

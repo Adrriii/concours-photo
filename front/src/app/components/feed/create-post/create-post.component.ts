@@ -1,17 +1,18 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import { NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry } from 'ngx-file-drop';
-import { ToastrService } from 'ngx-toastr';
+import {NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry} from 'ngx-file-drop';
+import {ToastrService} from 'ngx-toastr';
 
 // TODO à delete quand il y aura le service
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {PostsService} from '../../../services/posts.service';
+import {Post} from '../../../models/Post.model';
 
 @Component({
-  selector: 'app-create-post',
-  templateUrl: './create-post.component.html',
-  styleUrls: ['./create-post.component.css']
+    selector: 'app-create-post',
+    templateUrl: './create-post.component.html',
+    styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit {
     form: FormGroup;
@@ -25,13 +26,14 @@ export class CreatePostComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) data,
         private toastr: ToastrService,
         private postService: PostsService
-    ) { }
+    ) {
+    }
 
     public dropped(files: NgxFileDropEntry[]): void {
         this.files = files;
 
         // Only one file required on create post
-        if (this.files.length > 1){
+        if (this.files.length > 1) {
             this.files.pop();
         }
 
@@ -61,11 +63,11 @@ export class CreatePostComponent implements OnInit {
         }
     }
 
-    public fileOver(event): void{
+    public fileOver(event): void {
         console.log(event);
     }
 
-    public fileLeave(event): void{
+    public fileLeave(event): void {
         console.log(event);
     }
 
@@ -77,17 +79,32 @@ export class CreatePostComponent implements OnInit {
 
     save(): void {
         if (this.files.length === 1) {
-            // TODO à REMPLACER quand il y aura le service
             const fileEntry = this.currentFile.fileEntry as FileSystemFileEntry;
             fileEntry.file((file: File) => {
                 const formData = new FormData();
+                const post = new Post(
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                );
 
                 formData.append('file', file, this.currentFile.relativePath);
+                formData.append('post', JSON.stringify(post));
 
-                this.postService.post(formData).subscribe(
-                    posted => {
-                        this.toastr.success('Successfully send image to server !');
-                    }, error => {
+                this.postService.sendPost(
+                    formData
+                ).subscribe(
+                    postSent => {
+                        console.log('Receive post -> ' + postSent);
+                        this.toastr.success('You posted your picture !');
+                    },
+                    error => {
+                        console.log('Error while sending file -> ' + error);
                         this.toastr.error(error.message);
                     }
                 );

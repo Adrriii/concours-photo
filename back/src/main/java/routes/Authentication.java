@@ -1,6 +1,6 @@
 package routes;
 
-import model.SimpleUser;
+import model.UserAuth;
 import services.AuthenticationService;
 
 import javax.annotation.security.PermitAll;
@@ -22,7 +22,7 @@ public class Authentication {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(
             @Context HttpServletRequest req,
-            SimpleUser user
+            UserAuth user
     ) {
         try {
             return authenticationService.loginUser(user.username, user.passwordHash).map(
@@ -51,7 +51,7 @@ public class Authentication {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response register(
             @Context HttpServletRequest req,
-            SimpleUser user
+            UserAuth user
     ) {
         System.out.println("Receive register request, user: " + user.username + ", password: " + user.passwordHash);
         try {

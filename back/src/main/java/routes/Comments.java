@@ -1,21 +1,11 @@
 package routes;
 
-import model.Comment;
-import model.Post;
-import model.User;
-import services.AuthenticationService;
-import services.CommentService;
-import services.PostService;
-import services.ReactionService;
-
-import java.util.Optional;
+import model.*;
+import services.*;
 
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 

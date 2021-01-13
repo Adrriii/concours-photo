@@ -18,7 +18,12 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
         Integer userId = getInteger(resultSet, "id");
         HashMap<SettingName, UserSetting> userSettings = new SqlUserSettingDao().getAllForUser(userId);
 
-        return new User(resultSet.getString("username"), userSettings, userId);
+        return new User(resultSet.getString("username"), 
+                        userSettings, 
+                        getInteger(resultSet, "victories"), 
+                        getInteger(resultSet, "score"), 
+                        getInteger(resultSet, "userlevel"), 
+                        userId);
     }
 
     @Override
@@ -41,21 +46,21 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
     public User insert(User user, String hash) throws SQLException {
         if(user.id != null) throw new SQLException(String.valueOf(UserDaoException.ID_PROVIDED));
 
-        String statement = "INSERT INTO user (username, sha) VALUES (?,?)";
-        List<Object> opt = Arrays.asList(user.username, hash);
+        String statement = "INSERT INTO user (username, victories, score, userlevel, sha) VALUES (?,?,?,?,?)";
+        List<Object> opt = Arrays.asList(user.username, user.victories, user.score, user.userlevel, hash);
 
         int userId = doInsert(statement, opt);
         new SqlUserSettingDao().insertDefaultsForUser(userId);
         
-        return new User(user.username, new SqlUserSettingDao().getAllForUser(userId), userId);
+        return new User(user.username, new SqlUserSettingDao().getAllForUser(userId), user.victories, user.score, user.userlevel, userId);
     }
 
     @Override
     public void update(User user) throws SQLException {
         if(user.id == null) throw new SQLException(String.valueOf(UserDaoException.ID_NOT_PROVIDED));
 
-        String statement = "UPDATE user SET username=? WHERE id=?";
-        List<Object> opt = Arrays.asList(user.id, user.username);
+        String statement = "UPDATE user SET username=?, userlevel=?, victories=?, score=? WHERE id=?";
+        List<Object> opt = Arrays.asList(user.username, user.userlevel, user.victories, user.score, user.id);
 
         for(UserSetting userSetting : user.settings.values()) {
             new SqlUserSettingDao().update(userSetting);

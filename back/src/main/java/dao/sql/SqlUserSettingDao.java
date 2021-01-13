@@ -43,7 +43,7 @@ public class SqlUserSettingDao extends SqlDao<UserSetting> implements UserSettin
 
         for (Setting setting : new SqlSettingDao().queryAllObjects(statement)) {
             String statementNested = "INSERT INTO user_setting (user, setting, public, value) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE user=user";
-            List<Object> opt = Arrays.asList(userId, setting.label.toString().toLowerCase(), false, setting.defaultValue);
+            List<Object> opt = Arrays.asList(userId, setting.label.toString().toLowerCase(), setting.defaultPublic, setting.defaultValue);
 
             exec(statementNested, opt);
         }

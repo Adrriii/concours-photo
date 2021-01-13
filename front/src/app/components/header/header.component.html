@@ -8,7 +8,7 @@
         <div class="navbar-nav">
             <a class="nav-item nav-link" routerLink="register" [hidden]="isUserConnected()">Inscription</a>
             <a class=" nav-item nav-link" routerLink="login" [hidden]="isUserConnected()">Connexion</a>
-            <a class="nav-item nav-link" routerLink="login" [hidden]="!isUserConnected()" (click)="logout()">Déconnexion</a>
+            <a class="nav-item nav-link" [hidden]="!isUserConnected()" (click)="logout()">Déconnexion</a>
             <a class="nav-item nav-link" routerLink="feed">Feed</a>
         </div>
     </div>

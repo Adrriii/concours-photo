@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {Subscription} from 'rxjs';
 import {User} from '../../models/User.model';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-header',
@@ -13,7 +14,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     currentUser: User = null;
 
     constructor(
-        private authService: AuthService
+        private authService: AuthService,
+        private router: Router
     ) {
     }
 
@@ -34,7 +36,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     logout(): void {
         this.authService.logOutUser()
-            .then(() => console.log('Logout successfully'))
+            .then(() => {
+                console.log('Logout successfully');
+                this.router.navigate(['login']);
+            })
             .catch(error => console.log('Error while logging out : ' + error));
     }
 }

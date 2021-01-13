@@ -2,23 +2,29 @@
     background: url("https://www.toptal.com/designers/subtlepatterns/patterns/geometry2.png");
 }
 
-.p {
-    font-family: 'Damion', cursive;
-    font-weight: 400;
-}
-
-.h2 {
-    color: whitesmoke;
-    font-family: 'Damion', cursive;
-    font-weight: 400;
-}
-
 header {
     position: relative;
-    height: 15vh;
-    min-height: 5rem;
-    width: 100%;
+    margin: 0 auto;
+    background-color: black;
+    height: 45vh;
+    min-height: 15rem;
+    width: 65%;
     overflow: hidden;
+}
+
+header video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 0;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
 }
 
 header .container {
@@ -32,7 +38,16 @@ header .overlay {
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: #4caf50;
+    background-color: black;
     opacity: 0.5;
     z-index: 1;
+}
+
+@media (pointer: coarse) and (hover: none) {
+    header {
+        background: url('https://media.publit.io/file/photographepng.png') black no-repeat center center scroll;
+    }
+    header video {
+        display: none;
+    }
 }

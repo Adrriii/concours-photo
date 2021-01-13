@@ -1,12 +1,15 @@
 package routes;
 
+import filters.JWTTokenNeeded;
 import model.Comment;
 import model.Post;
 import model.User;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import services.AuthenticationService;
 import services.PostService;
 import services.ReactionService;
+import services.UserService;
 
 import java.io.InputStream;
 import java.util.Optional;
@@ -16,6 +19,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -25,7 +29,7 @@ import javax.ws.rs.core.Response;
 public class Posts {
     @Inject PostService postService;
     @Inject ReactionService reactionService;
-    @Inject AuthenticationService authenticationService;
+    @Inject UserService userService;
 
     @Context private ResourceContext resourceContext;
 
@@ -34,18 +38,35 @@ public class Posts {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addPost(
-            @FormDataParam("file") InputStream fileInputStream
+            @FormDataParam("file") InputStream uploadedInputStream,
+            @FormDataParam("file") FormDataContentDisposition fileDetails,
+            @FormDataParam("post") Post post
     ) {
-        System.out.println("Add post -> receive " + fileInputStream);
-        /*try {
+        System.out.println("[Posts - Route] -> Receive request...");
+        System.out.println("Filename is -> " + fileDetails.getFileName());
+
+        try {
             return postService.addOne(post)
                     .map(newPost -> Response.ok(newPost).build())
                     .orElse(Response.status(400).entity("Bad post format").build());
         } catch (Exception e) {
             return Response.status(500).entity(e.getMessage()).build();
-        }*/
+        }
 
-        return Response.status(200).entity(null).build();
+/*
+        String uploadedFileLocation = "/Users/temp/" + fileDetails.getFileName();
+
+        // save it
+        writeToFile(uploadedInputStream, uploadedFileLocation);
+
+        String output = "File uploaded to : " + uploadedFileLocation;
+
+        ResponseBean responseBean = new ResponseBean();
+
+        responseBean.setCode(StatusConstants.SUCCESS_CODE);
+        responseBean.setMessage(fileDetails.getFileName());
+        responseBean.setResult(null);
+        return responseBean;*/
     }
 
     @GET
@@ -58,9 +79,12 @@ public class Posts {
 
     @PUT
     @Path("{id}/react")
-    public Response changeReactToPost(@Context HttpServletRequest req, @PathParam("id") int id, String reaction) {
-        Optional<User> userOp = authenticationService.getCurrentUser(req);
-        if(userOp.isPresent()) {
+    @JWTTokenNeeded
+    public Response changeReactToPost(@Context ContainerRequestContext ctx, @PathParam("id") int id, String reaction) {
+
+        Optional<User> userOp = userService.getUserFromRequestContext(ctx);
+
+        if (userOp.isPresent()) {
             if(reactionService.changeReactToPost(id, userOp.get().id, reaction)) {
                 return Response.ok().build();
             } else {
@@ -73,14 +97,17 @@ public class Posts {
 
     @POST
     @Path("{id}/react")
-    public Response addReactToPost(@Context HttpServletRequest req, @PathParam("id") int id, String reaction) {
-        return changeReactToPost(req, id, reaction);
+    @JWTTokenNeeded
+    public Response addReactToPost(@Context ContainerRequestContext ctx, @PathParam("id") int id, String reaction) {
+        return changeReactToPost(ctx, id, reaction);
     }
 
     @DELETE
     @Path("{id}/react")
-    public Response cancelReactToPost(@Context HttpServletRequest req, @PathParam("id") int id) {
-        Optional<User> userOp = authenticationService.getCurrentUser(req);
+    @JWTTokenNeeded
+    public Response cancelReactToPost(@Context ContainerRequestContext ctx, @PathParam("id") int id) {
+        Optional<User> userOp = userService.getUserFromRequestContext(ctx);
+
         if(userOp.isPresent()) {
             if(reactionService.cancelReactToPost(id, userOp.get().id)) {
                 return Response.ok().build();

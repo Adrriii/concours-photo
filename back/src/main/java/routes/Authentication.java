@@ -1,14 +1,13 @@
 package routes;
 
+import model.UserAuth;
 import filters.JWTTokenNeeded;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import model.SimpleUser;
 import services.AuthenticationService;
 import util.KeyGenerator;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -19,7 +18,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 
 @Path("")
 public class Authentication {
@@ -50,7 +48,7 @@ public class Authentication {
     @Path("login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(
-            SimpleUser user
+            UserAuth user
     ) {
         try {
             return authenticationService.loginUser(user.username, user.passwordHash).map(
@@ -77,7 +75,7 @@ public class Authentication {
     @Path("register")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response register(
-            SimpleUser user
+            UserAuth user
     ) {
         try {
             return authenticationService.registerUser(user.username, user.passwordHash)

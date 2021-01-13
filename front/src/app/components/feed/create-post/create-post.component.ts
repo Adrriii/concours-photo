@@ -5,8 +5,9 @@ import {NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry} from 'n
 import {ToastrService} from 'ngx-toastr';
 
 // TODO à delete quand il y aura le service
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {PostsService} from '../../../services/posts.service';
+import {Post} from '../../../models/Post.model';
 
 @Component({
     selector: 'app-create-post',
@@ -25,7 +26,8 @@ export class CreatePostComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) data,
         private toastr: ToastrService,
         private postService: PostsService
-    ) { }
+    ) {
+    }
 
     public dropped(files: NgxFileDropEntry[]): void {
         this.files = files;
@@ -79,13 +81,28 @@ export class CreatePostComponent implements OnInit {
             const fileEntry = this.currentFile.fileEntry as FileSystemFileEntry;
             fileEntry.file((file: File) => {
                 const formData = new FormData();
+                const post = new Post(
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                );
 
                 formData.append('file', file, this.currentFile.relativePath);
 
-                this.postService.post(formData).subscribe(
-                    posted => {
-                        this.toastr.success('Successfully send image to server !');
-                    }, error => {
+                this.postService.sendPost(
+                    formData
+                ).subscribe(
+                    postSent => {
+                        console.log('Receive post -> ' + postSent);
+                        this.toastr.success('You posted your picture !');
+                    },
+                    error => {
+                        console.log('Error while sending file -> ' + error);
                         this.toastr.error(error.message);
                     }
                 );

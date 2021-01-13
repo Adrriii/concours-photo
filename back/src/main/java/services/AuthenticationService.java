@@ -14,7 +14,6 @@ import java.util.Optional;
 
 public class AuthenticationService {
     @Inject UserDao userDao;
-    @Inject UserSettingDao userSettingDao;
 
     public AuthenticationService() {}
 

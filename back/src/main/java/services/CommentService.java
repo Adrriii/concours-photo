@@ -23,7 +23,7 @@ public class CommentService {
         try {
             parent = commentDao.getById(parentId);
 
-            if (comment.parent != null && comment.parent.id == parent.id)
+            if (comment.parent != null && comment.parent.id.equals(parent.id))
                 throw new Exception();
 
         } catch (Exception e) {

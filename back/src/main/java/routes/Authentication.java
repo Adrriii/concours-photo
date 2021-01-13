@@ -68,9 +68,8 @@ public class Authentication {
     @GET
     @Path("logout")
     @JWTTokenNeeded
-    public Response logout(@Context HttpServletRequest req) {
-        req.getSession(true).setAttribute("user", null);
-
+    public Response logout() {
+        // Invalidate token ?
         return Response.ok().build();
     }
 

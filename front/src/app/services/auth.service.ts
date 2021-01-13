@@ -1,17 +1,24 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { sha256 } from 'js-sha256';
-import { User } from '../models/User.model';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {sha256} from 'js-sha256';
+import {User} from '../models/User.model';
 import {environment} from '../../environments/environment.prod';
+import {Subject, Subscription} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
 
-    public me: User;
+    private currentUser: User = null;
+    public me = new Subject<User>();
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient) {
+    }
+
+    emitMe(): void {
+        this.me.next(this.currentUser);
+    }
 
     createNewUser(username: string, password: string): Promise<void> {
         return new Promise<void>(
@@ -20,12 +27,14 @@ export class AuthService {
                     .post(environment.apiBaseUrl + 'register',
                         {
                             username,
-                            passwordHash : sha256(password)
+                            passwordHash: sha256(password)
                         })
                     .subscribe(
                         () => {
                             console.log('user created successfully !');
-                            this.me = new User(username);
+                            this.currentUser = new User(username);
+                            this.emitMe();
+
                             resolve();
                         },
                         (error) => {
@@ -44,14 +53,15 @@ export class AuthService {
                     .post(environment.apiBaseUrl + 'login',
                         {
                             username,
-                            passwordHash : sha256(password)
+                            passwordHash: sha256(password)
                         }, {
                             responseType: 'text'
                         })
                     .subscribe(
                         data => {
                             console.log('user logged successfully, data is : ' + data);
-                            this.me = new User(username);
+                            this.currentUser = new User(username);
+                            this.emitMe();
                             localStorage.setItem('jwt', data);
                             resolve();
                         },
@@ -64,21 +74,23 @@ export class AuthService {
         );
     }
 
-    logOutUser(username: string, password: string): Promise<void> {
+    logOutUser(): Promise<void> {
         return new Promise<void>(
             (resolve, reject) => {
                 this.httpClient
                     .get<any[]>(environment.apiBaseUrl + 'logout')
                     .subscribe(
-                        (Response) => {
+                        () => {
                             console.log('user logged out successfully');
-                            this.me = null;
+                            this.currentUser = null;
                             localStorage.clear();
+
+                            this.emitMe();
                             resolve();
                         },
-                        (error) => {
-                            console.log('error');
-                            reject();
+                        error => {
+                            console.log('Error in logout : ' + JSON.stringify(error));
+                            reject(error);
                         }
                     );
             }

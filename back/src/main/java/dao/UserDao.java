@@ -1,8 +1,8 @@
 package dao;
 
-import model.SettingName;
 import model.User;
-import model.UserSetting;
+
+import java.util.Optional;
 
 public interface UserDao {
     User getById(int id) throws Exception;

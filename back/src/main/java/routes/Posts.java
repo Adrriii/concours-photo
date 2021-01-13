@@ -51,7 +51,9 @@ public class Posts {
 
         System.out.println("[Posts - Route] -> Receive request from " + user.username);
         System.out.println("Filename is -> " + fileDetails.getFileName());
-
+        System.out.println("Post is -> " + post);
+        System.out.println("Post author is -> " + post.author);
+        
         try {
             return postService.addOne(post)
                     .map(newPost -> Response.ok(newPost).build())

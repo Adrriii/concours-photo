@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry} from 'ngx-file-drop';
@@ -8,24 +8,31 @@ import {ToastrService} from 'ngx-toastr';
 import {HttpClient} from '@angular/common/http';
 import {PostsService} from '../../../services/posts.service';
 import {Post} from '../../../models/Post.model';
+import {AuthService} from '../../../services/auth.service';
+import {User} from '../../../models/User.model';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-create-post',
     templateUrl: './create-post.component.html',
     styleUrls: ['./create-post.component.css']
 })
-export class CreatePostComponent implements OnInit {
+export class CreatePostComponent implements OnInit, OnDestroy {
     form: FormGroup;
     files: NgxFileDropEntry[] = [];
     imagePreview: string | ArrayBuffer = null;
     currentFile: NgxFileDropEntry;
+
+    user: User = null;
+    userSubscription: Subscription;
 
     constructor(
         private formBuilder: FormBuilder,
         private dialogRef: MatDialogRef<CreatePostComponent>,
         @Inject(MAT_DIALOG_DATA) data,
         private toastr: ToastrService,
-        private postService: PostsService
+        private postService: PostsService,
+        private authService: AuthService
     ) {
     }
 
@@ -74,6 +81,14 @@ export class CreatePostComponent implements OnInit {
         this.form = this.formBuilder.group({
             title: ['', Validators.required]
         });
+
+        this.userSubscription = this.authService.me.subscribe(
+            user => this.user = user
+        );
+    }
+
+    ngOnDestroy(): void {
+        this.userSubscription.unsubscribe();
     }
 
     save(): void {
@@ -85,7 +100,7 @@ export class CreatePostComponent implements OnInit {
                     null,
                     null,
                     null,
-                    null,
+                    this.user,
                     null,
                     null,
                     null,
@@ -93,6 +108,7 @@ export class CreatePostComponent implements OnInit {
                 );
 
                 formData.append('file', file, this.currentFile.relativePath);
+                formData.append('post', JSON.stringify(post));
 
                 this.postService.sendPost(
                     formData

@@ -1,13 +1,36 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link" routerLink="register">Inscription</a>
-        <a class="nav-item nav-link" routerLink="login">Connexion</a>
-        <a class="nav-item nav-link" routerLink="feed">Feed</a>
-      </div>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" routerLink="register">Inscription</a>
+            <a class="nav-item nav-link" routerLink="login">Connexion</a>
+            <a class="nav-item nav-link" routerLink="feed">Feed</a>
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle d-flex align-items-center"
+                   href="#"
+                   id="navbarDropdownMenuLink"
+                   role="button"
+                   data-toggle="dropdown"
+                   aria-expanded="false">
+                    <img
+                        src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
+                        class="rounded-circle"
+                        height="22"
+                        alt=""
+                        loading="lazy"
+                    />
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">My profile</a>
+                    <a class="dropdown-item" href="#">Settings</a>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li>
+                        <a class="dropdown-item" href="#">Logout</a>
+                </ul>
+            </div>
+        </div>
     </div>
 </nav>

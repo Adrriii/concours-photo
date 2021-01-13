@@ -10,41 +10,43 @@
 <!--    </mat-form-field>-->
 
 <!--</mat-dialog-content>-->
-    <div class="center">
-        <div class="input-container input-effect">
-            <input class="effect-button" type="text" placeholder="Title">
-            <span class="focus-border"><i></i></span>
-        </div>
-        <ngx-file-drop dropZoneLabel="Drop files here"
-                       [dropZoneClassName] = "'drop-zone'"
-                       [contentClassName] = "'drop-content'"
-                       (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-            <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                Drag and drop your picture here
-                <div>
-                    <button type="button" class="btn-file" (click)="openFileSelector()">Browse Files</button>
-                </div>
-
-            </ng-template>
-        </ngx-file-drop>
-
-        <img [src]="imagePreview">
-
-        <div class="upload-table">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th><p>Name of the file</p></th>
-                </tr>
-                </thead>
-                <tbody class="upload-name-style">
-                <tr *ngFor="let item of files; let i=index">
-                    <td><strong>{{ item.relativePath }}</strong></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+<div class="center">
+    <div class="input-container input-effect">
+        <input class="effect-button" type="text" placeholder="Title">
+        <span class="focus-border"><i></i></span>
     </div>
+    <ngx-file-drop dropZoneLabel="Drop files here"
+                   [dropZoneClassName]="'drop-zone'"
+                   [contentClassName]="'drop-content'"
+                   (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)"
+                    [hidden]="isFileSelected()">
+        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+            <div class="dropzone-content-container">
+                <div>Drag and drop your picture here</div>
+                <button type="button" class="btn-file mt-2" (click)="openFileSelector()">Browse Files</button>
+            </div>
+        </ng-template>
+    </ngx-file-drop>
+
+    <div class="container" align="center" [hidden]="!isFileSelected()">
+        <img [src]="imagePreview" class="preview-image">
+    </div>
+
+    <div class="upload-table">
+        <table class="table">
+            <thead>
+            <tr>
+                <th><p>Name of the file</p></th>
+            </tr>
+            </thead>
+            <tbody class="upload-name-style">
+            <tr *ngFor="let item of files; let i=index">
+                <td><strong>{{ item.relativePath }}</strong></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <h2>Choisissez un tag</h2>
 <div class="select">

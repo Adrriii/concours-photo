@@ -37,14 +37,23 @@ public class Posts {
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
+    @JWTTokenNeeded
     public Response addPost(
+            @Context ContainerRequestContext ctx,
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetails,
             @FormDataParam("post") Post post
-    ) {
-        System.out.println("[Posts - Route] -> Receive request...");
-        System.out.println("Filename is -> " + fileDetails.getFileName());
+    ) throws Exception {
+        Optional<User> userOpt = userService.getUserFromRequestContext(ctx);
+        User user = userOpt.orElseThrow(
+                () -> new Exception("User logged in but can't find username in context")
+        );
 
+        System.out.println("[Posts - Route] -> Receive request from " + user.username);
+        System.out.println("Filename is -> " + fileDetails.getFileName());
+        System.out.println("Post is -> " + post);
+        System.out.println("Post author is -> " + post.author);
+        
         try {
             return postService.addOne(post)
                     .map(newPost -> Response.ok(newPost).build())

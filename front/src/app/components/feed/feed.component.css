@@ -2,10 +2,15 @@
     background: url("https://www.toptal.com/designers/subtlepatterns/patterns/geometry2.png");
 }
 
+/*Here to modify box video*/
 header {
     position: relative;
     margin: 0 auto;
     background-color: black;
+    border-radius: 30px;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;
+    box-shadow:         3px 3px 5px 6px #ccc;
     height: 45vh;
     min-height: 15rem;
     width: 65%;

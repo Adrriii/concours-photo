@@ -93,7 +93,6 @@ export class CreatePostComponent implements OnInit {
                 );
 
                 formData.append('file', file, this.currentFile.relativePath);
-                formData.append('post', JSON.stringify(post));
 
                 this.postService.sendPost(
                     formData

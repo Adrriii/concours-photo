@@ -1,3 +1,38 @@
 .backdropBackground {
     background: url("https://www.toptal.com/designers/subtlepatterns/patterns/geometry2.png");
 }
+
+.p {
+    font-family: 'Damion', cursive;
+    font-weight: 400;
+}
+
+.h2 {
+    color: whitesmoke;
+    font-family: 'Damion', cursive;
+    font-weight: 400;
+}
+
+header {
+    position: relative;
+    height: 15vh;
+    min-height: 5rem;
+    width: 100%;
+    overflow: hidden;
+}
+
+header .container {
+    position: relative;
+    z-index: 2;
+}
+
+header .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #4caf50;
+    opacity: 0.5;
+    z-index: 1;
+}

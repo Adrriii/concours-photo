@@ -14,7 +14,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("themes")
-@PermitAll
 public class Themes {
     @Inject AuthenticationService authenticationService;
     @Inject ThemeService themeService;
@@ -30,7 +29,6 @@ public class Themes {
     }
 
     @POST
-    @RolesAllowed("user")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addTheme(@Context HttpServletRequest req, Theme theme) {
         return authenticationService.getCurrentUser(req).map(currentUser ->
@@ -65,7 +63,6 @@ public class Themes {
     }
 
     @GET
-    @RolesAllowed("user")
     @Path("proposals/vote")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserVote(@Context HttpServletRequest req) {
@@ -82,7 +79,6 @@ public class Themes {
     }
 
     @POST
-    @RolesAllowed("user")
     @Path("proposals/vote/{proposalId}")
     public Response setUserProposal(@Context HttpServletRequest req, @PathParam("proposalId") int proposalId) {
         return authenticationService.getCurrentUser(req).map(user -> {
@@ -97,7 +93,6 @@ public class Themes {
     }
 
     @DELETE
-    @RolesAllowed("user")
     @Path("proposals/vote/{proposalId}")
     public Response removeUserProposal(@Context HttpServletRequest req) {
         return authenticationService.getCurrentUser(req).map(user -> {

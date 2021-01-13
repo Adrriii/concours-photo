@@ -20,11 +20,10 @@
                        [contentClassName] = "'drop-content'"
                        (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
             <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                Drag and drop your picture here
-                <div>
-                    <button type="button" class="btn-file" (click)="openFileSelector()">Browse Files</button>
+                <div class="dropzone-content-container">
+                    <div>Drag and drop your picture here</div>
+                    <button type="button" class="btn-file mt-2" (click)="openFileSelector()">Browse Files</button>
                 </div>
-
             </ng-template>
         </ngx-file-drop>
 

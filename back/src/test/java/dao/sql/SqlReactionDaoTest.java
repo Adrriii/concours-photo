@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import dao.*;
 import model.*;
-import services.AuthenticationService;
 
 import static org.junit.jupiter.api.Assertions.*;
 

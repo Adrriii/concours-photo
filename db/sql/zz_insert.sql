@@ -2,15 +2,15 @@ use photodb;
 
 -- Insert the user settings along with their default value
 
-INSERT INTO setting (label, default_value)
+INSERT INTO setting (label, default_value, default_public)
 VALUES
-    ("mail","Not provided"),
-    ("birthday","Not provided"),
-    ("gender","Not provided"),
-    ("location","Not provided"),
-    ("bio",""),
-    ("victories","0"),
-    ("points","0");
+    ("mail","Not provided",0),
+    ("birthday","Not provided",0),
+    ("gender","Not provided",0),
+    ("location","Not provided",0),
+    ("bio","",1),
+    ("victories","0",1),
+    ("points","0",1);
 
 
 -- Insert default necessary values

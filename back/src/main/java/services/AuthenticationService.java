@@ -43,7 +43,7 @@ public class AuthenticationService {
             return Optional.empty();
 
         } catch (Exception e) {
-            User newUser = new User(username, null);
+            User newUser = new User(username);
             newUser = userDao.insert(newUser, hash(passwordHash));
 
             return Optional.of(newUser);

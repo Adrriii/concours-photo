@@ -1,7 +1,9 @@
 package services;
 
 import dao.UserDao;
+
 import model.User;
+import model.UserPublic;
 
 import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -22,5 +24,18 @@ public class UserService {
     public Optional<User> getUserFromRequestContext(ContainerRequestContext context) {
         String username = (String) context.getProperty("username");
         return getUserByName(username);
+    }
+
+
+    public Optional<UserPublic> getById(int id) {
+        UserPublic user;
+
+        try {
+            user = userDao.getById(id).getPublicProfile();
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+
+        return Optional.of(user);
     }
 }

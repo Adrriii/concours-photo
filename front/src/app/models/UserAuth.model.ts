@@ -1,4 +1,4 @@
-export class User {
+export class UserAuth {
     constructor(public username: string) {
     }
 }

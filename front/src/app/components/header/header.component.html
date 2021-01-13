@@ -22,13 +22,10 @@
           <li class="nav-item" [hidden]="isUserConnected()">
             <a class=" nav-item nav-link" routerLink="login" >Connexion</a>
           </li>
+
           <li class="nav-item" [hidden]="!isUserConnected()">
-            <a class="nav-item nav-link" routerLink="login" (click)="logout()">Déconnexion</a>
-          </li>
-          <li class="nav-item" [hidden]="isUserConnected()">
             <div class="dropdown">
               <a class="nav-link dropdown-toggle d-flex align-items-center"
-                 [hidden]="isUserConnected()"
                  href="#"
                  id="navbarDropdownMenuLink"
                  role="button"

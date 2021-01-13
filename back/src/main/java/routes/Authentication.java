@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 
 @Path("")
 public class Authentication {

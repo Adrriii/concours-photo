@@ -25,5 +25,6 @@ public class ApplicationBinder extends AbstractBinder {
         bindAsContract(ReactionService.class);
         bindAsContract(CommentService.class);
         bindAsContract(ThemeService.class);
+        bindAsContract(UserService.class);
     }
 }

@@ -1,5 +1,6 @@
 package routes;
 
+import filters.JWTTokenNeeded;
 import model.Comment;
 import model.Post;
 import model.User;
@@ -7,6 +8,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import services.AuthenticationService;
 import services.PostService;
 import services.ReactionService;
+import services.UserService;
 
 import java.io.InputStream;
 import java.util.Optional;
@@ -16,6 +18,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -25,7 +28,7 @@ import javax.ws.rs.core.Response;
 public class Posts {
     @Inject PostService postService;
     @Inject ReactionService reactionService;
-    @Inject AuthenticationService authenticationService;
+    @Inject UserService userService;
 
     @Context private ResourceContext resourceContext;
 
@@ -57,9 +60,12 @@ public class Posts {
 
     @PUT
     @Path("{id}/react")
-    public Response changeReactToPost(@Context HttpServletRequest req, @PathParam("id") int id, String reaction) {
-        Optional<User> userOp = authenticationService.getCurrentUser(req);
-        if(userOp.isPresent()) {
+    @JWTTokenNeeded
+    public Response changeReactToPost(@Context ContainerRequestContext ctx, @PathParam("id") int id, String reaction) {
+
+        Optional<User> userOp = userService.getUserFromRequestContext(ctx);
+
+        if (userOp.isPresent()) {
             if(reactionService.changeReactToPost(id, userOp.get().id, reaction)) {
                 return Response.ok().build();
             } else {
@@ -72,14 +78,17 @@ public class Posts {
 
     @POST
     @Path("{id}/react")
-    public Response addReactToPost(@Context HttpServletRequest req, @PathParam("id") int id, String reaction) {
-        return changeReactToPost(req, id, reaction);
+    @JWTTokenNeeded
+    public Response addReactToPost(@Context ContainerRequestContext ctx, @PathParam("id") int id, String reaction) {
+        return changeReactToPost(ctx, id, reaction);
     }
 
     @DELETE
     @Path("{id}/react")
-    public Response cancelReactToPost(@Context HttpServletRequest req, @PathParam("id") int id) {
-        Optional<User> userOp = authenticationService.getCurrentUser(req);
+    @JWTTokenNeeded
+    public Response cancelReactToPost(@Context ContainerRequestContext ctx, @PathParam("id") int id) {
+        Optional<User> userOp = userService.getUserFromRequestContext(ctx);
+
         if(userOp.isPresent()) {
             if(reactionService.cancelReactToPost(id, userOp.get().id)) {
                 return Response.ok().build();

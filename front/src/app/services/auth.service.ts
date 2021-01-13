@@ -12,6 +12,7 @@ export class AuthService {
 
     private currentUser: UserAuth = null;
     public me = new Subject<UserAuth>();
+    public isAuth : boolean = false;
 
     constructor(private httpClient: HttpClient) {
     }
@@ -58,7 +59,9 @@ export class AuthService {
                         data => {
                             console.log('user logged successfully, data is : ' + data);
                             this.currentUser = new UserAuth(username);
+                            // TODO : get existing user for field UserAuth.user
                             this.emitMe();
+                            this.isAuth = true;
                             localStorage.setItem('jwt', data);
                             resolve();
                         },
@@ -81,8 +84,8 @@ export class AuthService {
                             console.log('user logged out successfully');
                             this.currentUser = null;
                             localStorage.clear();
-
                             this.emitMe();
+                            this.isAuth = false;
                             resolve();
                         },
                         error => {

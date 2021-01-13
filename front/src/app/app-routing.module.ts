@@ -6,13 +6,14 @@ import {RegisterComponent} from './components/authentication/register/register.c
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {FeedComponent} from "./components/feed/feed.component";
 import { UserComponent } from './components/user/user.component';
+import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
     { path : 'feed', component: FeedComponent },
     { path : 'home', component: HomeComponent },
     { path : 'login', component: LoginComponent },
     { path : 'register', component: RegisterComponent },
-    { path : 'user', component: UserComponent },
+    { path : 'user', canActivate: [AuthGuardService], component: UserComponent },
     { path : '', redirectTo: '/home', pathMatch: 'full'},
     { path : '**', component: PageNotFoundComponent }
 ];

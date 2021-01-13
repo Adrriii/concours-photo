@@ -1,13 +1,9 @@
 package routes;
 
-<<<<<<< HEAD
-import model.UserAuth;
-=======
 import filters.JWTTokenNeeded;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import model.SimpleUser;
->>>>>>> jwt
 import services.AuthenticationService;
 import util.KeyGenerator;
 
@@ -54,12 +50,7 @@ public class Authentication {
     @Path("login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(
-<<<<<<< HEAD
-            @Context HttpServletRequest req,
-            UserAuth user
-=======
             SimpleUser user
->>>>>>> jwt
     ) {
         try {
             return authenticationService.loginUser(user.username, user.passwordHash).map(
@@ -86,12 +77,7 @@ public class Authentication {
     @Path("register")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response register(
-<<<<<<< HEAD
-            @Context HttpServletRequest req,
-            UserAuth user
-=======
             SimpleUser user
->>>>>>> jwt
     ) {
         try {
             return authenticationService.registerUser(user.username, user.passwordHash)

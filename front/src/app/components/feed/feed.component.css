@@ -2,13 +2,19 @@
     background: url("https://www.toptal.com/designers/subtlepatterns/patterns/geometry2.png");
 }
 
-.h1 {
-    
+.p {
+    font-family: 'Damion', cursive;
+    font-weight: 400;
+}
+
+.h2 {
+    color: whitesmoke;
+    font-family: 'Damion', cursive;
+    font-weight: 400;
 }
 
 header {
     position: relative;
-    background-color: black;
     height: 15vh;
     min-height: 5rem;
     width: 100%;
@@ -26,7 +32,7 @@ header .overlay {
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: black;
+    background-color: #4caf50;
     opacity: 0.5;
     z-index: 1;
 }

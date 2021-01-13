@@ -17,7 +17,7 @@ import {Post} from '../../../models/Post.model';
 export class CreatePostComponent implements OnInit {
     form: FormGroup;
     files: NgxFileDropEntry[] = [];
-    imagePreview: string | ArrayBuffer;
+    imagePreview: string | ArrayBuffer = null;
     currentFile: NgxFileDropEntry;
 
     constructor(
@@ -129,5 +129,9 @@ export class CreatePostComponent implements OnInit {
             }
         }
         return isFileAllowed;
+    }
+
+    isFileSelected(): boolean {
+        return this.imagePreview !== null;
     }
 }

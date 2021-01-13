@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
         this.authService.createNewUser(
             this.form.get('username').value,
             this.form.get('password').value).then(
-            () => this.router.navigate(['home'])
+            () => this.router.navigate(['login'])
         ).catch(
             error => {
                 console.log('Error in log : ' + error);

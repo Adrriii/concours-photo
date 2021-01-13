@@ -22,6 +22,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {NgxFileDropModule} from 'ngx-file-drop';
 import {ToastrModule} from 'ngx-toastr';
 import {AuthInterceptorService} from './services/auth-interceptor.service';
+import { UserComponent } from './components/user/user.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import {AuthInterceptorService} from './services/auth-interceptor.service';
         HeaderComponent,
         FeedComponent,
         CreatePostComponent,
+        UserComponent,
     ],
     imports: [
         BrowserModule,

@@ -1,11 +1,7 @@
 package services;
 
-import dao.PostDao;
-import dao.ReactionDao;
-import dao.UserDao;
-import model.Post;
-import model.ReactionName;
-import model.User;
+import dao.*;
+import model.*;
 
 import javax.inject.Inject;
 

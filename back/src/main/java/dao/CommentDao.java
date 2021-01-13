@@ -2,7 +2,6 @@ package dao;
 
 import model.Comment;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface CommentDao {

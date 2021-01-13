@@ -8,3 +8,5 @@ back/.project
 back/.settings/
 
 .vscode/
+back/.idea/artifacts/back_war_exploded.xml
+back/back.iml

@@ -32,9 +32,6 @@ export class AuthService {
                     .subscribe(
                         () => {
                             console.log('user created successfully !');
-                            this.currentUser = new User(username);
-                            this.emitMe();
-
                             resolve();
                         },
                         (error) => {

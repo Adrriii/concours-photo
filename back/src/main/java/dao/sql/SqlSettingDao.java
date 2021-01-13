@@ -13,7 +13,8 @@ public class SqlSettingDao extends SqlDao<Setting> implements SettingDao {
     protected Setting createObjectFromResult(ResultSet resultSet) throws SQLException {
         return new Setting(
             SettingName.valueOf(resultSet.getString("label").toUpperCase()),
-            resultSet.getString("default_value")
+            resultSet.getString("default_value"),
+            resultSet.getBoolean("default_public")
         );
     }
 }

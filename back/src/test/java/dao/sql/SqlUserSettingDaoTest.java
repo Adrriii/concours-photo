@@ -43,7 +43,7 @@ class SqlUserSettingDaoTest {
         settings.put(SettingName.VICTORIES, new UserSetting(testUser.id, true, System.currentTimeMillis()+"5", SettingName.VICTORIES));
         settings.put(SettingName.POINTS, new UserSetting(testUser.id, true, System.currentTimeMillis()+"1500", SettingName.POINTS));
 
-        User updateUser = new User(testUser.username, settings, testUser.id);
+        User updateUser = new User(testUser.username, settings, 0, 0, 0, testUser.id);
         assertDoesNotThrow(() -> userDao.update(updateUser));
 
         Map<SettingName, UserSetting> updatedSettings = dao.getAllForUser(updateUser.id);

@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 
 // TODO à delete quand il y aura le service
 import { HttpClient } from '@angular/common/http';
+import {PostsService} from '../../../services/posts.service';
 
 @Component({
   selector: 'app-create-post',
@@ -19,11 +20,11 @@ export class CreatePostComponent implements OnInit {
     currentFile: NgxFileDropEntry;
 
     constructor(
-        private httpClient: HttpClient, // TODO à delete quand il y aura le service
         private formBuilder: FormBuilder,
         private dialogRef: MatDialogRef<CreatePostComponent>,
         @Inject(MAT_DIALOG_DATA) data,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private postService: PostsService
     ) { }
 
     public dropped(files: NgxFileDropEntry[]): void {
@@ -80,13 +81,16 @@ export class CreatePostComponent implements OnInit {
             const fileEntry = this.currentFile.fileEntry as FileSystemFileEntry;
             fileEntry.file((file: File) => {
                 const formData = new FormData();
-                formData.append('logo', file, this.currentFile.relativePath);
 
-                this.httpClient.post('http://localhost:9000/api/v1/posts', formData)
-                    .subscribe(data => {
-                        // Sanitized logo returned from backend
-                    });
-                this.toastr.success('You posted your picture !.');
+                formData.append('file', file, this.currentFile.relativePath);
+
+                this.postService.post(formData).subscribe(
+                    posted => {
+                        this.toastr.success('Successfully send image to server !');
+                    }, error => {
+                        this.toastr.error(error.message);
+                    }
+                );
             });
         }
 

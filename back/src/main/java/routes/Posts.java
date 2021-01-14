@@ -14,6 +14,7 @@ import services.*;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.Optional;
 
 import javax.annotation.security.PermitAll;
@@ -54,12 +55,6 @@ public class Posts {
         ObjectMapper mapper = new ObjectMapper();
         Post post = mapper.readValue(postJson, Post.class);
 
-        System.out.println("[Posts - Route] -> Receive request from " + user.username);
-        System.out.println("Filename is -> " + fileDetails.getFileName());
-        System.out.println("Post is -> " + postJson);
-        System.out.println("Created post is -> " + post);
-
-
         String image64 = Base64.encodeBase64String(
                 IOUtils.toByteArray(uploadedInputStream)
         );
@@ -77,11 +72,15 @@ public class Posts {
                 image.delete_url
         );
 
+        System.out.println("Create post : " + newPost);
 
         try {
             return postService.addOne(newPost)
                     .map(createdPost -> Response.ok(createdPost).build())
                     .orElse(Response.status(400).entity("Bad post format").build());
+        } catch (SQLException e) {
+            System.out.println("SQL Exception : " + e.getMessage());
+            return Response.status(500).entity(e.getMessage()).build();
         } catch (Exception e) {
             System.out.println("Exception in add post : " + e.getMessage());
             return Response.status(500).entity(e.getMessage()).build();

@@ -32,4 +32,17 @@ public class Post {
     public Post(String title, String reacted, List<Reactions> reactions, User author, Label label, Theme theme, String photo, String photoDelete) {
         this(title, reacted, reactions, author, label, theme, photo, photoDelete, null);
     }
+
+    @Override
+    public String toString() {
+        return "Post(id: " + this.id +
+                ", title: " + this.title +
+                ", reacted: " + this.reacted +
+                ", reactions: " + this.reactions +
+                ", author: " + this.author +
+                ", label: " + this.label +
+                ", theme: " + this.theme +
+                ", photo: " + this.photo +
+                ", photoDelete: " + this.photoDelete + ")";
+    }
 }

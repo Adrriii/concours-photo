@@ -15,11 +15,11 @@ export class PostsService {
     }
 
     getById(id: number): Observable<Post> {
-        return this.httpClient.get<Post>(environment.apiBaseUrl + `posts/${id}`, {withCredentials: true});
+        return this.httpClient.get<Post>(environment.apiBaseUrl + `posts/${id}`);
     }
 
     post(data: FormData): Observable<Post> {
-        return this.httpClient.post<Post>(environment.apiBaseUrl + 'posts/', data, {withCredentials: true});
+        return this.httpClient.post<Post>(environment.apiBaseUrl + 'posts/', data);
     }
 
     sendPost(data: FormData): Observable<Post> {

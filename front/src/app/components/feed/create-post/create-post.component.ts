@@ -9,6 +9,8 @@ import {Post} from '../../../models/Post.model';
 import {AuthService} from '../../../services/auth.service';
 import {Subscription} from 'rxjs';
 import {User} from '../../../models/User.model';
+import {LabelsService} from '../../../services/labels.service';
+import {Label} from '../../../models/Label.model';
 
 @Component({
     selector: 'app-create-post',
@@ -24,13 +26,17 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     user: User = null;
     userSubscription: Subscription;
 
+    labels: Array<Label> = null;
+    labelsSubscriptions: Subscription;
+
     constructor(
         private formBuilder: FormBuilder,
         private dialogRef: MatDialogRef<CreatePostComponent>,
         @Inject(MAT_DIALOG_DATA) data,
         private toastr: ToastrService,
         private postService: PostsService,
-        private authService: AuthService
+        private authService: AuthService,
+        private labelService: LabelsService
     ) {
     }
 
@@ -77,17 +83,25 @@ export class CreatePostComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.form = this.formBuilder.group({
-            title: ['', Validators.required]
+            title: ['', Validators.required],
+            tag: ['', Validators.required]
         });
 
         this.userSubscription = this.authService.me.subscribe(
             user => this.user = user
         );
         this.authService.emitMe();
+
+        this.labelsSubscriptions = this.labelService.labelsSubject.subscribe(
+            labels => this.labels = labels
+        );
+
+        this.labelService.getAll();
     }
 
     ngOnDestroy(): void {
         this.userSubscription.unsubscribe();
+        this.labelsSubscriptions.unsubscribe();
     }
 
     save(): void {
@@ -95,13 +109,15 @@ export class CreatePostComponent implements OnInit, OnDestroy {
         if (this.files.length === 1) {
             const fileEntry = this.currentFile.fileEntry as FileSystemFileEntry;
             fileEntry.file((file: File) => {
+
+                console.log('Value is : ', this.form.value);
                 const formData = new FormData();
                 const post = new Post(
-                    null,
+                    this.form.value.title,
                     null,
                     null,
                     this.user,
-                    null,
+                    this.form.value.tag,
                     null,
                     null,
                     null
@@ -120,7 +136,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
                         this.toastr.success('You posted your picture !');
                     },
                     error => {
-                        console.log('Error while sending file -> ' + error);
+                        console.log('Error while sending file -> ' + error.message);
                         this.toastr.error(error.message);
                     }
                 );
@@ -151,5 +167,9 @@ export class CreatePostComponent implements OnInit, OnDestroy {
 
     isFileSelected(): boolean {
         return this.imagePreview !== null;
+    }
+
+    isFromCorrect(): boolean {
+        return this.form.valid && this.files.length === 1;
     }
 }

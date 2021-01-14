@@ -1,16 +1,21 @@
 package routes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import filters.JWTTokenNeeded;
 import model.Comment;
+import model.Image;
 import model.Post;
 import model.User;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
-import services.PostService;
-import services.ReactionService;
-import services.UserService;
+import services.*;
 
+import java.io.FileInputStream;
 import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -26,6 +31,7 @@ public class Posts {
     @Inject PostService postService;
     @Inject ReactionService reactionService;
     @Inject UserService userService;
+    @Inject AbstractImageService imageService;
 
     @Context private ResourceContext resourceContext;
 
@@ -38,40 +44,45 @@ public class Posts {
             @Context ContainerRequestContext ctx,
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetails,
-            @FormDataParam("post") Post post
+            @FormDataParam("post") String postJson
     ) throws Exception {
         Optional<User> userOpt = userService.getUserFromRequestContext(ctx);
         User user = userOpt.orElseThrow(
                 () -> new Exception("User logged in but can't find username in context")
         );
+        ObjectMapper mapper = new ObjectMapper();
+        Post post = mapper.readValue(postJson, Post.class);
 
-        System.out.println("[Posts - Route] -> Receive request from " + user.username);
-        System.out.println("Filename is -> " + fileDetails.getFileName());
-        System.out.println("Post is -> " + post);
-        System.out.println("Post author is -> " + post.author);
-        
+        String image64 = Base64.encodeBase64String(
+                IOUtils.toByteArray(uploadedInputStream)
+        );
+
+        Image image = imageService.postImage(image64);
+        System.out.println("Image posted ! Link is : " + image.url);
+        Post newPost = new Post(
+                post.title,
+                post.reacted,
+                post.reactions,
+                user,
+                post.label,
+                post.theme,
+                image.url,
+                image.delete_url
+        );
+
+        System.out.println("Create post : " + newPost);
+
         try {
-            return postService.addOne(post)
-                    .map(newPost -> Response.ok(newPost).build())
+            return postService.addOne(newPost)
+                    .map(createdPost -> Response.ok(createdPost).build())
                     .orElse(Response.status(400).entity("Bad post format").build());
+        } catch (SQLException e) {
+            System.out.println("SQL Exception : " + e.getMessage());
+            return Response.status(500).entity(e.getMessage()).build();
         } catch (Exception e) {
+            System.out.println("Exception in add post : " + e.getMessage());
             return Response.status(500).entity(e.getMessage()).build();
         }
-
-/*
-        String uploadedFileLocation = "/Users/temp/" + fileDetails.getFileName();
-
-        // save it
-        writeToFile(uploadedInputStream, uploadedFileLocation);
-
-        String output = "File uploaded to : " + uploadedFileLocation;
-
-        ResponseBean responseBean = new ResponseBean();
-
-        responseBean.setCode(StatusConstants.SUCCESS_CODE);
-        responseBean.setMessage(fileDetails.getFileName());
-        responseBean.setResult(null);
-        return responseBean;*/
     }
 
     @GET
@@ -80,6 +91,17 @@ public class Posts {
         return postService.getById(id)
                 .map(post -> Response.ok(post).build())
                 .orElse(Response.status(400).entity("Post not found").build());
+    }
+
+    @GET
+    @Path("theme/{themeId}")
+    public Response getPostsByThemeId(@PathParam("themeId") int themeId) {
+        try {
+            List<Post> posts = postService.getPostsByThemeId(themeId);
+            return Response.ok().entity(posts).build();
+        } catch (Exception e) {
+            return Response.status(500).entity("Internal error").build();
+        }
     }
 
     @PUT

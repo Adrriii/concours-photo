@@ -18,6 +18,7 @@ public class ApplicationBinder extends AbstractBinder {
         bind(ImgurImageService.class).to(AbstractImageService.class);
         bind(SqlCommentDao.class).to(CommentDao.class);
         bind(SqlReactionDao.class).to(ReactionDao.class);
+        bind(SqlLabelDao.class).to(LabelDao.class);
 
         bind(SimpleKeyGenerator.class).to(KeyGenerator.class);
 
@@ -28,6 +29,7 @@ public class ApplicationBinder extends AbstractBinder {
         bindAsContract(CommentService.class);
         bindAsContract(ThemeService.class);
         bindAsContract(UserService.class);
+        bindAsContract(LabelService.class);
         bindAsContract(SearchService.class);
     }
 }

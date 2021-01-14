@@ -4,6 +4,7 @@ import dao.PostDao;
 import model.Post;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Optional;
 
 public class PostService {
@@ -26,5 +27,9 @@ public class PostService {
         }
 
         return Optional.ofNullable(post);
+    }
+
+    public List<Post> getPostsByThemeId(int id) throws Exception {
+        return postDao.getAllByTheme(id);
     }
 }

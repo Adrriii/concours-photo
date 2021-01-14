@@ -23,6 +23,7 @@ import {NgxFileDropModule} from 'ngx-file-drop';
 import {ToastrModule} from 'ngx-toastr';
 import {AuthInterceptorService} from './services/auth-interceptor.service';
 import { UserComponent } from './components/user/user.component';
+import { ThemeComponent } from './components/theme/theme.component';
 
 @NgModule({
     declarations: [
@@ -34,6 +35,7 @@ import { UserComponent } from './components/user/user.component';
         FeedComponent,
         CreatePostComponent,
         UserComponent,
+        ThemeComponent,
     ],
     imports: [
         BrowserModule,

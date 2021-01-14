@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {sha256} from 'js-sha256';
-import {User} from '../models/User.model';
+import {UserAuth} from '../models/UserAuth.model';
 import {environment} from '../../environments/environment.prod';
 import {Subject, Subscription} from 'rxjs';
 
@@ -10,8 +10,8 @@ import {Subject, Subscription} from 'rxjs';
 })
 export class AuthService {
 
-    private currentUser: User = null;
-    public me = new Subject<User>();
+    private currentUser: UserAuth = null;
+    public me = new Subject<UserAuth>();
 
     constructor(private httpClient: HttpClient) {
     }
@@ -57,7 +57,7 @@ export class AuthService {
                     .subscribe(
                         data => {
                             console.log('user logged successfully, data is : ' + data);
-                            this.currentUser = new User(username);
+                            this.currentUser = new UserAuth(username);
                             this.emitMe();
                             localStorage.setItem('jwt', data);
                             resolve();

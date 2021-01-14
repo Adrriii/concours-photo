@@ -4,8 +4,9 @@ import {HomeComponent} from './components/home/home.component';
 import {LoginComponent} from './components/authentication/login/login.component';
 import {RegisterComponent} from './components/authentication/register/register.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
-import {FeedComponent} from "./components/feed/feed.component";
+import {FeedComponent} from './components/feed/feed.component';
 import { UserComponent } from './components/user/user.component';
+import {ThemeComponent} from './components/theme/theme.component';
 
 const routes: Routes = [
     { path : 'feed', component: FeedComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
     { path : 'login', component: LoginComponent },
     { path : 'register', component: RegisterComponent },
     { path : 'user', component: UserComponent },
+    { path : 'theme', component: ThemeComponent },
     { path : '', redirectTo: '/home', pathMatch: 'full'},
     { path : '**', component: PageNotFoundComponent }
 ];

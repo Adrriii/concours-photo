@@ -6,4 +6,14 @@ export class User {
         public victories: number,
         public score: number
     ) {}
+
+    static fromJson(userJson: User): User {
+        return new User(
+            userJson.id,
+            userJson.username,
+            userJson.userLevel,
+            userJson.victories,
+            userJson.score
+        );
+    }
 }

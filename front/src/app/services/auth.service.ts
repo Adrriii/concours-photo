@@ -28,7 +28,7 @@ export class AuthService {
 
         this.httpClient.get<User>(environment.apiBaseUrl + 'user/me').subscribe(
             user => {
-                this.currentUser = user;
+                this.currentUser = User.fromJson(user);
                 this.emitMe();
 
                 console.log('Successfully get current user : ' + JSON.stringify(this.currentUser));

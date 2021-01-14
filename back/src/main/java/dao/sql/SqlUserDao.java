@@ -96,6 +96,15 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
 
         exec(statement, opt);
     }
+
+    @Override
+    public List<User> search(String searchString) throws SQLException {
+        searchString = "%"+searchString+"%";
+        String statement = "SELECT * FROM user WHERE username LIKE ?";
+        List<Object> opt = Arrays.asList(searchString);
+
+        return queryAllObjects(statement, opt);
+    }
 }
 
 enum UserDaoException {

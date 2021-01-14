@@ -106,4 +106,13 @@ public class SqlCommentDao extends SqlDao<Comment> implements CommentDao {
 
         exec(statement, opt);
     }
+
+    @Override
+    public List<Comment> search(String searchString) throws SQLException {
+        searchString = "%"+searchString+"%";
+        String statement = "SELECT * FROM comment WHERE content LIKE ?";
+        List<Object> opt = Arrays.asList(searchString);
+
+        return queryAllObjects(statement, opt);
+    }
 }

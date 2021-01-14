@@ -1,5 +1,6 @@
 import dao.*;
 import dao.sql.*;
+
 import org.glassfish.jersey.internal.inject.AbstractBinder;
 import services.*;
 import services.implementation.imgur.ImgurImageService;
@@ -27,5 +28,6 @@ public class ApplicationBinder extends AbstractBinder {
         bindAsContract(CommentService.class);
         bindAsContract(ThemeService.class);
         bindAsContract(UserService.class);
+        bindAsContract(SearchService.class);
     }
 }

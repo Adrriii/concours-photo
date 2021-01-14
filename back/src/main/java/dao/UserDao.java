@@ -2,7 +2,7 @@ package dao;
 
 import model.User;
 
-public interface UserDao {
+public interface UserDao extends Searchable<User> {
     User getById(int id) throws Exception;
     User getByUsername(String username) throws Exception;
 

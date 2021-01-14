@@ -77,7 +77,8 @@ export class CreatePostComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.form = this.formBuilder.group({
-            title: ['', Validators.required]
+            title: ['', Validators.required],
+            tag: ['', Validators.required]
         });
 
         this.userSubscription = this.authService.me.subscribe(
@@ -95,13 +96,15 @@ export class CreatePostComponent implements OnInit, OnDestroy {
         if (this.files.length === 1) {
             const fileEntry = this.currentFile.fileEntry as FileSystemFileEntry;
             fileEntry.file((file: File) => {
+
+                console.log('Value is : ', this.form.value);
                 const formData = new FormData();
                 const post = new Post(
-                    null,
+                    this.form.value.title,
                     null,
                     null,
                     this.user,
-                    null,
+                    this.form.value.tag,
                     null,
                     null,
                     null
@@ -151,5 +154,9 @@ export class CreatePostComponent implements OnInit, OnDestroy {
 
     isFileSelected(): boolean {
         return this.imagePreview !== null;
+    }
+
+    isFromCorrect(): boolean {
+        return this.form.valid && this.files.length === 1;
     }
 }

@@ -10,16 +10,16 @@
 <!--    </mat-form-field>-->
 
 <!--</mat-dialog-content>-->
-<div class="center">
+<form class="center" [formGroup]="form">
     <div class="input-container input-effect">
-        <input class="effect-button" type="text" placeholder="Title">
+        <input class="effect-button" type="text" placeholder="Title" formControlName="title">
         <span class="focus-border"><i></i></span>
     </div>
     <ngx-file-drop dropZoneLabel="Drop files here"
                    [dropZoneClassName]="'drop-zone'"
                    [contentClassName]="'drop-content'"
                    (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)"
-                    [hidden]="isFileSelected()">
+                   [hidden]="isFileSelected()">
         <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
             <div class="dropzone-content-container">
                 <div>Drag and drop your picture here</div>
@@ -31,18 +31,20 @@
     <div class="container" align="center" [hidden]="!isFileSelected()">
         <img [src]="imagePreview" class="preview-image">
     </div>
-</div>
 
-<h2>Choose a tag</h2>
-<div class="select">
-    <select name="format" id="format">
-        <option>Landscape</option>
-        <option>Macro</option>
-        <option>Portrait</option>
-    </select>
-</div>
+    <h2>Choose a tag</h2>
+    <div class="select">
+        <select name="format" id="format" formControlName="tag">
+            <option value="Landscape" selected>Landscape</option>
+            <option value="Macro">Macro</option>
+            <option value="Portrait">Portrait</option>
+        </select>
+    </div>
 
-<mat-dialog-actions>
-    <button class="button-self-made" (click)="close()">Close</button>
-    <button class="button-self-made" (click)="save()">Save</button>
-</mat-dialog-actions>
+    <mat-dialog-actions>
+        <button class="button-self-made" (click)="close()">Close</button>
+        <button class="button-self-made" (click)="save()" type="submit" [disabled]="!isFromCorrect()">Save</button>
+    </mat-dialog-actions>
+</form>
+
+

@@ -12,13 +12,29 @@ export class AuthService {
 
     private currentUser: UserAuth = null;
     public me = new Subject<UserAuth>();
-    public isAuth : boolean = false;
+    public isAuth = false;
 
     constructor(private httpClient: HttpClient) {
     }
 
     emitMe(): void {
         this.me.next(this.currentUser);
+    }
+
+    private setCurrentUser(username, jwt): void {
+        this.currentUser = new UserAuth(username);
+        this.isAuth = true;
+        localStorage.setItem('jwt', jwt);
+
+        this.emitMe();
+    }
+
+    private clearCurrentUser(): void {
+        this.currentUser = null;
+        this.isAuth = false;
+        localStorage.clear();
+
+        this.emitMe();
     }
 
     createNewUser(username: string, password: string): Promise<void> {
@@ -58,11 +74,7 @@ export class AuthService {
                     .subscribe(
                         data => {
                             console.log('user logged successfully, data is : ' + data);
-                            this.currentUser = new UserAuth(username);
-                            // TODO : get existing user for field UserAuth.user
-                            this.emitMe();
-                            this.isAuth = true;
-                            localStorage.setItem('jwt', data);
+                            this.setCurrentUser(username, data);
                             resolve();
                         },
                         error => {
@@ -82,10 +94,7 @@ export class AuthService {
                     .subscribe(
                         () => {
                             console.log('user logged out successfully');
-                            this.currentUser = null;
-                            localStorage.clear();
-                            this.emitMe();
-                            this.isAuth = false;
+                            this.clearCurrentUser();
                             resolve();
                         },
                         error => {

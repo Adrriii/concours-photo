@@ -2,14 +2,10 @@ package routes;
 
 import filters.JWTTokenNeeded;
 import model.Theme;
-import services.AuthenticationService;
 import services.ThemeService;
 import services.UserService;
 
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;

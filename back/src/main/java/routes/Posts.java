@@ -6,7 +6,6 @@ import model.Post;
 import model.User;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
-import services.AuthenticationService;
 import services.PostService;
 import services.ReactionService;
 import services.UserService;
@@ -14,10 +13,7 @@ import services.UserService;
 import java.io.InputStream;
 import java.util.Optional;
 
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceContext;

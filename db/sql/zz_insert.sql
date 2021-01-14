@@ -15,7 +15,11 @@ VALUES
 
 -- Insert default necessary values
 
-INSERT INTO label (label) VALUES ("");
+INSERT INTO label (label) 
+VALUES 
+    ("Portrait"),
+    ("Paysage"),
+    ("Macro");
 
 INSERT INTO theme (title, state, photo_url, winner, date)
 VALUES

@@ -86,6 +86,14 @@ public class Posts {
                 .orElse(Response.status(400).entity("Post not found").build());
     }
 
+    @GET
+    @Path("{themeId}")
+    public Response getPostsByThemeId(@PathParam("themeId") int themeId) {
+            return postService.getPostsByThemeId(themeId)
+                    .map(post -> Response.ok(post).build())
+                    .orElse(Response.status(400).entity("Post not found").build());
+    }
+
     @PUT
     @Path("{id}/react")
     @JWTTokenNeeded

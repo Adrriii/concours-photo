@@ -56,3 +56,460 @@ header .overlay {
         display: none;
     }
 }
+
+/*COMMENT SECTION*/
+
+.comment-section{
+    list-style: none;
+    max-width: 800px;
+    width: 100%;
+    margin: 50px auto;
+    padding: 10px;
+}
+
+.comment{
+    display: flex;
+    border-radius: 3px;
+    margin-bottom: 45px;
+    flex-wrap: wrap;
+}
+
+.comment.user-comment{
+    color:  #808080;
+}
+
+.comment.author-comment{
+    color:  #60686d;
+    justify-content: flex-end;
+}
+
+/* User and time info */
+
+.comment .info{
+    width: 17%;
+}
+
+.comment.user-comment .info{
+    text-align: right;
+}
+
+.comment.author-comment .info{
+    order: 3;
+}
+
+.comment .info a{	/* User name */
+    display: block;
+    text-decoration: none;
+    color: #656c71;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 10px 0 3px 0;
+}
+
+.comment .info span{	/* Time */
+    font-size: 11px;
+    color:  #9ca7af;
+}
+
+/* The user avatar */
+
+.comment .avatar{
+    width: 8%;
+}
+
+.comment.user-comment .avatar{
+    padding: 10px 18px 0 3px;
+}
+
+.comment.author-comment .avatar{
+    order: 2;
+    padding: 10px 3px 0 18px;
+}
+
+.comment .avatar img{
+    display: block;
+    border-radius: 50%;
+}
+
+.comment.user-comment .avatar img{
+    float: right;
+}
+
+
+/* The comment text */
+
+.comment p{
+    line-height: 1.5;
+    padding: 18px 22px;
+    width: 50%;
+    position: relative;
+    word-wrap: break-word;
+}
+
+.comment.user-comment p{
+    background-color:  #f3f3f3;
+}
+
+.comment.author-comment p{
+    background-color:  #e2f8ff;
+    order: 1;
+}
+
+.user-comment p:after{
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 2px solid #f3f3f3;
+    left: -8px;
+    top: 18px;
+}
+
+.author-comment p:after{
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 2px solid #e2f8ff;
+    right: -8px;
+    top: 18px;
+}
+
+/* Comment form */
+
+.write-new{
+    margin: 80px auto 0;
+    width: 50%;
+}
+
+.write-new textarea{
+    color:  #444;
+    font: inherit;
+
+    outline: 0;
+    border-radius: 3px;
+    border: 1px solid #cecece;
+    background-color:  #fefefe;
+    box-shadow: 1px 2px 1px 0 rgba(0, 0, 0, 0.06);
+    overflow: auto;
+
+    width:100%;
+    min-height: 80px;
+    padding: 15px 20px;
+}
+
+.write-new img{
+    border-radius: 50%;
+    margin-top: 15px;
+}
+
+.write-new button{
+    float:right;
+    background-color:  #87bae1;
+    box-shadow: 1px 2px 1px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    border: 0;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+
+    padding: 10px 25px;
+    margin-top: 18px;
+}
+
+@media (max-width: 800px){
+
+    .comment p{
+        width: 100%;
+    }
+
+    .comment.user-comment .info{
+        order: 3;
+        text-align: left;
+    }
+
+    .comment.user-comment .avatar{
+        order: 2;
+    }
+
+    .comment.user-comment p{
+        order: 1;
+    }
+
+    .comment.author-comment{
+        justify-content: flex-start;
+    }
+
+
+    .comment-section{
+        margin-top: 10px;
+    }
+
+    .comment .info{
+        width: auto;
+    }
+
+    .comment .info a{
+        padding-top: 15px;
+    }
+
+    .comment.user-comment .avatar,
+    .comment.author-comment .avatar{
+        padding: 15px 10px 0 18px;
+        width: auto;
+    }
+
+    .comment.user-comment p:after,
+    .comment.author-comment p:after{
+        width: 12px;
+        height: 12px;
+        top: initial;
+        left: 28px;
+        bottom: -6px;
+    }
+
+    .write-new{
+        width: 100%;
+    }
+}
+
+/*add comment*/
+
+.pb-cmnt-container {
+    font-family: Lato;
+    margin-top: 100px;
+}
+
+.pb-cmnt-textarea {
+    resize: none;
+    padding: 20px;
+    height: 130px;
+    width: 100%;
+    border: 1px solid #F2F2F2;
+}
+
+/*three buttons general*/
+
+.create-post {
+    float:right;
+    background-color:  #4caf50;
+    box-shadow: 1px 2px 1px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    border: 0;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+
+    padding: 10px 25px;
+    margin: 18px 0 auto;
+}
+
+.next-theme {
+    float:right;
+    background-color: #decb5c;
+    box-shadow: 1px 2px 1px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    border: 0;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+
+    padding: 10px 25px;
+    margin: 18px 0 auto;
+}
+
+.dropdown-filter {
+    float:right;
+    background-color: #c6292d;
+    box-shadow: 1px 2px 1px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    border: 0;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+
+    padding: 10px 25px;
+    margin: 18px 0 auto;
+}
+
+/*POST*/
+
+/*
+*
+* ===========================================================
+*     HERO SECTION
+* ===========================================================
+*
+*/
+.post-feed {
+    padding: 6.25rem 0px !important;
+    margin: 0px !important;
+}
+.cardbox {
+    border-radius: 3px;
+    margin-bottom: 20px;
+    padding: 0px !important;
+}
+
+/* ------------------------------- */
+/* Cardbox Heading
+---------------------------------- */
+.cardbox .cardbox-heading {
+    padding: 16px;
+    margin: 0;
+}
+.cardbox .btn-flat.btn-flat-icon {
+    border-radius: 50%;
+    font-size: 24px;
+    height: 32px;
+    width: 32px;
+    padding: 0;
+    overflow: hidden;
+    color: #fff !important;
+    background: #b5b6b6;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.cardbox .float-right .dropdown-menu{
+    position: relative;
+    left: 13px !important;
+}
+.cardbox .float-right a:hover{
+    background: #f4f4f4 !important;
+}
+.cardbox .float-right a.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 4px 0px 4px 10px;
+    clear: both;
+    font-weight: 400;
+    font-family: 'Abhaya Libre', serif;
+    font-size: 14px !important;
+    color: #848484;
+    text-align: inherit;
+    white-space: nowrap;
+    background: 0 0;
+    border: 0;
+}
+
+/* ------------------------------- */
+/* Media Section
+---------------------------------- */
+.media {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+.d-flex {
+    display: -ms-flexbox !important;
+    display: flex !important;
+}
+.media .mr-3{
+    margin-right: 1rem !important;
+}
+.media img{
+    width: 48px !important;
+    height: 48px !important;
+    padding: 2px;
+    border: 2px solid #f4f4f4;
+}
+.media-body {
+    -ms-flex: 1;
+    flex: 1;
+    padding: .4rem !important;
+}
+.media-body p{
+    font-family: 'Rokkitt', serif;
+    font-weight: 500 !important;
+    font-size: 14px;
+    color: #88898a;
+}
+.media-body small span{
+    font-family: 'Rokkitt', serif;
+    font-size: 12px;
+    color: #aaa;
+    margin-right: 10px;
+}
+
+/* ------------------------------- */
+/* Cardbox Item
+---------------------------------- */
+.cardbox .cardbox-item {
+    position: relative;
+    display: block;
+}
+.cardbox .cardbox-item img{
+}
+.img-responsive{
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+.fw {
+    width: 100% !important;
+    height: auto;
+}
+
+
+/* ------------------------------- */
+/* Cardbox Base
+---------------------------------- */
+.cardbox-base{
+    border-bottom: 2px solid #f4f4f4;
+}
+.cardbox-base ul{
+    margin: 10px 0px 10px 15px!important;
+    padding: 10px !important;
+    font-size: 0px;
+    display: inline-block;
+}
+.cardbox-base li {
+    list-style: none;
+    margin: 0px 0px 0px -8px !important;
+    padding: 0px 0px 0px 0px !important;
+    display: inline-block;
+}
+
+.cardbox-base li a{
+    margin: 0px !important;
+    padding: 0px !important;
+}
+.cardbox-base li a i{
+    position: relative;
+    top: 4px;
+    font-size: 16px;
+    color: #8d8d8d;
+    margin-right: 15px;
+}
+.cardbox-base li a span{
+    font-family: 'Rokkitt', serif;
+    font-size: 14px;
+    color: #8d8d8d;
+    margin-left: 20px;
+    position: relative;
+    top: 5px;
+}
+.cardbox-base li a em{
+    font-family: 'Rokkitt', serif;
+    font-size: 14px;
+    color: #8d8d8d;
+    position: relative;
+    top: 3px;
+}
+.cardbox-base li a img{
+    width: 25px;
+    height: 25px;
+    margin: 0px !important;
+    border: 2px solid #fff;
+}

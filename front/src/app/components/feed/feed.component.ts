@@ -25,6 +25,7 @@ export class FeedComponent implements OnInit {
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
       dialogConfig.backdropClass = 'backdropBackground';
+      dialogConfig.width = '30%';
 
       const dialogRef = this.dialog.open(CreatePostComponent, dialogConfig);
 

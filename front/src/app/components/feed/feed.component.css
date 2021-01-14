@@ -340,13 +340,6 @@ header .overlay {
 
 /*POST*/
 
-/*
-*
-* ===========================================================
-*     HERO SECTION
-* ===========================================================
-*
-*/
 .post-feed {
     padding: 6.25rem 0px !important;
     margin: 0px !important;
@@ -357,9 +350,7 @@ header .overlay {
     padding: 0px !important;
 }
 
-/* ------------------------------- */
-/* Cardbox Heading
----------------------------------- */
+/* Cardbox Heading */
 .cardbox .cardbox-heading {
     padding: 16px;
     margin: 0;
@@ -402,9 +393,7 @@ header .overlay {
     border: 0;
 }
 
-/* ------------------------------- */
-/* Media Section
----------------------------------- */
+/* Media Section*/
 .media {
     display: -ms-flexbox;
     display: flex;
@@ -442,9 +431,8 @@ header .overlay {
     margin-right: 10px;
 }
 
-/* ------------------------------- */
-/* Cardbox Item
----------------------------------- */
+
+/* Cardbox Item*/
 .cardbox .cardbox-item {
     position: relative;
     display: block;
@@ -461,10 +449,8 @@ header .overlay {
     height: auto;
 }
 
+/* Cardbox Base*/
 
-/* ------------------------------- */
-/* Cardbox Base
----------------------------------- */
 .cardbox-base{
     border-bottom: 2px solid #f4f4f4;
 }

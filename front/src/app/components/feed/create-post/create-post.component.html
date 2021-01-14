@@ -35,9 +35,7 @@
     <h2>Choose a tag</h2>
     <div class="select">
         <select name="format" id="format" formControlName="tag">
-            <option value="Landscape" selected>Landscape</option>
-            <option value="Macro">Macro</option>
-            <option value="Portrait">Portrait</option>
+            <option *ngFor="let label of labels" [value]="label.label">{{label.label}}</option>
         </select>
     </div>
 

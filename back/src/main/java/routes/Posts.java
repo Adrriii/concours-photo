@@ -15,6 +15,7 @@ import services.*;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.security.PermitAll;
@@ -93,6 +94,17 @@ public class Posts {
         return postService.getById(id)
                 .map(post -> Response.ok(post).build())
                 .orElse(Response.status(400).entity("Post not found").build());
+    }
+
+    @GET
+    @Path("{themeId}")
+    public Response getPostsByThemeId(@PathParam("themeId") int themeId) {
+        try {
+            List<Post> posts = postService.getPostsByThemeId(themeId);
+            return Response.ok().entity(posts).build();
+        } catch (Exception e) {
+            return Response.status(500).entity("Internal error").build();
+        }
     }
 
     @PUT

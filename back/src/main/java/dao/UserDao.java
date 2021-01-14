@@ -7,7 +7,7 @@ public interface UserDao {
     User getByUsername(String username) throws Exception;
 
     User insert(User user, String hash) throws Exception;
-    void update(User user) throws Exception;
+    User update(User user) throws Exception;
     void delete(User user) throws Exception;
 
     User getByLogin(String username, String hash) throws Exception;

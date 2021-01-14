@@ -499,3 +499,20 @@ header .overlay {
     margin: 0px !important;
     border: 2px solid #fff;
 }
+
+/* modify fa symbols */
+
+.fa-thumbs-up:hover {
+    color: blue !important;
+}
+
+.fa-thumbs-down:hover {
+    color: blue !important;
+}
+
+.fa-comments:hover {
+    color: blue !important;
+}
+
+
+

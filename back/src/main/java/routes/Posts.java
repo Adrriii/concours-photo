@@ -97,7 +97,7 @@ public class Posts {
     }
 
     @GET
-    @Path("{themeId}")
+    @Path("theme/{themeId}")
     public Response getPostsByThemeId(@PathParam("themeId") int themeId) {
         try {
             List<Post> posts = postService.getPostsByThemeId(themeId);

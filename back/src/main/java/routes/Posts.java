@@ -1,5 +1,6 @@
 package routes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import filters.JWTTokenNeeded;
 import model.Comment;
 import model.Post;
@@ -42,25 +43,30 @@ public class Posts {
             @Context ContainerRequestContext ctx,
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetails,
-            @FormDataParam("post") Post post
+            @FormDataParam("post") String postJson
     ) throws Exception {
         Optional<User> userOpt = userService.getUserFromRequestContext(ctx);
         User user = userOpt.orElseThrow(
                 () -> new Exception("User logged in but can't find username in context")
         );
+        ObjectMapper mapper = new ObjectMapper();
+        Post post = mapper.readValue(postJson, Post.class);
 
         System.out.println("[Posts - Route] -> Receive request from " + user.username);
         System.out.println("Filename is -> " + fileDetails.getFileName());
-        System.out.println("Post is -> " + post);
-        System.out.println("Post author is -> " + post.author);
-        
+        System.out.println("Post is -> " + postJson);
+        System.out.println("Created post is -> " + post);
+
+        return Response.ok().entity(null).build();
+        /*
         try {
             return postService.addOne(post)
                     .map(newPost -> Response.ok(newPost).build())
                     .orElse(Response.status(400).entity("Bad post format").build());
         } catch (Exception e) {
+            System.out.println("Exception in add post : " + e.getMessage());
             return Response.status(500).entity(e.getMessage()).build();
-        }
+        }*/
 
 /*
         String uploadedFileLocation = "/Users/temp/" + fileDetails.getFileName();

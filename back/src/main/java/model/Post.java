@@ -13,6 +13,10 @@ public class Post {
     public final String photo;
     public final String photoDelete;
 
+    public Post() {
+        this(null, null, null, null, null, null, null, null);
+    }
+
     public Post(String title, String reacted, List<Reactions> reactions, User author, Label label, Theme theme, String photo, String photoDelete, Integer id) {
         this.id = id;
         this.title = title;

@@ -120,7 +120,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
                         this.toastr.success('You posted your picture !');
                     },
                     error => {
-                        console.log('Error while sending file -> ' + error);
+                        console.log('Error while sending file -> ' + error.message);
                         this.toastr.error(error.message);
                     }
                 );

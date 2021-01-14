@@ -12,7 +12,8 @@ export class Post {
         public label: Label,
         public theme: Theme,
         public photo: string,
-        public photoDelete: string
+        public photoDelete: string,
+        public id?: number,
     ) {
     }
 }

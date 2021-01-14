@@ -31,31 +31,14 @@
     <div class="container" align="center" [hidden]="!isFileSelected()">
         <img [src]="imagePreview" class="preview-image">
     </div>
-
-    <div class="upload-table">
-        <table class="table">
-            <thead>
-            <tr>
-                <th><p>Name of the file</p></th>
-            </tr>
-            </thead>
-            <tbody class="upload-name-style">
-            <tr *ngFor="let item of files; let i=index">
-                <td><strong>{{ item.relativePath }}</strong></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
 </div>
 
-<h2>Choisissez un tag</h2>
+<h2>Choose a tag</h2>
 <div class="select">
     <select name="format" id="format">
-        <option>test</option>
-        <option>test</option>
-        <option>test</option>
-        <option>test</option>
-        <option>test</option>
+        <option>Landscape</option>
+        <option>Macro</option>
+        <option>Portrait</option>
     </select>
 </div>
 

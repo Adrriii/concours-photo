@@ -24,12 +24,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/custom-theme.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/hamburgers/dist/hamburgers.css",
               "node_modules/ngx-toastr/toastr.css",
-              "src/styles.css"
+              "src/styles.css",
+              "src/custom-theme.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

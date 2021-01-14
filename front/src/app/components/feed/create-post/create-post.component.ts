@@ -1,16 +1,14 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry} from 'ngx-file-drop';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {NgxFileDropEntry, FileSystemFileEntry} from 'ngx-file-drop';
 import {ToastrService} from 'ngx-toastr';
 
-// TODO à delete quand il y aura le service
-import {HttpClient} from '@angular/common/http';
 import {PostsService} from '../../../services/posts.service';
 import {Post} from '../../../models/Post.model';
 import {AuthService} from '../../../services/auth.service';
-import {UserAuth} from '../../../models/UserAuth.model';
 import {Subscription} from 'rxjs';
+import {User} from '../../../models/User.model';
 
 @Component({
     selector: 'app-create-post',
@@ -23,7 +21,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     imagePreview: string | ArrayBuffer = null;
     currentFile: NgxFileDropEntry;
 
-    userAuth: UserAuth = null;
+    user: User = null;
     userSubscription: Subscription;
 
     constructor(
@@ -83,8 +81,9 @@ export class CreatePostComponent implements OnInit, OnDestroy {
         });
 
         this.userSubscription = this.authService.me.subscribe(
-            userAuth => this.userAuth = userAuth
+            user => this.user = user
         );
+        this.authService.emitMe();
     }
 
     ngOnDestroy(): void {
@@ -92,6 +91,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     }
 
     save(): void {
+        console.log('Save method : ');
         if (this.files.length === 1) {
             const fileEntry = this.currentFile.fileEntry as FileSystemFileEntry;
             fileEntry.file((file: File) => {
@@ -100,12 +100,14 @@ export class CreatePostComponent implements OnInit, OnDestroy {
                     null,
                     null,
                     null,
-                    this.userAuth.user,
+                    this.user,
                     null,
                     null,
                     null,
                     null
                 );
+
+                console.log('Sending post : ' + JSON.stringify(post));
 
                 formData.append('file', file, this.currentFile.relativePath);
                 formData.append('post', JSON.stringify(post));

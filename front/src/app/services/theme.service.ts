@@ -15,7 +15,7 @@ export class ThemeService {
     }
 
     getCurrentTheme(): Observable<Theme> {
-        return this.httpClient.get<Theme>(environment.apiBaseUrl + `themes/current`, {withCredentials: true});
+        return this.httpClient.get<Theme>(environment.apiBaseUrl + `themes/current`);
     }
 
 }

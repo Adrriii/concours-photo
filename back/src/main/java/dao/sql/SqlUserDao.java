@@ -56,7 +56,7 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
     }
 
     @Override
-    public void update(User user) throws SQLException {
+    public User update(User user) throws SQLException {
         if(user.id == null) throw new SQLException(String.valueOf(UserDaoException.ID_NOT_PROVIDED));
 
         String statement = "UPDATE user SET username=?, userlevel=?, victories=?, score=? WHERE id=?";
@@ -67,6 +67,7 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
         }
 
         exec(statement, opt);
+        return user;
     }
 
     @Override

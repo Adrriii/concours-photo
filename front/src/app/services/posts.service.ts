@@ -14,6 +14,14 @@ export class PostsService {
     ) {
     }
 
+    getAllCommentByPostId(postId: number): Observable<Comment[]> {
+        return this.httpClient.get<Comment[]>(environment.apiBaseUrl + `posts/${postId}/comments`, {withCredentials: true});
+    }
+
+    getPostsByTheme(themeId: number): Observable<Post[]> {
+        return this.httpClient.get<Post[]>(environment.apiBaseUrl + `posts/${themeId}`, {withCredentials: true});
+    }
+
     getById(id: number): Observable<Post> {
         return this.httpClient.get<Post>(environment.apiBaseUrl + `posts/${id}`, {withCredentials: true});
     }

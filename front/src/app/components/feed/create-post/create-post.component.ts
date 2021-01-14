@@ -4,8 +4,6 @@ import {MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatDialogConfig} from '@angula
 import {NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry} from 'ngx-file-drop';
 import {ToastrService} from 'ngx-toastr';
 
-// TODO à delete quand il y aura le service
-import {HttpClient} from '@angular/common/http';
 import {PostsService} from '../../../services/posts.service';
 import {Post} from '../../../models/Post.model';
 import {AuthService} from '../../../services/auth.service';

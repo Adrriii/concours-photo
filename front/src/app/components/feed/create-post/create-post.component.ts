@@ -9,7 +9,7 @@ import {HttpClient} from '@angular/common/http';
 import {PostsService} from '../../../services/posts.service';
 import {Post} from '../../../models/Post.model';
 import {AuthService} from '../../../services/auth.service';
-import {User} from '../../../models/User.model';
+import {UserAuth} from '../../../models/UserAuth.model';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -23,7 +23,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     imagePreview: string | ArrayBuffer = null;
     currentFile: NgxFileDropEntry;
 
-    user: User = null;
+    userAuth: UserAuth = null;
     userSubscription: Subscription;
 
     constructor(
@@ -83,7 +83,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
         });
 
         this.userSubscription = this.authService.me.subscribe(
-            user => this.user = user
+            userAuth => this.userAuth = userAuth
         );
     }
 
@@ -100,7 +100,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
                     null,
                     null,
                     null,
-                    this.user,
+                    this.userAuth.user,
                     null,
                     null,
                     null,

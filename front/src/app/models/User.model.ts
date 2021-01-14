@@ -1,4 +1,9 @@
 export class User {
-    constructor(public username: string) {
-    }
+    constructor(
+        public id : number,
+        public username : String,
+        public userlevel : number,
+        public victories : number,
+        public score : number
+    ) {}
 }

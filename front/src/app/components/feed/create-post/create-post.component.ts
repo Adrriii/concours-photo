@@ -1,14 +1,14 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {NgxFileDropEntry, FileSystemFileEntry, FileSystemDirectoryEntry} from 'ngx-file-drop';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {NgxFileDropEntry, FileSystemFileEntry} from 'ngx-file-drop';
 import {ToastrService} from 'ngx-toastr';
 
 import {PostsService} from '../../../services/posts.service';
 import {Post} from '../../../models/Post.model';
 import {AuthService} from '../../../services/auth.service';
-import {User} from '../../../models/User.model';
 import {Subscription} from 'rxjs';
+import {User} from '../../../models/User.model';
 
 @Component({
     selector: 'app-create-post',
@@ -77,12 +77,14 @@ export class CreatePostComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.form = this.formBuilder.group({
-            title: ['', Validators.required]
+            title: ['', Validators.required],
+            tag: ['', Validators.required]
         });
 
         this.userSubscription = this.authService.me.subscribe(
             user => this.user = user
         );
+        this.authService.emitMe();
     }
 
     ngOnDestroy(): void {
@@ -90,20 +92,25 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     }
 
     save(): void {
+        console.log('Save method : ');
         if (this.files.length === 1) {
             const fileEntry = this.currentFile.fileEntry as FileSystemFileEntry;
             fileEntry.file((file: File) => {
+
+                console.log('Value is : ', this.form.value);
                 const formData = new FormData();
                 const post = new Post(
-                    null,
+                    this.form.value.title,
                     null,
                     null,
                     this.user,
-                    null,
+                    this.form.value.tag,
                     null,
                     null,
                     null
                 );
+
+                console.log('Sending post : ' + JSON.stringify(post));
 
                 formData.append('file', file, this.currentFile.relativePath);
                 formData.append('post', JSON.stringify(post));
@@ -116,7 +123,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
                         this.toastr.success('You posted your picture !');
                     },
                     error => {
-                        console.log('Error while sending file -> ' + error);
+                        console.log('Error while sending file -> ' + error.message);
                         this.toastr.error(error.message);
                     }
                 );
@@ -147,5 +154,9 @@ export class CreatePostComponent implements OnInit, OnDestroy {
 
     isFileSelected(): boolean {
         return this.imagePreview !== null;
+    }
+
+    isFromCorrect(): boolean {
+        return this.form.valid && this.files.length === 1;
     }
 }

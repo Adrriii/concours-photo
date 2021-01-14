@@ -1,4 +1,10 @@
+import { User } from './User.model';
+
 export class UserAuth {
-    constructor(public username: string) {
+
+    public user: User;
+
+    constructor(
+        public username: string) {
     }
 }

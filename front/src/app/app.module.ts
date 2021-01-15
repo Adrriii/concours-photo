@@ -24,6 +24,8 @@ import {ToastrModule} from 'ngx-toastr';
 import {AuthInterceptorService} from './services/auth-interceptor.service';
 import { UserComponent } from './components/user/user.component';
 import { ThemeComponent } from './components/theme/theme.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { OtherProfileComponent } from './components/other-profile/other-profile.component';
 
 @NgModule({
     declarations: [
@@ -36,6 +38,8 @@ import { ThemeComponent } from './components/theme/theme.component';
         CreatePostComponent,
         UserComponent,
         ThemeComponent,
+        ProfileComponent,
+        OtherProfileComponent,
     ],
     imports: [
         BrowserModule,

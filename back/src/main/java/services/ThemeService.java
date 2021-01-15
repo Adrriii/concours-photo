@@ -18,7 +18,7 @@ public class ThemeService {
 
     public Optional<Theme> getById(int id) {
         try {
-            return Optional.of(themeDao.getById(id));
+            return themeDao.getById(id);
         } catch (Exception e) {
             return Optional.empty();
         }

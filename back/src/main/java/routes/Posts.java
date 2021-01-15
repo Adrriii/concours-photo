@@ -44,7 +44,7 @@ public class Posts {
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetails,
             @FormDataParam("post") String postJson
-    ) throws Exception {
+    ) {
         try {
             Optional<User> userOpt = userService.getUserFromRequestContext(ctx);
             User user = userOpt.orElseThrow(
@@ -91,7 +91,7 @@ public class Posts {
             }
         } catch(Exception e) {
             e.printStackTrace();
-            throw e;
+            return Response.status(500).entity(e.getMessage()).build();
         }
     }
 

@@ -31,5 +31,6 @@ public class ApplicationBinder extends AbstractBinder {
         bindAsContract(UserService.class);
         bindAsContract(LabelService.class);
         bindAsContract(SearchService.class);
+        bindAsContract(FeedService.class);
     }
 }

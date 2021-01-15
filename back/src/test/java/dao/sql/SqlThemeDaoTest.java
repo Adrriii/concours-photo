@@ -40,7 +40,7 @@ class SqlThemeDaoTest {
         SqlThemeDao sqlThemeDao = new SqlThemeDao();
 
         Theme inserted = assertDoesNotThrow(() -> sqlThemeDao.insert(theme));
-        Theme fromGet = assertDoesNotThrow(() -> sqlThemeDao.getById(inserted.id));
+        Theme fromGet = assertDoesNotThrow(() -> sqlThemeDao.getById(inserted.id).orElseThrow());
 
         assertEquals(inserted, fromGet);
         

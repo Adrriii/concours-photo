@@ -4,7 +4,7 @@ import model.Comment;
 
 import java.util.List;
 
-public interface CommentDao {
+public interface CommentDao extends Searchable<Comment> {
     List<Comment> getAllForUser(int projectId) throws Exception;
     List<Comment> getAllForPost(int postId) throws Exception;
     List<Comment> getChildren(int parentId) throws Exception;

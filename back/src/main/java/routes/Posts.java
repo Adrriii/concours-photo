@@ -18,10 +18,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceContext;
@@ -97,7 +94,7 @@ public class Posts {
     }
 
     @GET
-    @Path("{themeId}")
+    @Path("theme/{themeId}")
     public Response getPostsByThemeId(@PathParam("themeId") int themeId) {
         try {
             List<Post> posts = postService.getPostsByThemeId(themeId);

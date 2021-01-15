@@ -76,4 +76,13 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
 
         exec(statement, opt);
     }
+
+    @Override
+    public List<Post> search(String searchString) throws SQLException {
+        searchString = "%"+searchString+"%";
+        String statement = "SELECT * FROM post WHERE title LIKE ?";
+        List<Object> opt = Arrays.asList(searchString);
+
+        return queryAllObjects(statement, opt);
+    }
 }

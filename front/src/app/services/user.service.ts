@@ -12,8 +12,16 @@ export class UserService {
 
   constructor() { }
 
-  // getById(id: number): Observable<User> {
-  //   return this.httpClient.get<User>(environment.apiBaseUrl + `user/${id}`, {withCredentials: true});
-  // }
+  getById(id: number): Observable<User> {
+    return this.httpClient.get<User>(environment.apiBaseUrl + `user/${id}`);
+  }
+
+  getMe(): Observable<User> {
+    return this.httpClient.get<User>(environment.apiBaseUrl + 'me');
+  }
+
+  update(): void {
+    
+  }
   
 }

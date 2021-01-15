@@ -1,6 +1,7 @@
 package routes;
 
 import filters.JWTTokenNeeded;
+import model.User;
 import services.UserService;
 
 import javax.annotation.security.PermitAll;
@@ -14,7 +15,8 @@ import javax.ws.rs.core.Response;
 @Path("user/")
 @PermitAll
 public class Users {
-    @Inject UserService userService;
+    @Inject
+    UserService userService;
 
     @GET
     @Path("{id}")
@@ -33,5 +35,18 @@ public class Users {
         return userService.getUserFromRequestContext(ctx).map(
                 user -> Response.ok().entity(user).build()
         ).orElse(Response.status(500).entity("Internal error, can't find logged user").build());
+    }
+
+    @PUT
+    @Path("me")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modifyMe(User user) {
+        try {
+            return userService.update(user)
+                    .map(userUpdated -> Response.ok(userUpdated).build())
+                    .orElse(Response.status(400).entity("Internal error, cannot update logged user").build());
+        } catch (Exception e) {
+            return Response.status(500).entity(e.getMessage()).build();
+        }
     }
 }

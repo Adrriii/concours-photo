@@ -51,6 +51,8 @@
                     <li><a><span>242 Dislikes</span></a></li>
                 </ul>
             </div><!--/ cardbox-base -->
+
+            <app-comments [hidden]="!isSelected" [post]="post"></app-comments>
         </div><!--/ cardbox -->
     </div><!--/ col-lg-6 -->
 

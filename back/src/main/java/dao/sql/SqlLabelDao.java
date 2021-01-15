@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Arrays;
 
 public class SqlLabelDao extends SqlDao<Label> implements LabelDao {
@@ -21,6 +22,13 @@ public class SqlLabelDao extends SqlDao<Label> implements LabelDao {
         String statement = "SELECT * FROM label";
 
         return queryAllObjects(statement);
+    }
+
+    public Optional<Label> get(Label label) throws SQLException {
+        String statement = "SELECT * FROM label WHERE label = ?";
+        List<Object> opt = Arrays.asList(label.label);
+
+        return queryFirstOptional(statement, opt);
     }
 
     public Label insert(Label label) throws SQLException {

@@ -2,10 +2,7 @@ package routes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import filters.JWTTokenNeeded;
-import model.Comment;
-import model.Image;
-import model.Post;
-import model.User;
+import model.*;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -32,6 +29,8 @@ public class Posts {
     @Inject ReactionService reactionService;
     @Inject UserService userService;
     @Inject AbstractImageService imageService;
+    @Inject ThemeService themeService;
+    @Inject LabelService labelService;
 
     @Context private ResourceContext resourceContext;
 
@@ -46,42 +45,53 @@ public class Posts {
             @FormDataParam("file") FormDataContentDisposition fileDetails,
             @FormDataParam("post") String postJson
     ) throws Exception {
-        Optional<User> userOpt = userService.getUserFromRequestContext(ctx);
-        User user = userOpt.orElseThrow(
-                () -> new Exception("User logged in but can't find username in context")
-        );
-        ObjectMapper mapper = new ObjectMapper();
-        Post post = mapper.readValue(postJson, Post.class);
-
-        String image64 = Base64.encodeBase64String(
-                IOUtils.toByteArray(uploadedInputStream)
-        );
-
-        Image image = imageService.postImage(image64);
-        System.out.println("Image posted ! Link is : " + image.url);
-        Post newPost = new Post(
-                post.title,
-                post.reacted,
-                post.reactions,
-                user,
-                post.label,
-                post.theme,
-                image.url,
-                image.delete_url
-        );
-
-        System.out.println("Create post : " + newPost);
-
         try {
-            return postService.addOne(newPost)
-                    .map(createdPost -> Response.ok(createdPost).build())
-                    .orElse(Response.status(400).entity("Bad post format").build());
-        } catch (SQLException e) {
-            System.out.println("SQL Exception : " + e.getMessage());
-            return Response.status(500).entity(e.getMessage()).build();
-        } catch (Exception e) {
-            System.out.println("Exception in add post : " + e.getMessage());
-            return Response.status(500).entity(e.getMessage()).build();
+            Optional<User> userOpt = userService.getUserFromRequestContext(ctx);
+            User user = userOpt.orElseThrow(
+                    () -> new Exception("User logged in but can't find username in context")
+            );
+            Theme theme = themeService.getCurrent().orElseThrow(
+                () -> new Exception("No current theme")
+            );
+            ObjectMapper mapper = new ObjectMapper();
+            Post post = mapper.readValue(postJson, Post.class);
+
+            Label label = labelService.get(post.label).orElseThrow(
+                () -> new Exception("Label not found : "+post.label)
+            );
+            String image64 = Base64.encodeBase64String(
+                    IOUtils.toByteArray(uploadedInputStream)
+            );
+
+            Image image = imageService.postImage(image64);
+            System.out.println("Image posted ! Link is : " + image.url);
+            Post newPost = new Post(
+                    post.title,
+                    null,
+                    null,
+                    user,
+                    label,
+                    theme,
+                    image.url,
+                    image.delete_url
+            );
+
+            System.out.println("Create post : " + newPost);
+
+            try {
+                return postService.addOne(newPost)
+                        .map(createdPost -> Response.ok(createdPost).build())
+                        .orElse(Response.status(400).entity("Bad post format").build());
+            } catch (SQLException e) {
+                System.out.println("SQL Exception : " + e.getMessage());
+                return Response.status(500).entity(e.getMessage()).build();
+            } catch (Exception e) {
+                System.out.println("Exception in add post : " + e.getMessage());
+                return Response.status(500).entity(e.getMessage()).build();
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
         }
     }
 

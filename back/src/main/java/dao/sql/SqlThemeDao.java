@@ -38,7 +38,7 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
 
     @Override
     public Optional<Theme> getCurrent() throws SQLException {
-        String statement = "SELECT * FROM theme WHERE state='current'";
+        String statement = "SELECT * FROM theme WHERE state='active'";
 
         return queryFirstOptional(statement);
     }

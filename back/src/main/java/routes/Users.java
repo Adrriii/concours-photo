@@ -12,7 +12,6 @@ import model.User;
 import services.UserService;
 
 
-
 @Path("user/")
 @PermitAll
 public class Users {

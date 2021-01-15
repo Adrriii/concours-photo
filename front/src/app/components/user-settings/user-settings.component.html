@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-lg-5 profile" id="profile-picture">
+      <a [routerLink]="['']">Add a picture</a>
+    </div>
+    <div class="col-lg-7 profile card">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <span id="name"> {{ getUserName() }} </span>
+        </li>
+        <li class="list-group-item">Mail : {{ getSetting("mail") }}</li>
+        <li class="list-group-item">Gender : {{ getSetting("gender") }}</li>
+        <li class="list-group-item">Birthday : {{ getSetting("birthday") }}</li>
+        <li class="list-group-item">Location : {{ getSetting("location") }}</li>
+        <li class="list-group-item">Bio : {{ getSetting("bio") }}</li>
+        <li class="list-group-item">Victories : {{ getSetting("victories") }}</li>
+        <li class="list-group-item">Points : {{ getSetting("points") }}</li>
+        <li class="list-group-item">
+            <button type="button" class="button-self-made" (click)="openDialog()">Update informations</button>
+        </li>
+      </ul>
+    </div>
+</div>

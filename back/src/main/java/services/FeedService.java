@@ -15,13 +15,15 @@ public class FeedService {
     @Inject ThemeDao themeDao;
     @Inject LabelDao labelDao;
 
-    public List<Post> feedSearch(String sort, String direction, Integer themeId, String labels) throws Exception {
+    public List<Post> feedSearch(String sort, String direction, Integer themeId, String labels, Integer page, Integer nbPosts) throws Exception {
         Theme theme = getArgTheme(themeId);
         sort = getArgSort(sort);
         direction = getArgDirection(direction);
         Set<Label> labelSet = getArgLabels(labels);
 
-        return postDao.getFeedSearch(sort, direction, theme, labelSet);
+        int offset = (page-1)*nbPosts;
+
+        return postDao.getFeedSearch(sort, direction, theme, labelSet, offset, nbPosts);
     }
 
     private Theme getArgTheme(Integer themeId) throws Exception {

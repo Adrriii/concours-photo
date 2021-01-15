@@ -1,21 +1,22 @@
 package routes;
 
 import filters.JWTTokenNeeded;
+import model.User;
+import services.UserService;
+
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import model.User;
-import services.UserService;
-
 
 @Path("user/")
 @PermitAll
 public class Users {
-    @Inject UserService userService;
+    @Inject
+    UserService userService;
 
     @GET
     @Path("{id}")

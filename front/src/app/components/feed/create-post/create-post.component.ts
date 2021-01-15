@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {NgxFileDropEntry, FileSystemFileEntry} from 'ngx-file-drop';
@@ -11,6 +11,8 @@ import {Subscription} from 'rxjs';
 import {User} from '../../../models/User.model';
 import {LabelsService} from '../../../services/labels.service';
 import {Label} from '../../../models/Label.model';
+import {EventEmitter} from '@angular/core';
+
 
 @Component({
     selector: 'app-create-post',
@@ -18,6 +20,7 @@ import {Label} from '../../../models/Label.model';
     styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit, OnDestroy {
+    postAdded = new EventEmitter();
     form: FormGroup;
     files: NgxFileDropEntry[] = [];
     imagePreview: string | ArrayBuffer = null;
@@ -105,12 +108,9 @@ export class CreatePostComponent implements OnInit, OnDestroy {
     }
 
     save(): void {
-        console.log('Save method : ');
         if (this.files.length === 1) {
             const fileEntry = this.currentFile.fileEntry as FileSystemFileEntry;
             fileEntry.file((file: File) => {
-
-                console.log('Value is : ', this.form.value);
                 const formData = new FormData();
                 const post = new Post(
                     this.form.value.title,
@@ -123,20 +123,17 @@ export class CreatePostComponent implements OnInit, OnDestroy {
                     null
                 );
 
-                console.log('Sending post : ' + JSON.stringify(post));
-
                 formData.append('file', file, this.currentFile.relativePath);
                 formData.append('post', JSON.stringify(post));
 
-                this.postService.sendPost(
+                this.postService.post(
                     formData
                 ).subscribe(
                     postSent => {
-                        console.log('Receive post -> ' + postSent);
                         this.toastr.success('You posted your picture !');
+                        this.postAdded.emit();
                     },
                     error => {
-                        console.log('Error while sending file -> ' + error.message);
                         this.toastr.error(error.message);
                     }
                 );

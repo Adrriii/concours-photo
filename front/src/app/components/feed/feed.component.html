@@ -34,7 +34,7 @@
 <a routerLink="/themes"><button class="next-theme">Next theme</button></a>
 <button class="create-post" (click)="openDialog()">Create new post</button>
 
-<section class="post-feed" *ngFor="let post of listPosts; let i=index">
+<section class="post-feed" *ngFor="let post of posts; let i=index">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 offset-lg-3">

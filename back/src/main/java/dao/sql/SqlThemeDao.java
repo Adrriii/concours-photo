@@ -38,7 +38,7 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
 
     @Override
     public Optional<Theme> getCurrent() throws SQLException {
-        String statement = "SELECT * FROM theme WHERE state='current'";
+        String statement = "SELECT * FROM theme WHERE state='active'";
 
         return queryFirstOptional(statement);
     }
@@ -58,11 +58,11 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
     }
 
     @Override
-    public Theme getById(int id) throws SQLException {
+    public Optional<Theme> getById(int id) throws SQLException {
         String statement = "SELECT * from theme WHERE id=?";
         List<Object> opt = Arrays.asList(id);
 
-        return queryFirstObject(statement, opt);
+        return queryFirstOptional(statement, opt);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
         );
 
         int insertedId = doInsert(statement, opt);
-        return getById(insertedId);
+        return getById(insertedId).orElseThrow(Exception::new);
     }
 
     @Override

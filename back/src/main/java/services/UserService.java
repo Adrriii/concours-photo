@@ -1,13 +1,13 @@
 package services;
 
 import dao.UserDao;
-
+import java.util.Optional;
+import javax.inject.Inject;
+import javax.ws.rs.container.ContainerRequestContext;
 import model.User;
 import model.UserPublic;
 
-import javax.inject.Inject;
-import javax.ws.rs.container.ContainerRequestContext;
-import java.util.Optional;
+
 
 public class UserService {
     @Inject
@@ -38,4 +38,14 @@ public class UserService {
 
         return Optional.of(user);
     }
+
+    public Optional<User> update(User user) throws Exception {
+        try {
+            userDao.getById(user.id);
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+
+        return Optional.of(userDao.update(user));
+    }   
 }

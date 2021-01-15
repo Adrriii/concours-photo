@@ -1,8 +1,7 @@
-import filters.CorsFilter;
+
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 import javax.ws.rs.ApplicationPath;
 import java.util.logging.Level;
@@ -16,7 +15,7 @@ public class Api extends ResourceConfig {
 
         register(new ApplicationBinder());
         register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.INFO,
-                LoggingFeature.Verbosity.PAYLOAD_ANY, 10000));
+                LoggingFeature.Verbosity.HEADERS_ONLY, 10000));
         register(MultiPartFeature.class);
     }
 }

@@ -5,6 +5,7 @@ import model.Label;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Optional;
 
 public class LabelService {
     @Inject
@@ -12,6 +13,10 @@ public class LabelService {
 
     public Label addOne(Label label) throws Exception {
         return labelDao.insert(label);
+    }
+
+    public Optional<Label> get(Label label) throws Exception {
+        return labelDao.get(label);
     }
 
     public List<Label> getAll() throws Exception {

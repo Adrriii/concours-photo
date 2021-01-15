@@ -5,8 +5,10 @@ import model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class SqlPostDao extends SqlDao<Post> implements PostDao {
 
@@ -16,35 +18,23 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
         User author = new SqlUserDao().getById(authorId);
 
         int themeId = resultSet.getInt("theme");
-        Theme theme = new SqlThemeDao().getById(themeId);
+        Theme theme = new SqlThemeDao().getById(themeId).orElseThrow(SQLException::new);
 
         int postId = resultSet.getInt("id");
         List<Reactions> reactions = new SqlReactionsDao().getAllReactionsForPost(postId);
 
-        return new Post(
-            resultSet.getString("title"),
-            null,
-            reactions,
-            author,
-            new Label(resultSet.getString("label")),
-            theme,
-            resultSet.getString("photo_url"),
-            resultSet.getString("delete_url"),
-            postId
-        );
+        return new Post(resultSet.getString("title"), resultSet.getDate("d").toString(), 
+                null, reactions, author, new Label(resultSet.getString("label")),
+                theme, resultSet.getString("photo_url"), resultSet.getString("delete_url"), 
+                getInteger(resultSet, "score"), getInteger(resultSet, "nb_comment"), 
+                getInteger(resultSet, "nb_votes"), postId);
     }
 
     @Override
     public Post insert(Post post) throws SQLException {
         String statement = "INSERT INTO post (title, author, label, theme, photo_url, delete_url) VALUES (?, ?, ?, ?, ?, ?)";
-        List<Object> opt = Arrays.asList(
-            post.title,
-            post.author.id,
-            post.label != null ? post.label.label : null,
-            post.theme.id,
-            post.photo,
-            post.photoDelete
-        );
+        List<Object> opt = Arrays.asList(post.title, post.author.id, post.label != null ? post.label.label : null,
+                post.theme.id, post.photo, post.photoDelete);
 
         int insertedId = doInsert(statement, opt);
         return getById(insertedId);
@@ -75,5 +65,58 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
         List<Object> opt = Arrays.asList(post.id);
 
         exec(statement, opt);
+    }
+
+    @Override
+    public List<Post> search(String searchString) throws SQLException {
+        searchString = "%" + searchString + "%";
+        String statement = "SELECT * FROM post WHERE title LIKE ?";
+        List<Object> opt = Arrays.asList(searchString);
+
+        return queryAllObjects(statement, opt);
+    }
+
+    @Override
+    public List<Post> getFeedSearch(String sort, String direction, Theme theme, Set<Label> labelSet) throws Exception {
+        String labelSubStatement = null;
+        List<Object> opt = new ArrayList<>();
+        
+        for(Label label : labelSet) {
+            if(labelSubStatement != null) labelSubStatement += " OR ";
+            else labelSubStatement = "";
+            labelSubStatement += "p.label = ?";
+            opt.add(label.label);
+        }
+        if(labelSubStatement == null) labelSubStatement = " ";
+        else labelSubStatement = " AND ("+labelSubStatement+") ";
+
+        String statement = "SELECT * FROM post as p, label as l, theme as t ";
+        statement += "WHERE p.label = l.label AND p.theme = t.id" + labelSubStatement;
+        statement += "AND p.theme = ? ";
+        opt.add(theme.id);
+
+        if(direction != "DESC" && direction != "ASC") throw new Exception("Invalid direction parameter");
+        statement += "ORDER BY ? "+direction;
+
+        switch(sort) {
+            case "score":
+                sort = "p.score";
+                break;
+            case "date":
+                sort = "p.d";
+                break;
+            case "nbComment":
+                sort = "p.nb_comment";
+                break;
+            case "nbVotes":
+                sort = "p.nb_votes";
+                break;
+            default:
+                throw new Exception("Invalid sort parameter");
+        }
+
+        opt.add(sort);
+
+        return queryAllObjects(statement, opt);
     }
 }

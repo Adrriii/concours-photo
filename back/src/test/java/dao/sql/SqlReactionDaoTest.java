@@ -32,7 +32,7 @@ class SqlReactionDaoTest {
         User toInsertUser = new User("user"+new Date().toInstant().toEpochMilli());
         testUser = new SqlUserDao().insert(toInsertUser, "null");
         
-        Post toInsertPost = new Post("post"+new Date().toInstant().toEpochMilli(), null, null, testUser, null, new SqlThemeDao().getById(1).orElseThrow(), "url", "url");
+        Post toInsertPost = new Post("post"+new Date().toInstant().toEpochMilli(), null, null, testUser, null, new SqlThemeDao().getById(1).orElseThrow(Exception::new), "url", "url");
         testPost = postDao.insert(toInsertPost);
     }
 

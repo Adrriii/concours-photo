@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ThemeDao {
     List<Theme> getAll() throws Exception;
-    Theme getById(int id) throws Exception;
+    Optional<Theme> getById(int id) throws Exception;
     Optional<Theme> getCurrent() throws Exception;
     
     List<Theme> getProposals() throws Exception;

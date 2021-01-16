@@ -46,7 +46,14 @@ public class SqlReactionDao extends SqlDao<Reaction> implements ReactionDao {
         String statement = "REPLACE INTO reaction (user, post, value) VALUES (?,?,?)";
         List<Object> opt = Arrays.asList(user.id, post.id, reaction.toString().toLowerCase());
 
+        int score = 1;
+        if(reaction == ReactionName.DISLIKE) score = -1;
+
+        String statementIncrement = "UPDATE post SET score = score + "+score+", nb_votes = nb_votes + 1 WHERE id = ?";
+        List<Object> optIncrement = Arrays.asList(post.id);
+        
         exec(statement, opt);
+        exec(statementIncrement, optIncrement);
     }
 
     @Override
@@ -54,7 +61,15 @@ public class SqlReactionDao extends SqlDao<Reaction> implements ReactionDao {
         String statement = "DELETE FROM reaction WHERE user=? AND post=?";
         List<Object> opt = Arrays.asList(user.id, post.id);
 
+        int score = 1;
+        Reaction reaction = get(user.id, post.id);
+        if(reaction.reaction == ReactionName.DISLIKE) score = -1;
+
+        String statementIncrement = "UPDATE post SET score = score - "+score+", nb_votes = nb_votes - 1 WHERE id = ?";
+        List<Object> optIncrement = Arrays.asList(post.id);
+
         exec(statement, opt);
+        exec(statementIncrement, optIncrement);
     }
 
     @Override

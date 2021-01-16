@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {CommentsService} from '../../../../../services/comments.service';
 
 @Component({
@@ -10,7 +10,7 @@ import {CommentsService} from '../../../../../services/comments.service';
 export class CommentFormComponent implements OnInit {
 
     form = this.formBuilder.group({
-        comment: ''
+        comment: ['', Validators.required]
     });
 
     constructor(

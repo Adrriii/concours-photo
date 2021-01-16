@@ -12,19 +12,28 @@ public abstract class SqlDao<T> {
     protected Integer queryFirstInt(String statement, List<Object> opt) throws SQLException {
         PreparedStatement preparedStatement = SqlDatabase.prepare(statement, opt);
         String sql = preparedStatement.toString();
-        preparedStatement.execute();
-
+        
+        ResultSet queryResult = preparedStatement.executeQuery();
         ResultSet generatedKey = preparedStatement.getGeneratedKeys();
 
         int id;
         if (generatedKey.next()) {
             id = generatedKey.getInt(1);
             generatedKey.close();
+            queryResult.close();
+            preparedStatement.close();
+            return id;
+        }
+        if(queryResult.next()) {
+            id = queryResult.getInt(1);
+            generatedKey.close();
+            queryResult.close();
             preparedStatement.close();
             return id;
         }
 
         generatedKey.close();
+        queryResult.close();
         preparedStatement.close();
 
         throw new SQLException("Could not get result : " + sql);
@@ -49,7 +58,7 @@ public abstract class SqlDao<T> {
 
     protected List<T> queryAllObjects(String statement, List<Object> opt) throws SQLException {
         PreparedStatement preparedStatement = SqlDatabase.prepare(statement, opt);
-        System.out.println(preparedStatement.toString());
+        //System.out.println(preparedStatement.toString());
         ResultSet resultSet = preparedStatement.executeQuery();
         List<T> items = new ArrayList<>();
 

@@ -5,18 +5,18 @@ import {LoginComponent} from './components/authentication/login/login.component'
 import {RegisterComponent} from './components/authentication/register/register.component';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {FeedComponent} from './components/feed/feed.component';
-import { UserComponent } from './components/user/user.component';
 import {ThemeComponent} from './components/theme/theme.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {OtherProfileComponent} from './components/other-profile/other-profile.component';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 
 const routes: Routes = [
     { path : 'feed', component: FeedComponent },
     { path : 'home', component: HomeComponent },
     { path : 'login', component: LoginComponent },
     { path : 'register', component: RegisterComponent },
-    { path : 'user', component: UserComponent },
     { path: 'me', component: ProfileComponent },
+    { path : 'settings', component: UserSettingsComponent },
     { path : 'themes', component: ThemeComponent },
     { path : '', redirectTo: '/home', pathMatch: 'full'},
     { path : '**', component: PageNotFoundComponent }

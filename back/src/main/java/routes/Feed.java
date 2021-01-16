@@ -21,10 +21,12 @@ public class Feed {
         @DefaultValue("DESC") @QueryParam("sort") String sort, 
         @DefaultValue("score") @QueryParam("direction") String direction, 
         @DefaultValue("") @QueryParam("labels") String labels,
+        @DefaultValue("1") @QueryParam("page") Integer page,
+        @DefaultValue("15") @QueryParam("nbPosts") Integer nbPosts,
         @QueryParam("theme") Integer themeId
     ) {
         try {
-            return Response.ok().entity(feedService.feedSearch(sort, direction, themeId, labels)).build();
+            return Response.ok().entity(feedService.feedSearch(sort, direction, themeId, labels, page, nbPosts)).build();
         } catch(Exception e) {
             return Response.status(500).entity(e.getMessage()).build();
         }

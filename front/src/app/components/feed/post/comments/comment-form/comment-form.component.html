@@ -1,0 +1,12 @@
+<div class="write-new">
+    <form action="#" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <label>
+            <textarea placeholder="Write your comment here" name="comment" formControlName="comment"></textarea>
+        </label>
+        <div>
+            <img src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg" width="35"
+                 alt="Profile of Bradley Jones" title="Alexandre Legendre"/>
+            <button class="btn" type="submit" [disabled]="!form.valid">Submit</button>
+        </div>
+    </form>
+</div>

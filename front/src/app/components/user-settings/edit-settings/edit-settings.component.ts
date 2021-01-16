@@ -16,6 +16,7 @@ export class EditSettingsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log("nrbrnrbbjhbqjh")
   }
 
   update(): void {

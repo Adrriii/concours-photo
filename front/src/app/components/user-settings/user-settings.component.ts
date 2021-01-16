@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/User.model';
-import { AuthService } from 'src/app/services/auth.service';
+import { UserSetting } from 'src/app/models/UserSetting.model';
+import { AuthService } from '../../services/auth.service';
 import { EditSettingsComponent } from './edit-settings/edit-settings.component';
 
 @Component({
@@ -12,8 +13,8 @@ import { EditSettingsComponent } from './edit-settings/edit-settings.component';
 })
 export class UserSettingsComponent implements OnInit, OnDestroy {
 
-    currentUserSubscription: Subscription;
     currentUser: User = null;
+    currentUserSubscription: Subscription;
 
     constructor(
         private dialog: MatDialog,
@@ -23,7 +24,9 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.currentUserSubscription = this.authService.me.subscribe(
-            user => this.currentUser = user
+            user => {
+              this.currentUser = user
+            }
         );
     }
 
@@ -47,14 +50,12 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     }
 
     getUserName() : string {
-      if(this.currentUser)
-          return this.currentUser.username;
+      if(this.authService.currentUser)
+          return this.authService.currentUser.username;
       return "Undefined";
     }
 
-    getSetting(settingName : string) : string {
-      if(this.currentUser && this.currentUser.settings.has(settingName))
-          return this.currentUser.settings.get(settingName)
-      return "Undefined";
+    getSetting(settingName: string) : string {
+      return 'undefined'
     }
 }

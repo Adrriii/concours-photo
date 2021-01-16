@@ -35,7 +35,7 @@ VALUES
 INSERT INTO user (username,sha,userlevel,victories,score) 
 VALUES
     ("Adri","f1ef21ffb3c4521188d2d08a8306bf71f87cbc8246ab296018f33c63b4f14e93",10,999,9999),
-    ("coucou","1",10,999,9999),
+    ("coucou","37acbd7dc4f8b1dfe7954b59d775da26f4d017df28bde97ef34a77b013a5f0f6",10,999,9999),
     ("Alexandre","2",10,999,9999),
     ("JD","3",10,999,9999);
 
@@ -48,3 +48,12 @@ VALUES
     ("Chien",1,null,2,"https://media.nature.com/lw800/magazine-assets/d41586-020-01430-5/d41586-020-01430-5_17977552.jpg",""),
     ("OtherPost",2,"Macro",1,"https://www.canon.fr/media/IMG_5302-5325.tif_1200x800_tcm79-1374042.jpg","")
     ;
+
+-- Insert Demo comments
+    
+INSERT INTO comment (author, post, parent, content)
+VALUES
+    (1, 1, null, "Je suis un super commentaire !"),
+    (2, 1,  1, "Ouais c'est ça"),
+    (3, 1,  null, "Super photo !"),
+    (4, 1,  null, "Ouaip");

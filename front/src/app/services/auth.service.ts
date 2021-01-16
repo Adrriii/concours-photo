@@ -16,6 +16,11 @@ export class AuthService {
     public isAuth = false;
 
     constructor(private httpClient: HttpClient) {
+        const jwt = localStorage.getItem('jwt');
+
+        if (jwt !== null) {
+            this.setCurrentUser(jwt);
+        }
     }
 
     emitMe(): void {

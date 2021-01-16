@@ -233,3 +233,9 @@
     width: 100%;
     border: 1px solid #F2F2F2;
 }
+
+
+.form-container {
+    display: flex;
+    justify-content: center;
+}

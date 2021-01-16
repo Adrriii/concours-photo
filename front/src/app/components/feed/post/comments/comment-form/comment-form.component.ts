@@ -1,15 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
+import {CommentsService} from '../../../../../services/comments.service';
 
 @Component({
-  selector: 'app-comment-form',
-  templateUrl: './comment-form.component.html',
-  styleUrls: ['./comment-form.component.css']
+    selector: 'app-comment-form',
+    templateUrl: './comment-form.component.html',
+    styleUrls: ['./comment-form.component.css']
 })
 export class CommentFormComponent implements OnInit {
 
-  constructor() { }
+    form = this.formBuilder.group({
+        comment: ''
+    });
 
-  ngOnInit(): void {
-  }
+    constructor(
+        private formBuilder: FormBuilder,
+        private commentService: CommentsService
+    ) {
+    }
 
+    ngOnInit(): void {
+    }
+
+    onSubmit(): void {
+        console.log('Hop submit comment (TODO)');
+    }
 }

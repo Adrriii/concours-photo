@@ -56,6 +56,6 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     }
 
     getSetting(settingName: string) : string {
-      let map = this.authService.currentUser.settings.map( x => x);
+      return 'undefined'
     }
 }

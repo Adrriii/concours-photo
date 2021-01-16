@@ -8,7 +8,7 @@ import {Post} from '../../../models/Post.model';
 })
 export class PostComponent implements OnInit {
     @Input() post: Post;
-    private isSelected = false;
+    public isSelected = false;
 
     constructor() {
     }

@@ -24,6 +24,10 @@ import {ToastrModule} from 'ngx-toastr';
 import {AuthInterceptorService} from './services/auth-interceptor.service';
 import { UserComponent } from './components/user/user.component';
 import { ThemeComponent } from './components/theme/theme.component';
+import { PostComponent } from './components/feed/post/post.component';
+import { CommentsComponent } from './components/feed/post/comments/comments.component';
+import { CommentComponent } from './components/feed/post/comments/comment/comment.component';
+import { CommentFormComponent } from './components/feed/post/comments/comment-form/comment-form.component';
 
 @NgModule({
     declarations: [
@@ -36,6 +40,10 @@ import { ThemeComponent } from './components/theme/theme.component';
         CreatePostComponent,
         UserComponent,
         ThemeComponent,
+        PostComponent,
+        CommentsComponent,
+        CommentComponent,
+        CommentFormComponent,
     ],
     imports: [
         BrowserModule,

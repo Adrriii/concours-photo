@@ -93,7 +93,7 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
         );
 
         int insertedId = doInsert(statement, opt);
-        return getById(insertedId).orElseThrow();
+        return getById(insertedId).orElseThrow(Exception::new);
     }
 
     @Override

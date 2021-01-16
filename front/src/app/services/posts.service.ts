@@ -19,7 +19,7 @@ export class PostsService {
     }
 
     getPostsByTheme(themeId: number): Observable<Post[]> {
-        return this.httpClient.get<Post[]>(environment.apiBaseUrl + `posts/theme/${themeId}`);
+        return this.httpClient.get<Post[]>(environment.apiBaseUrl + `feed?theme=${themeId}&order=DESC`);
     }
 
     post(data: FormData): Observable<Post> {

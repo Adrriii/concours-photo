@@ -80,7 +80,9 @@ public class FeedService {
         Set<Label> labelList = new HashSet<>();
         for(String label : l) {
             try {
-            labelList.add(labelDao.get(new Label(label)).orElseThrow());
+            labelList.add(
+                    labelDao.get(new Label(label)).orElseThrow(Exception::new)
+            );
             } catch(Exception e) {
                 System.out.println("Ignoring invalid label "+label);
             }

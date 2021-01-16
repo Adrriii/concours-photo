@@ -18,7 +18,7 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
         User author = new SqlUserDao().getById(authorId);
 
         int themeId = resultSet.getInt("theme");
-        Theme theme = new SqlThemeDao().getById(themeId).orElseThrow();
+        Theme theme = new SqlThemeDao().getById(themeId).orElseThrow(SQLException::new);
 
         int postId = resultSet.getInt("id");
         List<Reactions> reactions = new SqlReactionsDao().getAllReactionsForPost(postId);

@@ -11,7 +11,7 @@ import {User} from '../models/User.model';
 })
 export class AuthService {
 
-    private currentUser: User = null;
+    public currentUser: User = null;
     public me = new Subject<User>();
     public isAuth = false;
 
@@ -33,7 +33,11 @@ export class AuthService {
 
         this.httpClient.get<User>(environment.apiBaseUrl + 'user/me').subscribe(
             user => {
+                console.log(user);
+                // let test : User = user;
+                // console.log(test);                
                 this.currentUser = User.fromJson(user);
+                // this.currentUser = user;
                 this.emitMe();
 
                 console.log('Successfully get current user : ' + JSON.stringify(this.currentUser));

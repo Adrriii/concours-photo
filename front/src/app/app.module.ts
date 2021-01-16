@@ -22,8 +22,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {NgxFileDropModule} from 'ngx-file-drop';
 import {ToastrModule} from 'ngx-toastr';
 import {AuthInterceptorService} from './services/auth-interceptor.service';
-import { UserComponent } from './components/user/user.component';
 import { ThemeComponent } from './components/theme/theme.component';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
+import { EditSettingsComponent } from './components/user-settings/edit-settings/edit-settings.component';
 import { PostComponent } from './components/feed/post/post.component';
 import { CommentsComponent } from './components/feed/post/comments/comments.component';
 import { CommentComponent } from './components/feed/post/comments/comment/comment.component';
@@ -40,10 +41,11 @@ import { OtherProfileComponent } from './components/other-profile/other-profile.
         HeaderComponent,
         FeedComponent,
         CreatePostComponent,
-        UserComponent,
         ThemeComponent,
         ProfileComponent,
         OtherProfileComponent,
+        UserSettingsComponent,
+        EditSettingsComponent,
         PostComponent,
         CommentsComponent,
         CommentComponent,

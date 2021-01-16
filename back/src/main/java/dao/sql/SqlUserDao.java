@@ -22,7 +22,10 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
                         userSettings, 
                         getInteger(resultSet, "victories"), 
                         getInteger(resultSet, "score"), 
-                        getInteger(resultSet, "userlevel"), 
+                        getInteger(resultSet, "userlevel"),
+                        getParticipationCount(userId),
+                        resultSet.getString("photo_url"),
+                        resultSet.getString("delete_url"), 
                         userId);
     }
 
@@ -52,7 +55,7 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
         int userId = doInsert(statement, opt);
         new SqlUserSettingDao().insertDefaultsForUser(userId);
         
-        return new User(user.username, new SqlUserSettingDao().getAllForUser(userId), user.victories, user.score, user.userlevel, userId);
+        return new User(user.username, new SqlUserSettingDao().getAllForUser(userId), user.victories, user.score, user.userlevel, user.participations, user.photo, user.photoDelete, userId);
     }
 
     @Override
@@ -105,6 +108,18 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
         List<Object> opt = Arrays.asList(searchString);
 
         return queryAllObjects(statement, opt);
+    }
+
+    private Integer getParticipationCount(Integer user) throws SQLException {
+        String statement = "SELECT COUNT(*) FROM post WHERE author = ?";
+        List<Object> opt = Arrays.asList(user);
+
+        try {
+            return queryFirstInt(statement, opt);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }
 

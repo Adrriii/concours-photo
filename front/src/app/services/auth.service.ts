@@ -16,6 +16,11 @@ export class AuthService {
     public isAuth = false;
 
     constructor(private httpClient: HttpClient) {
+        const jwt = localStorage.getItem('jwt');
+
+        if (jwt !== null) {
+            this.setCurrentUser(jwt);
+        }
     }
 
     emitMe(): void {
@@ -86,9 +91,8 @@ export class AuthService {
                             responseType: 'text'
                         })
                     .subscribe(
-                        data => {
-                            console.log('user logged successfully, data is : ' + data);
-                            this.setCurrentUser(data);
+                        token => {
+                            this.setCurrentUser(token);
                             resolve();
                         },
                         error => {

@@ -16,4 +16,18 @@ export class Post {
         public id?: number,
     ) {
     }
+
+    static fromJson(json: Post): Post {
+        return new Post(
+            json.title,
+            json.reacted,
+            json.reactions,
+            User.fromJson(json.author),
+            json.label,
+            json.theme,
+            json.photo,
+            json.photoDelete,
+            json.id
+        );
+    }
 }

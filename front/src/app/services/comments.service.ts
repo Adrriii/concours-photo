@@ -18,4 +18,8 @@ export class CommentsService {
     public getAllForPost(post: Post): Observable<Array<Comment>> {
         return this.httpClient.get<Array<Comment>>(environment.apiBaseUrl + `posts/${post.id}/comments`);
     }
+
+    public postComment(post: Post, comment: Comment): Observable<Comment> {
+        return this.httpClient.post<Comment>(environment.apiBaseUrl + `posts/${post.id}/comments`, comment);
+    }
 }

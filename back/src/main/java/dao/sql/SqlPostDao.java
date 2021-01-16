@@ -77,7 +77,7 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
     }
 
     @Override
-    public List<Post> getFeedSearch(String sort, String direction, Theme theme, Set<Label> labelSet) throws Exception {
+    public List<Post> getFeedSearch(String sort, String direction, Theme theme, Set<Label> labelSet, int offset, int limit) throws Exception {
         String labelSubStatement = null;
         List<Object> opt = new ArrayList<>();
         
@@ -116,6 +116,10 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
         }
 
         opt.add(sort);
+
+        statement += " LIMIT ? OFFSET ?";
+        opt.add(limit);
+        opt.add(offset);
 
         return queryAllObjects(statement, opt);
     }

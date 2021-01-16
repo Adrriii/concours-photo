@@ -2,3 +2,7 @@
 <ul class="comment-section">
     <app-comment *ngFor="let comment of comments" [comment]="comment" [currentUser]="currentUser"></app-comment>
 </ul>
+
+<div class="form-container">
+    <app-comment-form [hidden]="currentUser === null" [author]="currentUser" [post]="post" (commentAdded)="onNewComment($event)"></app-comment-form>
+</div>

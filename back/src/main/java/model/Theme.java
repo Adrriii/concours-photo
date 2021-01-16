@@ -9,6 +9,10 @@ public class Theme {
     public final User winner;
     public final User author;
 
+    public Theme() {
+        this(null, null, null, null);
+    }
+
     public Theme(Integer id, String title, String photo, String state, String date, User winner, User author) {
         this.id = id;
         this.title = title;

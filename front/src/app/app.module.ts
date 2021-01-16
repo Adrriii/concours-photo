@@ -24,6 +24,11 @@ import {ToastrModule} from 'ngx-toastr';
 import {AuthInterceptorService} from './services/auth-interceptor.service';
 import { UserComponent } from './components/user/user.component';
 import { ThemeComponent } from './components/theme/theme.component';
+import {CommentsComponent} from "./components/feed/post/comments/comments.component";
+import {ProfileComponent} from "./components/profile/profile.component";
+import {OtherProfileComponent} from "./components/other-profile/other-profile.component";
+import {PostComponent} from "./components/feed/post/post.component";
+import {CommentComponent} from "./components/feed/post/comments/comment/comment.component";
 
 @NgModule({
     declarations: [

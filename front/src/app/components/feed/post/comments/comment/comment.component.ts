@@ -21,7 +21,7 @@ export class CommentComponent implements OnInit {
     }
 
     getUserClass(): string {
-        if (this.currentUser.username === this.comment.author.username) {
+        if (this.currentUser !== null && this.currentUser.username === this.comment.author.username) {
             return 'author-comment';
         }
 

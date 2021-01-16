@@ -27,6 +27,7 @@ import { ThemeComponent } from './components/theme/theme.component';
 import { PostComponent } from './components/feed/post/post.component';
 import { CommentsComponent } from './components/feed/post/comments/comments.component';
 import { CommentComponent } from './components/feed/post/comments/comment/comment.component';
+import { CommentFormComponent } from './components/feed/post/comments/comment-form/comment-form.component';
 
 @NgModule({
     declarations: [
@@ -42,6 +43,7 @@ import { CommentComponent } from './components/feed/post/comments/comment/commen
         PostComponent,
         CommentsComponent,
         CommentComponent,
+        CommentFormComponent,
     ],
     imports: [
         BrowserModule,

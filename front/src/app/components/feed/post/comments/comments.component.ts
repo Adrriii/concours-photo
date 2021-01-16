@@ -2,7 +2,6 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Post} from '../../../../models/Post.model';
 import {Comment} from '../../../../models/Comment.model';
 import {CommentsService} from '../../../../services/comments.service';
-import {UserService} from '../../../../services/user.service';
 import {User} from '../../../../models/User.model';
 import {AuthService} from '../../../../services/auth.service';
 import {Subscription} from 'rxjs';
@@ -41,4 +40,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
         this.currentUserSubscription.unsubscribe();
     }
 
+    onNewComment(comment: Comment): void {
+        this.comments.push(comment);
+    }
 }

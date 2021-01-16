@@ -87,9 +87,8 @@ export class AuthService {
                             responseType: 'text'
                         })
                     .subscribe(
-                        data => {
-                            console.log('user logged successfully, data is : ' + data);
-                            this.setCurrentUser(data);
+                        token => {
+                            this.setCurrentUser(token);
                             resolve();
                         },
                         error => {

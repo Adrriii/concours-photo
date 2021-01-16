@@ -4,7 +4,10 @@ export class User {
         public username: string,
         public userLevel: number,
         public victories: number,
-        public score: number
+        public score: number,
+        public participations: number,
+        public photo: string,
+        public photoDelete: string
     ) {}
 
     static fromJson(userJson: User): User {
@@ -13,7 +16,10 @@ export class User {
             userJson.username,
             userJson.userLevel,
             userJson.victories,
-            userJson.score
+            userJson.score,
+            userJson.participations,
+            userJson.photo,
+            userJson.photoDelete
         );
     }
 }

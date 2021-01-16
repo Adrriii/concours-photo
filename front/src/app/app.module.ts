@@ -28,6 +28,8 @@ import { PostComponent } from './components/feed/post/post.component';
 import { CommentsComponent } from './components/feed/post/comments/comments.component';
 import { CommentComponent } from './components/feed/post/comments/comment/comment.component';
 import { CommentFormComponent } from './components/feed/post/comments/comment-form/comment-form.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { OtherProfileComponent } from './components/other-profile/other-profile.component';
 
 @NgModule({
     declarations: [
@@ -40,6 +42,8 @@ import { CommentFormComponent } from './components/feed/post/comments/comment-fo
         CreatePostComponent,
         UserComponent,
         ThemeComponent,
+        ProfileComponent,
+        OtherProfileComponent,
         PostComponent,
         CommentsComponent,
         CommentComponent,

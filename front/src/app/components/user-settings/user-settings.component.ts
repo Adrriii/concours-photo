@@ -5,6 +5,7 @@ import { User } from 'src/app/models/User.model';
 import { UserSetting } from 'src/app/models/UserSetting.model';
 import { AuthService } from '../../services/auth.service';
 import { EditSettingsComponent } from './edit-settings/edit-settings.component';
+import {UserSetting} from '../../models/UserSetting.model';
 
 @Component({
   selector: 'app-user-settings',

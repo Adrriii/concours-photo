@@ -30,15 +30,13 @@ export class CommentFormComponent implements OnInit {
     }
 
     onSubmit(): void {
-        console.log('Hop submit comment (TODO)');
-
         const comment = new Comment(
             User.fromJson(this.author),
             this.post,
             null,
             this.form.value.comment
         );
-        console.log('Sending : ' + JSON.stringify(comment, null, 4));
+
         this.commentService.postComment(this.post, comment).subscribe(
             newComment => this.commentAdded.emit(newComment)
         );

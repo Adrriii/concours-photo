@@ -45,7 +45,7 @@ export class FeedComponent implements OnInit {
     updatePostsForCurrentTheme(): void {
         this.postService.getPostsByTheme(this.currentThemeId).subscribe(
             posts => {
-                this.posts = posts;
+                this.posts = posts.map(p => Post.fromJson(p));
             }, error => {
                 console.log('Error when getting posts by theme: ' + error.message);
             }

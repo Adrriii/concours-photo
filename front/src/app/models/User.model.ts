@@ -1,4 +1,4 @@
-import { UserSetting } from "./UserSetting.model";
+import { UserSetting } from './UserSetting.model';
 
 export class User {
 
@@ -10,7 +10,7 @@ export class User {
         public score: number,
         public participations: number,
         public photo: string,
-        public photoDelete: string
+        public photoDelete: string,
         public settings: Map <string, UserSetting>
     ) {}
 
@@ -23,24 +23,8 @@ export class User {
             userJson.score,
             userJson.participations,
             userJson.photo,
-            userJson.photoDelete
+            userJson.photoDelete,
             userJson.settings
         );
     }
-
-    // public compare(user : User) : boolean {
-    //     this.settings.forEach((value, key) => {
-    //         let setting : string = user.settings.get(key);
-    //         if(setting !== value){
-    //             console.log(`error while comparing user's settings : ${setting} not equals ${value}`);
-    //             return false;
-    //         }    
-    //     });
-
-    //     return this.id === user.id
-    //         && this.username === user.username
-    //         && this.userLevel === user.userLevel
-    //         && this.victories === user.victories
-    //         && this.score === user.score;
-    // }
 }

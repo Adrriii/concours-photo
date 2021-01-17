@@ -85,7 +85,7 @@ export class EditSettingsComponent implements OnInit, OnDestroy {
 
     getSetting(settingName: string): string{
         return this.authService.currentUser.getSetting(settingName);
-      }
+    }
 
     isCurrentGender(gender: string): boolean {
         return this.authService.currentUser.getSetting('GENDER') === gender;

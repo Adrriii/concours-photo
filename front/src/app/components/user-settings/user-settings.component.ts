@@ -5,7 +5,6 @@ import { User } from 'src/app/models/User.model';
 import { UserSetting } from 'src/app/models/UserSetting.model';
 import { AuthService } from '../../services/auth.service';
 import { EditSettingsComponent } from './edit-settings/edit-settings.component';
-import {UserSetting} from '../../models/UserSetting.model';
 
 @Component({
   selector: 'app-user-settings',
@@ -29,6 +28,8 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
               this.currentUser = user
             }
         );
+        console.log("on init => " + this.currentUser);
+        
     }
 
     ngOnDestroy(): void {
@@ -41,7 +42,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
       dialogConfig.backdropClass = 'backdropBackground';
-      dialogConfig.width = '30%';
+      dialogConfig.width = '80%';
 
       const dialogRef = this.dialog.open(EditSettingsComponent, dialogConfig);
 
@@ -56,7 +57,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
       return "Undefined";
     }
 
-    getSetting(settingName: string) : string {
-      return 'undefined'
+    getSetting(settingName: string): string{
+      return this.authService.currentUser.settings.get(settingName).value;
     }
 }

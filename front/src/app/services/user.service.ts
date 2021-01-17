@@ -9,9 +9,8 @@ import { User } from '../models/User.model';
     providedIn: 'root'
 })
 export class UserService {
-    httpClient: HttpClient;
 
-    constructor() { }
+    constructor(private httpClient: HttpClient) { }
 
     getById(id: number): Observable<User> {
         return this.httpClient.get<User>(environment.apiBaseUrl + `user/${id}`);

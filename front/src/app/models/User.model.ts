@@ -24,7 +24,27 @@ export class User {
             userJson.participations,
             userJson.photo,
             userJson.photoDelete,
-            userJson.settings
+            new Map(Object.entries(userJson.settings))
         );
     }
+
+    // public getSetting(settingName: string) : string {
+    //     return this.settings.get(settingName).value;
+    // }
+
+    // public compare(user : User) : boolean {
+    //     this.settings.forEach((value, key) => {
+    //         let setting : string = user.settings.get(key);
+    //         if(setting !== value){
+    //             console.log(`error while comparing user's settings : ${setting} not equals ${value}`);
+    //             return false;
+    //         }    
+    //     });
+
+    //     return this.id === user.id
+    //         && this.username === user.username
+    //         && this.userLevel === user.userLevel
+    //         && this.victories === user.victories
+    //         && this.score === user.score;
+    // }
 }

@@ -1,12 +1,11 @@
 <div class="row">
     <div class="col-lg-5 profile" id="profile-picture">
 
-      <img [src]="getPhoto()" 
-          alt="Profile picture" 
-          [disabled]="getPhoto()===''" 
+      <img [src]="getPhoto()"
+          alt="Profile picture"
           style="height: 100%; width: 100%;">
 
-      <div>     
+      <div>
         <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
         <button (click)="fileInput.click()">Select File</button>
         <button (click)="onUpload()">Upload!</button>

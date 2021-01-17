@@ -30,10 +30,10 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.currentUserSubscription = this.authService.me.subscribe(
             user => {
-              this.currentUser = user
+              this.currentUser = user;
             }
         );
-        console.log("on init => " + this.currentUser);
+        console.log('on init => ' + this.currentUser);
 
     }
 
@@ -57,27 +57,28 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
       );
     }
 
-    getUserName() : string {
-      if(this.authService.currentUser)
+    getUserName(): string {
+      if (this.authService.currentUser) {
           return this.authService.currentUser.username;
-      return "Undefined";
+      }
+      return 'Undefined';
     }
 
-    getSetting(settingName: string): string{
-      return this.authService.currentUser.getSetting(settingName);
-    } 
-
-    onFileChanged(event){
-      this.file = event.target.files[0];
+    getSetting(settingName: string): string {
+        return this.authService.currentUser.getSetting(settingName);
     }
 
-    onUpload(){
+    onFileChanged(event): void{
+        this.file = event.target.files[0];
+    }
+
+    onUpload(): void {
         const uploadPicture = new FormData();
         uploadPicture.append('file', this.file, this.file.name);
         this.userService.updateProfilePicture(uploadPicture)
             .subscribe(
                 (user) => {
-                    console.log('picture successfully uploaded : '+ JSON.stringify(user));
+                    console.log('picture successfully uploaded : ' + JSON.stringify(user));
                     // console.log(user)
                     // console.log(user);
                     // this.currentUser = User.fromJson(user);

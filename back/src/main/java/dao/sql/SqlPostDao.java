@@ -132,4 +132,12 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
 
         return queryAllObjects(statement, opt);
     }
+
+    @Override
+    public void increaseNbCommentBy(int postId, int toAdd) throws Exception {
+        String statement = "UPDATE post SET nb_comment = nb_comment + " + toAdd + " WHERE id=?";
+        List<Object> opt = Arrays.asList(postId);
+
+        exec(statement, opt);
+    }
 }

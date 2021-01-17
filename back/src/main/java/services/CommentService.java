@@ -13,6 +13,10 @@ public class CommentService {
     @Inject CommentDao commentDao;
     @Inject PostDao postDao;
 
+    private void addOneCommentInPost(int postId) throws Exception {
+        postDao.increaseNbCommentBy(postId, 1);
+    }
+
     public List<Comment> getAllForPost(int postId) throws Exception {
         return commentDao.getAllForPost(postId);
     }
@@ -38,6 +42,7 @@ public class CommentService {
                 comment.id
         );
 
+        addOneCommentInPost(comment.post.id);
         return Optional.of(commentDao.update(comment));
     }
 
@@ -57,6 +62,12 @@ public class CommentService {
                 comment.content,
                 comment.id
         ));
+
+        addOneCommentInPost(comment.post.id);
+
+        System.out.println("Replying to post, increase comment");
+        post = postDao.getById(comment.post.id);
+        System.out.println("Now number of comment is " + post.nbComment);
 
         return Optional.of(comment);
     }

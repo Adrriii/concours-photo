@@ -104,7 +104,7 @@ public class Users {
                     try {
                         return userService.update(user).map(
                             updatedUser -> {
-                                return Response.status(500).entity(updatedUser).build();
+                                return Response.ok(updatedUser).build();
                             }
                         ).orElse(Response.status(500).entity("Could not update the user").build());
                     } catch(Exception e) {
@@ -118,3 +118,4 @@ public class Users {
         }
     }
 }
+

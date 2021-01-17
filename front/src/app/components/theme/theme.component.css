@@ -70,3 +70,37 @@
     background: orange;
     width: 15%;
 }
+
+.vote-theme {
+    float:right;
+    background-color: green;
+    box-shadow: 1px 2px 1px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    border: 0;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+
+    padding: 10px 25px;
+    margin: 18px 0 auto;
+}
+
+.v-theme1{
+    background-color: red;
+}
+
+.v-theme2{
+    background-color: #2ecc71;
+}
+
+.v-theme3{
+    background-color: blue;
+}
+
+.v-theme4{
+    background-color: violet;
+}
+
+.v-theme5{
+    background-color: orange;
+}

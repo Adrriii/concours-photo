@@ -64,8 +64,8 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
     public User update(User user) throws SQLException {
         if(user.id == null) throw new SQLException(String.valueOf(UserDaoException.ID_NOT_PROVIDED));
 
-        String statement = "UPDATE user SET username=?, userlevel=?, victories=?, score=? WHERE id=?";
-        List<Object> opt = Arrays.asList(user.username, user.userlevel, user.victories, user.score, user.id);
+        String statement = "UPDATE user SET username=?, userlevel=?, victories=?, score=?, photo_url=?, delete_url=? WHERE id=?";
+        List<Object> opt = Arrays.asList(user.username, user.userlevel, user.victories, user.score, user.photo, user.photoDelete, user.id);
 
         for(UserSetting userSetting : user.settings.values()) {
             new SqlUserSettingDao().update(userSetting);
@@ -150,3 +150,5 @@ enum UserDaoException {
         this.value = error;
     }
 }
+
+

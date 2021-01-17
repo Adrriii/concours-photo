@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { NgxFileDropEntry } from 'ngx-file-drop';
+import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/User.model';
+import { UserService } from 'src/app/services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { EditSettingsComponent } from './edit-settings/edit-settings.component';
 
@@ -14,20 +17,23 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
     currentUser: User = null;
     currentUserSubscription: Subscription;
+    file: File;
 
     constructor(
         private dialog: MatDialog,
-        private authService: AuthService
+        private authService: AuthService,
+        private toastr: ToastrService,
+        private userService: UserService
     ) {
     }
 
     ngOnInit(): void {
         this.currentUserSubscription = this.authService.me.subscribe(
             user => {
-              this.currentUser = user
+              this.currentUser = user;
             }
         );
-        console.log("on init => " + this.currentUser);
+        console.log('on init => ' + this.currentUser);
 
     }
 
@@ -51,13 +57,39 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
       );
     }
 
-    getUserName() : string {
-      if(this.authService.currentUser)
+    getUserName(): string {
+      if (this.authService.currentUser) {
           return this.authService.currentUser.username;
-      return "Undefined";
+      }
+      return 'Undefined';
     }
 
-    getSetting(settingName: string): string{
-      return this.authService.currentUser.getSetting(settingName);
+    getSetting(settingName: string): string {
+        return this.authService.currentUser.getSetting(settingName);
+    }
+
+    onFileChanged(event): void{
+        this.file = event.target.files[0];
+    }
+
+    onUpload(): void {
+        const uploadPicture = new FormData();
+        uploadPicture.append('file', this.file, this.file.name);
+        this.userService.updateProfilePicture(uploadPicture)
+            .subscribe(
+                (user) => {
+                    console.log('picture successfully uploaded : ' + JSON.stringify(user));
+                    // console.log(user)
+                    // console.log(user);
+                    // this.currentUser = User.fromJson(user);
+                },
+                (error) => {
+                    this.toastr.error(error.message);
+                }
+            );
+    }
+
+    getPhoto(): string {
+      return this.authService.currentUser.photo;
     }
 }

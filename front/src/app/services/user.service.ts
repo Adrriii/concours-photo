@@ -25,6 +25,10 @@ export class UserService {
         return this.httpClient.put<User>(environment.apiBaseUrl + 'user/me', user);
     }
 
+    updateProfilePicture(picture: FormData): Observable<User> {
+        return this.httpClient.post<User>(environment.apiBaseUrl + 'user/me/avatar', picture);
+    }
+
     getPostsById(id: number): Observable<Array<Post>> {
         return this.httpClient.get<Array<Post>>(environment.apiBaseUrl + `user/${id}/posts`);
     }

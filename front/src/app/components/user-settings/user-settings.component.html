@@ -1,14 +1,16 @@
 <div class="row">
     <div class="col-lg-5 profile" id="profile-picture">
-      <a [routerLink]="['']">Add a picture</a>
+
+      <img [src]="getPhoto()" 
+          alt="Profile picture" 
+          [disabled]="getPhoto()===''" 
+          style="height: 100%; width: 100%;">
 
       <div>     
         <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
         <button (click)="fileInput.click()">Select File</button>
         <button (click)="onUpload()">Upload!</button>
       </div>
-
-      <img [src]="getPhoto()" alt="Profile picture">
 
     </div>
     <div class="col-lg-7 profile card">

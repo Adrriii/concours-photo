@@ -8,3 +8,15 @@
     background-repeat: no-repeat
 }
 
+.img-sized {
+    width: auto;
+    height: auto;
+}
+
+.left-side-img {
+    float:left;
+}
+
+.right-side-img {
+    float:right;
+}

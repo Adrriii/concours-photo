@@ -37,13 +37,25 @@
             </div>
             <div class="py-4 px-4">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="mb-0">Recent photos</h5><a href="#" class="btn btn-link text-muted">Show all</a>
+                    <h5 class="mb-0">Recent photos</h5><a class="btn btn-link text-muted" (click)="showAll()"><h5>Show all</h5></a>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6 mb-2 pr-lg-1"><img src="https://media.publit.io/file/ThX0JeH.png" alt="" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-lg-6 mb-2 pl-lg-1"><img src="https://media.publit.io/file/ThX0JeH.png" alt="" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-lg-6 pr-lg-1 mb-2"><img src="https://media.publit.io/file/ThX0JeH.png" alt="" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-lg-6 pl-lg-1"><img src="https://media.publit.io/file/ThX0JeH.png" alt="" class="img-fluid rounded shadow-sm"></div>
+                <div class="row d-inline" *ngFor="let postImg of listImgs; index as i">
+                    <div *ngIf="i < 4">
+                        <div class="col-lg-6 mb-2 left-side-img">
+                            <img src="{{postImg}}" alt="" *ngIf="i % 2 == 0" class="img-sized img-fluid rounded shadow-sm">
+                        </div>
+                        <div class="col-lg-6 mb-2 right-side-img">
+                            <img src="{{postImg}}" alt="" *ngIf="i % 2 != 0" class="img-sized img-fluid rounded shadow-sm">
+                        </div>
+                    </div>
+                    <div *ngIf="i >= 4" [hidden]="!edited">
+                        <div class="col-lg-6 mb-2 left-side-img">
+                            <img src="{{postImg}}" alt="" *ngIf="i % 2 == 0" class="img-sized img-fluid rounded shadow-sm">
+                        </div>
+                        <div class="col-lg-6 mb-2 right-side-img">
+                            <img src="{{postImg}}" alt="" *ngIf="i % 2 != 0" class="img-sized img-fluid rounded shadow-sm">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

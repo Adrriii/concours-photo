@@ -50,6 +50,15 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
     }
 
     @Override
+    public List<Post> getAllForUser(int userId) throws SQLException {
+        String statement = "SELECT * FROM post WHERE author = ?";
+
+        List<Object> opt = Arrays.asList(userId);
+
+        return queryAllObjects(statement, opt);
+    }
+
+    @Override
     public Post getById(int integer) throws SQLException {
         String statement = "SELECT * FROM post WHERE id = ?";
 

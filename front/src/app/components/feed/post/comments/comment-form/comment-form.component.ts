@@ -38,7 +38,10 @@ export class CommentFormComponent implements OnInit {
         );
 
         this.commentService.postComment(this.post, comment).subscribe(
-            newComment => this.commentAdded.emit(newComment)
+            newComment => {
+                this.form.reset();
+                this.commentAdded.emit(newComment);
+            }
         );
     }
 }

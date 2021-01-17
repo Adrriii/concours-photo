@@ -32,4 +32,8 @@ public class PostService {
     public List<Post> getPostsByThemeId(int id) throws Exception {
         return postDao.getAllByTheme(id);
     }
+
+    public List<Post> getPostsByAuthorId(int id) throws Exception {
+        return postDao.getAllForUser(id);
+    }
 }

@@ -23,9 +23,9 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 @Path("user/")
 @PermitAll
 public class Users {
-    @Inject
-    UserService userService;
-    AbstractImageService imageService;
+    @Inject UserService userService;
+    @Inject PostService postService;
+    @Inject AbstractImageService imageService;
 
     @GET
     @Path("{id}")
@@ -34,6 +34,17 @@ public class Users {
         return userService.getById(id)
                 .map(user -> Response.ok(user.getPublicProfile()).build())
                 .orElse(Response.status(400).entity("User not found").build());
+    }
+
+    @GET
+    @Path("{id}/posts")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserPosts(@PathParam("id") int id) {
+        try {
+            return Response.ok(postService.getPostsByAuthorId(id)).build();
+        } catch(Exception e) {
+            return Response.status(500).entity(e.getMessage()).build();
+        }
     }
 
     @GET

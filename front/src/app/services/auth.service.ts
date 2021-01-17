@@ -33,7 +33,7 @@ export class AuthService {
 
         this.httpClient.get<User>(environment.apiBaseUrl + 'user/me').subscribe(
             user => {
-                // console.log(user);
+                console.log(user);
                 // let test : User = user;
                 // console.log(test);                
                 // this.currentUser = user;

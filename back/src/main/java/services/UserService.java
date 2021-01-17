@@ -27,11 +27,11 @@ public class UserService {
     }
 
 
-    public Optional<UserPublic> getById(int id) {
-        UserPublic user;
+    public Optional<User> getById(int id) {
+        User user;
 
         try {
-            user = userDao.getById(id).getPublicProfile();
+            user = userDao.getById(id);
         } catch (Exception e) {
             return Optional.empty();
         }

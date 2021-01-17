@@ -115,6 +115,10 @@ export class CreatePostComponent implements OnInit, OnDestroy {
                 const post = new Post(
                     this.form.value.title,
                     null,
+                    0,
+                    0,
+                    0,
+                    null,
                     null,
                     this.user,
                     this.form.value.tag,

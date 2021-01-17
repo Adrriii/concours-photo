@@ -6,6 +6,10 @@ import {Theme} from './Theme.model';
 export class Post {
     constructor(
         public title: string,
+        public date: string,
+        public score: number,
+        public nbVote: number,
+        public nbComment: number,
         public reacted: string,
         public reactions: Array<Reactions>,
         public author: User,
@@ -20,6 +24,10 @@ export class Post {
     static fromJson(json: Post): Post {
         return new Post(
             json.title,
+            json.date,
+            json.score,
+            json.nbVote,
+            json.nbComment,
             json.reacted,
             json.reactions,
             User.fromJson(json.author),

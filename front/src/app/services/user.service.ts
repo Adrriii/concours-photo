@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpEvent} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 // import { resolve } from 'dns';
 import { Observable } from 'rxjs';
@@ -16,7 +16,11 @@ export class UserService {
         return this.httpClient.get<User>(environment.apiBaseUrl + `user/${id}`);
     }
 
-    update(user : User): Observable<User> {
+    getMe(): Observable<User> {
+        return this.httpClient.get<User>(environment.apiBaseUrl + 'user/me');
+    }
+
+    update(user: User): Observable<User> {
         return this.httpClient.put<User>(environment.apiBaseUrl + 'user/me', user);
     }
 

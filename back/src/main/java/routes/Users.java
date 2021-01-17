@@ -23,7 +23,7 @@ public class Users {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getById(@PathParam("id") int id) {
         return userService.getById(id)
-                .map(user -> Response.ok(user).build())
+                .map(user -> Response.ok(user.getPublicProfile()).build())
                 .orElse(Response.status(400).entity("User not found").build());
     }
 
@@ -33,7 +33,11 @@ public class Users {
     @JWTTokenNeeded
     public Response getMe(@Context ContainerRequestContext ctx) {
         return userService.getUserFromRequestContext(ctx).map(
-                user -> Response.ok().entity(user).build()
+                userContext -> userService.getById(userContext.id).map(
+                    user -> {
+                        return Response.status(200).entity(user).build();
+                    }
+            ).orElse(Response.status(500).entity("Internal error, user doesn't exist").build())               
         ).orElse(Response.status(500).entity("Internal error, can't find logged user").build());
     }
 

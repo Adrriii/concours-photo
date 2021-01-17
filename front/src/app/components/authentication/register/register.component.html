@@ -3,12 +3,8 @@
 <div class="limiter">
     <div class="container-login100 fullscreen">
         <div class="wrap-login100">
-            <div class="NewLoginLeftContainer">
-                <div class="card transition">
-                    <h2 class="transition">Photo competition</h2>
-                    <p>Aenean lacinia bibendum nulla sed consectetur. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                    <div class="card_circle transition"></div>
-                </div>
+            <div class="login100-pic" data-tilt>
+                <img src="../../../../assets/img-01.png" alt="IMG">
             </div>
             <form [formGroup]="form" class="login100-form validate-form"
                   oninput='confirmPass.setCustomValidity(confirmPass.value != password.value ? "Passwords do not match." : "")'>

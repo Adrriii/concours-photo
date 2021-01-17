@@ -29,7 +29,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
             }
         );
         console.log("on init => " + this.currentUser);
-        
+
     }
 
     ngOnDestroy(): void {

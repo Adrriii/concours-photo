@@ -305,7 +305,7 @@
 }
 
 .post-large-view {
-    width: 100%;
+    width: 80%;
     transition: width 1s;
 }
 

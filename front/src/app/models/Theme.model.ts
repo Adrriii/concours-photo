@@ -7,7 +7,8 @@ export class Theme {
         public photo: string,
         public state: string,
         public date: string,
-        public winner: User
+        public winner: User,
+        public author: User
     ) {
     }
 }

@@ -68,7 +68,7 @@ public class CommentService {
         System.out.println("Replying to post, increase comment");
         post = postDao.getById(comment.post.id);
         System.out.println("Now number of comment is " + post.nbComment);
-
+        System.out.println(post);
         return Optional.of(comment);
     }
 

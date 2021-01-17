@@ -42,5 +42,6 @@ export class CommentsComponent implements OnInit, OnDestroy {
 
     onNewComment(comment: Comment): void {
         this.comments.push(comment);
+        this.post.nbComment += 1;
     }
 }

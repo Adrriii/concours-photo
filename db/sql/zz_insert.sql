@@ -41,12 +41,12 @@ VALUES
 
 -- Insert Demo posts
 
-INSERT INTO post (title, author, label, theme, photo_url, delete_url)
+INSERT INTO post (title, author, label, theme, photo_url, delete_url, nb_comment)
 VALUES
-    ("TestPost",1,"Portrait",1,"https://batiment.imag.fr/files/imag.png",""),
-    ("Post",1,null,1,"https://cybersavoir.csdm.qc.ca/bibliotheques/files/2018/11/10_banques_dimages_gratuites_libres_de_droits-300x169.jpg",""),
-    ("Chien",1,null,2,"https://media.nature.com/lw800/magazine-assets/d41586-020-01430-5/d41586-020-01430-5_17977552.jpg",""),
-    ("OtherPost",2,"Macro",1,"https://www.canon.fr/media/IMG_5302-5325.tif_1200x800_tcm79-1374042.jpg","")
+    ("TestPost",1,"Portrait",1,"https://batiment.imag.fr/files/imag.png","", 4),
+    ("Post",1,null,1,"https://cybersavoir.csdm.qc.ca/bibliotheques/files/2018/11/10_banques_dimages_gratuites_libres_de_droits-300x169.jpg","", 0),
+    ("Chien",1,null,2,"https://media.nature.com/lw800/magazine-assets/d41586-020-01430-5/d41586-020-01430-5_17977552.jpg","", 0),
+    ("OtherPost",2,"Macro",1,"https://www.canon.fr/media/IMG_5302-5325.tif_1200x800_tcm79-1374042.jpg","", 0)
     ;
 
 -- Insert Demo comments

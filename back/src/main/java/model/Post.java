@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.util.Map;
 
 public class Post {
     public final Integer id;
@@ -8,6 +9,7 @@ public class Post {
     public final String title;
     public final String reacted;
     public final List<Reactions> reactions;
+    public final Map<String, List<UserPublic>> reactionsUser;
     public final User author;
     public final Label label;
     public final Theme theme;
@@ -21,7 +23,7 @@ public class Post {
         this(null, null, null, null, null, null, null, null);
     }
 
-    public Post(String title, String date, String reacted, List<Reactions> reactions,
+    public Post(String title, String date, String reacted, List<Reactions> reactions, Map<String, List<UserPublic>> reactionsUser,
                 User author, Label label, Theme theme, String photo, String photoDelete,
                 Integer score, Integer nbVote, Integer nbComment, Integer id) {
         this.id = id;
@@ -29,6 +31,7 @@ public class Post {
         this.title = title;
         this.reacted = reacted;
         this.reactions = reactions;
+        this.reactionsUser = reactionsUser;
         this.author = author;
         this.label = label;
         this.theme = theme;
@@ -40,7 +43,7 @@ public class Post {
     }
 
     public Post(String title, String reacted, List<Reactions> reactions, User author, Label label, Theme theme, String photo, String photoDelete) {
-        this(title, null, reacted, reactions, author, label, theme, photo, photoDelete, 0, 0, 0, null);
+        this(title, null, reacted, reactions, null, author, label, theme, photo, photoDelete, 0, 0, 0, null);
     }
 
     @Override

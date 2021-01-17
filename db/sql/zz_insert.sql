@@ -32,12 +32,12 @@ VALUES
 
 -- Insert admin accounts
 
-INSERT INTO user (username,sha,userlevel,victories,score) 
+INSERT INTO user (username,sha,userlevel,victories,score, photo_url) 
 VALUES
-    ("Adri","f1ef21ffb3c4521188d2d08a8306bf71f87cbc8246ab296018f33c63b4f14e93",10,999,9999),
-    ("coucou","37acbd7dc4f8b1dfe7954b59d775da26f4d017df28bde97ef34a77b013a5f0f6",10,999,9999),
-    ("Alexandre","2",10,999,9999),
-    ("JD","3",10,999,9999);
+    ("Adri","f1ef21ffb3c4521188d2d08a8306bf71f87cbc8246ab296018f33c63b4f14e93",10,999,9999,"https://a.ppy.sh/4579132?1594553960.png"),
+    ("coucou","37acbd7dc4f8b1dfe7954b59d775da26f4d017df28bde97ef34a77b013a5f0f6",10,999,9999,null),
+    ("Alexandre","2",10,999,9999,null),
+    ("JD","3",10,999,9999,null);
 
 -- Insert Demo posts
 
@@ -57,3 +57,14 @@ VALUES
     (2, 1,  1, "Ouais c'est ça"),
     (3, 1,  null, "Super photo !"),
     (4, 1,  null, "Ouaip");
+
+-- Insert Demo reactions
+
+INSERT INTO reaction (user, post, value)
+VALUES
+    (1, 1, "like"),
+    (1, 2, "like"),
+    (1, 3, "dislike"),
+    (1, 4, "like"),
+    (2, 1, "like"),
+    (2, 3, "like");

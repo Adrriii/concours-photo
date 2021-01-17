@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class SqlPostDao extends SqlDao<Post> implements PostDao {
@@ -20,7 +21,9 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
         int themeId = resultSet.getInt("theme");
         Theme theme = new SqlThemeDao().getById(themeId).orElseThrow(SQLException::new);
 
+        
         int postId = resultSet.getInt("id");
+        Map<String, List<UserPublic>> reactionsUser = new SqlReactionsDao().getSampleUsersForReactions(postId);
         List<Reactions> reactions = new SqlReactionsDao().getAllReactionsForPost(postId);
 
         return new Post(
@@ -28,6 +31,7 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
                 resultSet.getDate("d").toString(),
                 null,
                 reactions,
+                reactionsUser,
                 author,
                 new Label(resultSet.getString("label")),
                 theme,

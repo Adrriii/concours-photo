@@ -40,13 +40,14 @@ export class EditSettingsComponent implements OnInit, OnDestroy {
     }
 
     initForm() {
+        this.currentUser = this.authService.currentUser;
         this.form = this.formBuilder.group({
-            username: [this.authService.currentUser.username,Validators.required],
-            mail: '',
-            gender: '',
-            birthday: '',
-            location: '',
-            bio: ''
+            username: [this.currentUser.username,Validators.required],
+            mail: this.currentUser.getSetting('MAIL'),
+            gender: this.currentUser.getSetting('GENDER'),
+            birthday: this.currentUser.getSetting('BIRTHDAY'),
+            location: this.currentUser.getSetting('LOCATION'),
+            bio: this.currentUser.getSetting('BIO')
         });
     }
 
@@ -57,13 +58,23 @@ export class EditSettingsComponent implements OnInit, OnDestroy {
     update(): void {
         this.currentUser = this.authService.currentUser;
         this.currentUser.username = this.form.value.username;
-        this.currentUser.settings.get('MAIL').value = this.form.value.mail;
-        this.currentUser.settings.get('GENDER').value = this.form.value.gender;
-        this.currentUser.settings.get('BIRTHDAY').value = this.form.value.birthday;
-        this.currentUser.settings.get('LOCATION').value = this.form.value.location;
-        this.currentUser.settings.get('BIO').value = this.form.value.bio;
+        this.currentUser.setSetting('MAIL',this.form.value.mail);
+        this.currentUser.setSetting('GENDER',this.form.value.gender);
+        this.currentUser.setSetting('BIRTHDAY',this.form.value.birthday);
+        this.currentUser.setSetting('LOCATION',this.form.value.location);
+        this.currentUser.setSetting('BIO',this.form.value.bio);
 
-        this.userService.update(this.currentUser);
+        console.log(this.currentUser);
+        
+        this.userService.update(this.currentUser)
+            .subscribe(
+              (user) => {
+                console.log(user);
+              },
+              (error) => {
+                console.log(error);
+              }
+            )
 
         this.dialogRef.close();
     }
@@ -73,11 +84,11 @@ export class EditSettingsComponent implements OnInit, OnDestroy {
     }
 
     getSetting(settingName: string): string{
-        return this.authService.currentUser.settings.get(settingName).value;
-    }
+        return this.authService.currentUser.getSetting(settingName);
+      }
 
     isCurrentGender(gender: string): boolean {
-        return this.authService.currentUser.settings.get('GENDER').value === gender;
+        return this.authService.currentUser.getSetting('GENDER') === gender;
     }
 
     isFormValid(): boolean {

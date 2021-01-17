@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/User.model';
-import { UserSetting } from 'src/app/models/UserSetting.model';
 import { AuthService } from '../../services/auth.service';
 import { EditSettingsComponent } from './edit-settings/edit-settings.component';
 
@@ -43,6 +42,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
       dialogConfig.autoFocus = true;
       dialogConfig.backdropClass = 'backdropBackground';
       dialogConfig.width = '80%';
+      dialogConfig.maxHeight = '80vh';
 
       const dialogRef = this.dialog.open(EditSettingsComponent, dialogConfig);
 
@@ -58,6 +58,6 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     }
 
     getSetting(settingName: string): string{
-      return this.authService.currentUser.settings.get(settingName).value;
+      return this.authService.currentUser.getSetting(settingName);
     }
 }

@@ -16,9 +16,9 @@
         <div class="form-group col-sm-6">
             <label for="gender">Gender</label>
             <select class="form-control" formControlName="gender">
-                <option value="jus d\'orange" [selected]="isCurrentGender('Male')">Male</option>
-                <option value="jus de mangue" [selected]="isCurrentGender('Female')">Female</option>
-                <option value="jus de mangue" [selected]="isCurrentGender('Not provided')">Not defined</option>
+                <option value="Male" [selected]="isCurrentGender('Male')">Male</option>
+                <option value="Female" [selected]="isCurrentGender('Female')">Female</option>
+                <option value="Not defined" [selected]="isCurrentGender('Not provided')">Not defined</option>
             </select>
         </div>
     

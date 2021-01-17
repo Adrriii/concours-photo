@@ -16,6 +16,7 @@ const routes: Routes = [
     { path : 'settings', canActivate: [AuthGuardService], component: UserSettingsComponent },
     { path : 'home', component: HomeComponent },
     { path : 'login', component: LoginComponent },
+    { path : 'me', component: ProfileComponent },
     { path : 'register', component: RegisterComponent },
     { path : 'themes', component: ThemeComponent },
     { path : '', redirectTo: '/home', pathMatch: 'full'},

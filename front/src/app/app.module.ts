@@ -31,6 +31,7 @@ import { CommentComponent } from './components/feed/post/comments/comment/commen
 import { CommentFormComponent } from './components/feed/post/comments/comment-form/comment-form.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { OtherProfileComponent } from './components/other-profile/other-profile.component';
+import { UserService} from './services/user.service';
 
 @NgModule({
     declarations: [

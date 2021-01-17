@@ -20,11 +20,15 @@
 </header>
 
 <div class="feed-container">
-    <div class="buttons">
+    <div class="py-5 justify-content-center d-flex text-center">
+        <button class="create-post" (click)="openDialog()">Create new post</button>
+        <a routerLink="/themes">
+            <button class="next-theme">Next theme</button>
+        </a>
         <div class="dropdown">
             <button class="dropdown-filter dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                Filter posts by
+                Sort posts by
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li class="dropdown-item">Score</li>
@@ -35,10 +39,6 @@
                 <li class="dropdown-item">Most votes</li>
             </div>
         </div>
-        <a routerLink="/themes">
-            <button class="next-theme">Next theme</button>
-        </a>
-        <button class="create-post" (click)="openDialog()">Create new post</button>
     </div>
 
     <div class="feed">

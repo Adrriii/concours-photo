@@ -12,4 +12,6 @@ public interface UserDao extends Searchable<User> {
 
     User getByLogin(String username, String hash) throws Exception;
     void updateHash(User user, String hash) throws Exception;
+    void updateUserScore(int id) throws Exception;
+    void updateUsersRanks() throws Exception;
 }

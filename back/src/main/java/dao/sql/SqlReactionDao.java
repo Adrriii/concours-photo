@@ -54,6 +54,10 @@ public class SqlReactionDao extends SqlDao<Reaction> implements ReactionDao {
         
         exec(statement, opt);
         exec(statementIncrement, optIncrement);
+        
+        SqlUserDao userDao = new SqlUserDao();
+        userDao.updateUserScore(user.id);
+        userDao.updateUsersRanks();
     }
 
     @Override
@@ -70,6 +74,10 @@ public class SqlReactionDao extends SqlDao<Reaction> implements ReactionDao {
 
         exec(statement, opt);
         exec(statementIncrement, optIncrement);
+        
+        SqlUserDao userDao = new SqlUserDao();
+        userDao.updateUserScore(user.id);
+        userDao.updateUsersRanks();
     }
 
     @Override

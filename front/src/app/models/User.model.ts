@@ -24,8 +24,16 @@ export class User {
             userJson.participations,
             userJson.photo,
             userJson.photoDelete,
-            new Map(Object.entries(userJson.settings))
+            userJson.settings
         );
+    }
+
+    public getSetting(settingName: string): string{
+        return this.settings[settingName].value;
+    }
+
+    public setSetting(settingName: string, value: string): void{
+        this.settings[settingName].value = value;
     }
 
     // public getSetting(settingName: string) : string {

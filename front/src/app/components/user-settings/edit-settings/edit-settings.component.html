@@ -1,55 +1,47 @@
 <h2 mat-dialog-title>{{"Update your informations"}}</h2>
 <form class="center" [formGroup]="form">
     <div class="row">
-        <div class="form-group col-lg-6">
-            <label for="firstName">Username</label>
-            <input type="text" id="firstName" class="form-control" formControlName="firstName">
+        <div class="form-group col-sm-6">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" formControlName="username">
         </div>
     
-        <div class="form-group col-lg-6">
-            <label for="firstName">mail</label>
-            <input type="text" id="firstName" class="form-control" formControlName="firstName" placeholder="">
+        <div class="form-group col-sm-6">
+            <label for="mail">Mail</label>
+            <input type="text" class="form-control" formControlName="mail" [placeholder]="getSetting('MAIL')">
         </div>
     </div>
 
     <div class="row">
-        <div class="form-group col-lg-6">
-            <label for="firstName">Gender</label>
-            <input type="text" id="firstName" class="form-control" formControlName="firstName">
+        <div class="form-group col-sm-6">
+            <label for="gender">Gender</label>
+            <select class="form-control" formControlName="gender">
+                <option value="jus d\'orange" [selected]="isCurrentGender('Male')">Male</option>
+                <option value="jus de mangue" [selected]="isCurrentGender('Female')">Female</option>
+                <option value="jus de mangue" [selected]="isCurrentGender('Not provided')">Not defined</option>
+            </select>
         </div>
     
-        <div class="form-group col-lg-6">
-            <label for="firstName">Birthday</label>
-            <input type="text" id="firstName" class="form-control" formControlName="firstName">
+        <div class="form-group col-sm-6">
+            <label for="birthday">Birthday</label>
+            <input type="text" class="form-control" formControlName="birthday" [placeholder]="getSetting('BIRTHDAY')">
         </div>
     </div>
 
     <div class="row">
-        <div class="form-group col-lg-6">
-            <label for="firstName">Location</label>
-            <input type="text" id="firstName" class="form-control" formControlName="firstName">
+        <div class="form-group col-sm-6">
+            <label for="location">Location</label>
+            <input type="text" class="form-control" formControlName="location" [placeholder]="getSetting('LOCATION')">
         </div>
     
-        <div class="form-group col-lg-6">
-            <label for="firstName">Bio</label>
-            <input type="text" id="firstName" class="form-control" formControlName="firstName">
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="form-group col-lg-6">
-            <label for="firstName">Victories</label>
-            <input type="text" id="firstName" class="form-control" formControlName="firstName">
-        </div>
-    
-        <div class="form-group col-lg-6">
-            <label for="firstName">Points</label>
-            <input type="text" id="firstName" class="form-control" formControlName="firstName">
+        <div class="form-group col-sm-6">
+            <label for="bio">Bio</label>
+            <input type="text" class="form-control" formControlName="bio" [placeholder]="getSetting('BIO')">
         </div>
     </div>
 
     <mat-dialog-actions>
         <button class="button-self-made" (click)="close()">Close</button>
-        <button class="button-self-made" (click)="update()" type="submit" [disabled]="!isFromCorrect()">Save</button>
+        <button class="button-self-made" (click)="update()" type="submit" [disabled]="!isFormValid  ()">Save</button>
     </mat-dialog-actions>
 </form>

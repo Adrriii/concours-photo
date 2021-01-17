@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/User.model';
+import { UserSetting } from 'src/app/models/UserSetting.model';
 import { AuthService } from '../../services/auth.service';
 import { EditSettingsComponent } from './edit-settings/edit-settings.component';
 
@@ -24,9 +25,11 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.currentUserSubscription = this.authService.me.subscribe(
             user => {
-              this.currentUser = user;
+              this.currentUser = user
             }
         );
+        console.log("on init => " + this.currentUser);
+
     }
 
     ngOnDestroy(): void {
@@ -39,7 +42,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
       dialogConfig.backdropClass = 'backdropBackground';
-      dialogConfig.width = '30%';
+      dialogConfig.width = '80%';
 
       const dialogRef = this.dialog.open(EditSettingsComponent, dialogConfig);
 
@@ -48,14 +51,13 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
       );
     }
 
-    getUserName(): string {
-      if (this.authService.currentUser) {
+    getUserName() : string {
+      if(this.authService.currentUser)
           return this.authService.currentUser.username;
-      }
-      return 'Undefined';
+      return "Undefined";
     }
 
-    getSetting(settingName: string): string {
-      return 'undefined';
+    getSetting(settingName: string): string{
+      return this.authService.currentUser.settings.get(settingName).value;
     }
 }

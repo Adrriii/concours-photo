@@ -1,30 +1,87 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CreatePostComponent } from '../../feed/create-post/create-post.component';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
+import { User } from '../../../models/User.model';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-edit-settings',
   templateUrl: './edit-settings.component.html',
   styleUrls: ['./edit-settings.component.css']
 })
-export class EditSettingsComponent implements OnInit {
-  [x: string]: any;
+export class EditSettingsComponent implements OnInit, OnDestroy {
+    [x: string]: any;
 
-  constructor(
-    private dialogRef: MatDialogRef<CreatePostComponent>,
-    @Inject(MAT_DIALOG_DATA) data
-  ) { }
+    currentUser: User = null;
+    currentUserSubscription: Subscription;
+    form : FormGroup;
 
-  ngOnInit(): void {
-    console.log("nrbrnrbbjhbqjh")
-  }
+    constructor(
+        private dialogRef: MatDialogRef<EditSettingsComponent>,
+        @Inject(MAT_DIALOG_DATA) data,
+        private dialog: MatDialog,
+        private authService: AuthService,
+        private userService: UserService,
+        private formBuilder: FormBuilder
+    ) {
+    }
 
-  update(): void {
-    this.dialogRef.close();
-  }
+    ngOnInit(): void {
+        this.currentUserSubscription = this.authService.me.subscribe(
+            user => {
+                this.currentUser = user
+            }
+        );
+        console.log(this.currentUserSubscription);
+        
+        this.initForm();
+    }
 
-  close(): void {
-    this.dialogRef.close();
-  }
+    initForm() {
+        this.form = this.formBuilder.group({
+            username: [this.authService.currentUser.username,Validators.required],
+            mail: '',
+            gender: '',
+            birthday: '',
+            location: '',
+            bio: ''
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.currentUserSubscription.unsubscribe();
+    }
+
+    update(): void {
+        this.currentUser = this.authService.currentUser;
+        this.currentUser.username = this.form.value.username;
+        this.currentUser.settings.get('MAIL').value = this.form.value.mail;
+        this.currentUser.settings.get('GENDER').value = this.form.value.gender;
+        this.currentUser.settings.get('BIRTHDAY').value = this.form.value.birthday;
+        this.currentUser.settings.get('LOCATION').value = this.form.value.location;
+        this.currentUser.settings.get('BIO').value = this.form.value.bio;
+
+        this.userService.update(this.currentUser);
+
+        this.dialogRef.close();
+    }
+
+    close(): void {
+        this.dialogRef.close();
+    }
+
+    getSetting(settingName: string): string{
+        return this.authService.currentUser.settings.get(settingName).value;
+    }
+
+    isCurrentGender(gender: string): boolean {
+        return this.authService.currentUser.settings.get('GENDER').value === gender;
+    }
+
+    isFormValid(): boolean {
+        return this.form.valid;
+    }
 
 }

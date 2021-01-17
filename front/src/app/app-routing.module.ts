@@ -9,14 +9,15 @@ import {ThemeComponent} from './components/theme/theme.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {OtherProfileComponent} from './components/other-profile/other-profile.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
+import { AuthGuardService } from './services/auth-guard.service';
 
 const routes: Routes = [
     { path : 'feed', component: FeedComponent },
+    { path : 'settings', canActivate: [AuthGuardService], component: UserSettingsComponent },
     { path : 'home', component: HomeComponent },
     { path : 'login', component: LoginComponent },
+    { path : 'me', component: ProfileComponent },
     { path : 'register', component: RegisterComponent },
-    { path: 'me', component: ProfileComponent },
-    { path : 'settings', component: UserSettingsComponent },
     { path : 'themes', component: ThemeComponent },
     { path : '', redirectTo: '/home', pathMatch: 'full'},
     { path : '**', component: PageNotFoundComponent }

@@ -23,11 +23,19 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
         int postId = resultSet.getInt("id");
         List<Reactions> reactions = new SqlReactionsDao().getAllReactionsForPost(postId);
 
-        return new Post(resultSet.getString("title"), resultSet.getDate("d").toString(), 
-                null, reactions, author, new Label(resultSet.getString("label")),
-                theme, resultSet.getString("photo_url"), resultSet.getString("delete_url"), 
-                getInteger(resultSet, "score"), getInteger(resultSet, "nb_comment"), 
-                getInteger(resultSet, "nb_votes"), postId);
+        return new Post(
+                resultSet.getString("title"),
+                resultSet.getDate("d").toString(),
+                null,
+                reactions,
+                author,
+                new Label(resultSet.getString("label")),
+                theme,
+                resultSet.getString("photo_url"), resultSet.getString("delete_url"),
+                getInteger(resultSet, "score"),
+                getInteger(resultSet, "nb_votes"),
+                getInteger(resultSet, "nb_comment"),
+                postId);
     }
 
     @Override
@@ -131,5 +139,13 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
         opt.add(offset);
 
         return queryAllObjects(statement, opt);
+    }
+
+    @Override
+    public void increaseNbCommentBy(int postId, int toAdd) throws Exception {
+        String statement = "UPDATE post SET nb_comment = nb_comment + " + toAdd + " WHERE id=?";
+        List<Object> opt = Arrays.asList(postId);
+
+        exec(statement, opt);
     }
 }

@@ -12,8 +12,8 @@ public class Post {
     public final Label label;
     public final Theme theme;
     public final Integer score;
-    public final Integer nb_votes;
-    public final Integer nb_comment;
+    public final Integer nbVote;
+    public final Integer nbComment;
     public final String photo;
     public final String photoDelete;
 
@@ -21,9 +21,9 @@ public class Post {
         this(null, null, null, null, null, null, null, null);
     }
 
-    public Post(String title, String date, String reacted, List<Reactions> reactions, 
-    User author, Label label, Theme theme, String photo, String photoDelete, 
-    Integer score, Integer nb_votes, Integer nb_comment, Integer id) {
+    public Post(String title, String date, String reacted, List<Reactions> reactions,
+                User author, Label label, Theme theme, String photo, String photoDelete,
+                Integer score, Integer nbVote, Integer nbComment, Integer id) {
         this.id = id;
         this.date = date;
         this.title = title;
@@ -35,8 +35,8 @@ public class Post {
         this.photo = photo;
         this.photoDelete = photoDelete;
         this.score = score;
-        this.nb_comment = nb_comment;
-        this.nb_votes = nb_votes;
+        this.nbComment = nbComment;
+        this.nbVote = nbVote;
     }
 
     public Post(String title, String reacted, List<Reactions> reactions, User author, Label label, Theme theme, String photo, String photoDelete) {
@@ -54,8 +54,8 @@ public class Post {
                 ", label: " + this.label +
                 ", theme: " + this.theme +
                 ", score: " + this.score +
-                ", nb_comment: " + this.nb_comment +
-                ", nb_votes: " + this.nb_votes +
+                ", nbComment: " + this.nbComment +
+                ", nbVote: " + this.nbVote +
                 ", photo: " + this.photo +
                 ", photoDelete: " + this.photoDelete + ")";
     }

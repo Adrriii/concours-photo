@@ -1,6 +1,6 @@
 <section class="post-container">
 
-    <div class="post" [ngClass]="getCurrentClass()" (click)="toggleSelected()">
+    <div class="post" [ngClass]="getCurrentClass()">
 
         <div class="cardbox shadow-lg bg-white">
             <div class="cardbox-heading">
@@ -10,7 +10,7 @@
                                         src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
                                         alt="User"></a>
                     </div>
-                    <div class="media-body">
+                    <div class="media-body" (click)="toggleSelected()">
                         <p class="m-0"><b>{{ post.title }}</b></p>
                         <small><span><i class="icon ion-md-pin"></i> {{ post.author.username }}</span></small>
                         <small><span><i class="icon ion-md-time"></i> 10 hours ago</span></small>
@@ -23,7 +23,7 @@
                      src="{{ post.photo }}" alt="Image">
             </div><!--/ cardbox-item -->
             <div class="cardbox-base">
-                <ul class="float-right">
+                <ul class="float-right" (click)="toggleSelected()">
                     <li><a><i class="fa fa-comments"></i></a></li>
                     <li><a><em class="mr-5">12</em></a></li>
                 </ul>

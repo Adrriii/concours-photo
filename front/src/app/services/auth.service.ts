@@ -11,11 +11,16 @@ import {User} from '../models/User.model';
 })
 export class AuthService {
 
-    private currentUser: User = null;
+    public currentUser: User = null;
     public me = new Subject<User>();
     public isAuth = false;
 
     constructor(private httpClient: HttpClient) {
+        const jwt = localStorage.getItem('jwt');
+
+        if (jwt !== null) {
+            this.setCurrentUser(jwt);
+        }
     }
 
     emitMe(): void {
@@ -28,7 +33,11 @@ export class AuthService {
 
         this.httpClient.get<User>(environment.apiBaseUrl + 'user/me').subscribe(
             user => {
+                console.log(user);
+                // let test : User = user;
+                // console.log(test);                
                 this.currentUser = User.fromJson(user);
+                // this.currentUser = user;
                 this.emitMe();
 
                 console.log('Successfully get current user : ' + JSON.stringify(this.currentUser));
@@ -82,9 +91,8 @@ export class AuthService {
                             responseType: 'text'
                         })
                     .subscribe(
-                        data => {
-                            console.log('user logged successfully, data is : ' + data);
-                            this.setCurrentUser(data);
+                        token => {
+                            this.setCurrentUser(token);
                             resolve();
                         },
                         error => {

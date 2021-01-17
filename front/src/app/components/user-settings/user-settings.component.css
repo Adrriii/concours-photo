@@ -1,0 +1,8 @@
+.profile {
+    margin-top: 10px;
+}
+
+#profile-picture {
+    background-image: url(../../../assets/default-pp.png);
+    background-size: 100% 100%;
+}

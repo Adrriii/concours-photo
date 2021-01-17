@@ -18,10 +18,10 @@ export class ProfileComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.authService.me.subscribe(
-             currentUser => this.currentUser = currentUser
-        );
-        //this.userService.getMe().subscribe(user => this.currentUser = user);
+        // this.authService.me.subscribe(
+        //      currentUser => this.currentUser = currentUser
+        // );
+        this.userService.getMe().subscribe(user => this.currentUser = user);
     }
 
 }

@@ -32,9 +32,8 @@ export class OtherProfileComponent implements OnInit {
                 this.listPosts = userPosts;
                 this.listImgs = new Array<string>();
                 for (const post of userPosts){
-                    this.listImgs.push(post.photo);
+                    this.listImgs.unshift(post.photo);
                 }
-                this.listImgs.reverse();
             }
         );
     }

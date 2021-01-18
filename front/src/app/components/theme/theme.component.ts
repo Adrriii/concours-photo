@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Theme } from 'src/app/models/Theme.model';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-theme',
@@ -7,9 +10,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ThemeComponent implements OnInit {
 
-  constructor() { }
+    nextThemesSubscription: Subscription;
+    nextThemes: Array<Theme>;
 
-  ngOnInit(): void {
-  }
+    constructor(private themeService: ThemeService) { }
+
+    ngOnInit(): void {
+        this.themeService.getNextThemes()
+            .subscribe(
+                (nextThemes) => {
+                  this.nextThemes = nextThemes;
+                  console.log("next themes "+JSON.stringify(nextThemes));
+                  
+                }
+            );
+        console.log(this.nextThemes);
+    }
 
 }

@@ -100,7 +100,7 @@ public class Users {
                 user -> {
                     user = new User(user.username, user.settings, user.victories, 
                                                 user.score, user.userlevel, user.participations, 
-                                                image.url, image.delete_url, user.rank, user.id);
+                                                image.url, image.delete_url, user.theme, user.rank, user.id);
                     try {
                         return userService.update(user).map(
                             updatedUser -> {
@@ -118,4 +118,5 @@ public class Users {
         }
     }
 }
+
 

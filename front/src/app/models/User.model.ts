@@ -12,6 +12,7 @@ export class User {
         public rank: number,
         public photo: string,
         public photoDelete: string,
+        public theme: number,
         public settings: Map <string, UserSetting>
     ) {}
 
@@ -26,6 +27,7 @@ export class User {
             userJson.rank,
             userJson.photo,
             userJson.photoDelete,
+            userJson.theme,
             userJson.settings
         );
     }

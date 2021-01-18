@@ -18,4 +18,8 @@ export class ThemeService {
         return this.httpClient.get<Theme>(environment.apiBaseUrl + `themes/current`);
     }
 
+    getNextThemes(): Observable<Array<Theme>> {
+        return this.httpClient.get<Array<Theme>>(environment.apiBaseUrl + `themes/proposals`);
+    }
+
 }

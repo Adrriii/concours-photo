@@ -26,6 +26,7 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
                         getParticipationCount(userId),
                         resultSet.getString("photo_url"),
                         resultSet.getString("delete_url"), 
+                        getInteger(resultSet, "theme"),
                         getInteger(resultSet, "rank"),
                         userId);
     }
@@ -57,15 +58,15 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
         new SqlUserSettingDao().insertDefaultsForUser(userId);
         
         updateUsersRanks();
-        return new User(user.username, new SqlUserSettingDao().getAllForUser(userId), user.victories, user.score, user.userlevel, user.participations, user.photo, user.photoDelete, user.rank, userId);
+        return new User(user.username, new SqlUserSettingDao().getAllForUser(userId), user.victories, user.score, user.userlevel, user.participations, user.photo, user.photoDelete, user.theme, user.rank, userId);
     }
 
     @Override
     public User update(User user) throws SQLException {
         if(user.id == null) throw new SQLException(String.valueOf(UserDaoException.ID_NOT_PROVIDED));
 
-        String statement = "UPDATE user SET username=?, userlevel=?, victories=?, score=?, photo_url=?, delete_url=? WHERE id=?";
-        List<Object> opt = Arrays.asList(user.username, user.userlevel, user.victories, user.score, user.photo, user.photoDelete, user.id);
+        String statement = "UPDATE user SET username=?, theme=?, userlevel=?, victories=?, score=?, photo_url=?, delete_url=? WHERE id=?";
+        List<Object> opt = Arrays.asList(user.username, user.theme, user.userlevel, user.victories, user.score, user.photo, user.photoDelete, user.id);
 
         for(UserSetting userSetting : user.settings.values()) {
             new SqlUserSettingDao().update(userSetting);
@@ -150,5 +151,6 @@ enum UserDaoException {
         this.value = error;
     }
 }
+
 
 

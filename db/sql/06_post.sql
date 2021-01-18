@@ -2,7 +2,7 @@ use photodb;
 
 CREATE TABLE post (
     id int UNSIGNED AUTO_INCREMENT,
-    d Date DEFAULT (CURRENT_DATE),
+    d DATETIME DEFAULT (CURRENT_TIMESTAMP),
     title TEXT NOT NULL,
     author int UNSIGNED NOT NULL,
     label VARCHAR(24),

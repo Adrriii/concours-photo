@@ -35,16 +35,16 @@ export class AuthService {
             user => {
                 console.log(user);
                 // let test : User = user;
-                // console.log(test);                
+                // console.log(test);
                 // this.currentUser = user;
                 // console.log(user+"this -> "+user.settings['GENDER']);
-                
-                
-                
+
+
+
                 this.currentUser = User.fromJson(user);
                 // console.log(this.currentUser.getSetting("bio"));
                 // console.log(Object.fromEntries(this.currentUser.settings));
-                
+
                 // this.currentUser = user;
                 this.emitMe();
 
@@ -125,6 +125,7 @@ export class AuthService {
                         },
                         error => {
                             console.log('Error in logout : ' + JSON.stringify(error));
+                            this.clearCurrentUser();
                             reject(error);
                         }
                     );

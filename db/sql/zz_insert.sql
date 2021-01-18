@@ -34,10 +34,10 @@ VALUES
 
 INSERT INTO user (username,sha,userlevel,victories,score, photo_url)
 VALUES
-    ("Adri","f1ef21ffb3c4521188d2d08a8306bf71f87cbc8246ab296018f33c63b4f14e93",10,999,9999,"https://a.ppy.sh/4579132?1594553960.png"),
-    ("coucou","37acbd7dc4f8b1dfe7954b59d775da26f4d017df28bde97ef34a77b013a5f0f6",10,999,9999,null),
-    ("Alexandre","2",10,999,9999,null),
-    ("JD","3",10,999,9999,null);
+    ("Adri","f1ef21ffb3c4521188d2d08a8306bf71f87cbc8246ab296018f33c63b4f14e93",10,999,4,"https://a.ppy.sh/4579132?1594553960.png"),
+    ("coucou","37acbd7dc4f8b1dfe7954b59d775da26f4d017df28bde97ef34a77b013a5f0f6",10,999,0,null),
+    ("Alexandre","2",10,999,0,null),
+    ("JD","3",10,999,0,null);
 
 -- Insert Demo posts
 

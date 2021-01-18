@@ -16,7 +16,7 @@ export class EditSettingsComponent implements OnInit, OnDestroy {
 
     currentUser: User = null;
     currentUserSubscription: Subscription;
-    form : FormGroup;
+    form: FormGroup;
 
     constructor(
         private dialogRef: MatDialogRef<EditSettingsComponent>,
@@ -35,14 +35,14 @@ export class EditSettingsComponent implements OnInit, OnDestroy {
             }
         );
         console.log(this.currentUserSubscription);
-        
+
         this.initForm();
     }
 
-    initForm() {
+    initForm(): void {
         this.currentUser = this.authService.currentUser;
         this.form = this.formBuilder.group({
-            username: [this.currentUser.username,Validators.required],
+            username: [this.currentUser.username, Validators.required],
             mail: this.currentUser.getSetting('MAIL'),
             gender: this.currentUser.getSetting('GENDER'),
             birthday: this.currentUser.getSetting('BIRTHDAY'),
@@ -58,14 +58,14 @@ export class EditSettingsComponent implements OnInit, OnDestroy {
     update(): void {
         this.currentUser = this.authService.currentUser;
         this.currentUser.username = this.form.value.username;
-        this.currentUser.setSetting('MAIL',this.form.value.mail);
-        this.currentUser.setSetting('GENDER',this.form.value.gender);
-        this.currentUser.setSetting('BIRTHDAY',this.form.value.birthday);
-        this.currentUser.setSetting('LOCATION',this.form.value.location);
-        this.currentUser.setSetting('BIO',this.form.value.bio);
+        this.currentUser.setSetting('MAIL', this.form.value.mail);
+        this.currentUser.setSetting('GENDER', this.form.value.gender);
+        this.currentUser.setSetting('BIRTHDAY', this.form.value.birthday);
+        this.currentUser.setSetting('LOCATION', this.form.value.location);
+        this.currentUser.setSetting('BIO', this.form.value.bio);
 
         console.log(this.currentUser);
-        
+
         this.userService.update(this.currentUser)
             .subscribe(
               (user) => {
@@ -74,7 +74,7 @@ export class EditSettingsComponent implements OnInit, OnDestroy {
               (error) => {
                 console.log(error);
               }
-            )
+            );
 
         this.dialogRef.close();
     }

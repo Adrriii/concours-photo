@@ -29,18 +29,43 @@ export class PostComponent implements OnInit {
         this.isSelected = !this.isSelected;
     }
 
+    isPostLiked(): boolean {
+        return this.post.reacted !== null &&
+            this.post.reacted.toLowerCase() === 'like';
+    }
+
+    isPostDisliked(): boolean {
+        return this.post.reacted !== null &&
+            this.post.reacted.toLowerCase() === 'dislike';
+    }
 
     sendLike(): void {
         if (! this.authService.isAuth) {
             return;
         }
 
-        this.reactionService.postReaction(this.post.id, 'like').subscribe(
-            () => {
-                this.post.nbVote += 1;
-                this.post.score += 1;
-            }
-        );
+        if (this.isPostLiked()) {
+            this.reactionService.deleteReaction(this.post.id).subscribe(
+                () => {
+                    this.post.nbVote -= 1;
+                    this.post.score -= 1;
+                    this.post.reacted = null;
+                }
+            );
+        } else {
+            this.reactionService.postReaction(this.post.id, 'like').subscribe(
+                () => {
+                    if (this.isPostDisliked()) {
+                        this.post.score += 2;
+                    } else {
+                        this.post.nbVote += 1;
+                        this.post.score += 1;
+                    }
+
+                    this.post.reacted = 'like';
+                }
+            );
+        }
     }
 
     sendDislike(): void {
@@ -48,12 +73,28 @@ export class PostComponent implements OnInit {
             return;
         }
 
-        this.reactionService.postReaction(this.post.id, 'dislike').subscribe(
-            () => {
-                this.post.nbVote += 1;
-                this.post.score -= 1;
-            }
-        );
+        if (this.isPostDisliked()) {
+            this.reactionService.deleteReaction(this.post.id).subscribe(
+                () => {
+                    this.post.nbVote -= 1;
+                    this.post.score += 1;
+                    this.post.reacted = null;
+                }
+            );
+        } else {
+            this.reactionService.postReaction(this.post.id, 'dislike').subscribe(
+                () => {
+                    if (this.isPostLiked()) {
+                        this.post.score -= 2;
+                    } else {
+                        this.post.nbVote += 1;
+                        this.post.score -= 1;
+                    }
+
+                    this.post.reacted = 'dislike';
+                }
+            );
+        }
     }
 
     getNumberLike(): number {

@@ -468,17 +468,14 @@
 
 /* modify fa symbols */
 
-.fa-thumbs-up:hover {
-    color: blue !important;
-}
-
-.fa-thumbs-down:hover {
-    color: blue !important;
-}
-
 .fa-comments:hover {
     color: blue !important;
 }
 
+.fa-thumbs-up:hover, .fa-thumbs-up.selected {
+    color: blue !important;
+}
 
-
+.fa-thumbs-down:hover, .fa-thumbs-down.selected {
+    color: red !important;
+}

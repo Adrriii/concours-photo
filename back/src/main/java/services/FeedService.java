@@ -1,9 +1,6 @@
 package services;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import javax.inject.Inject;
 
@@ -14,6 +11,34 @@ public class FeedService {
     @Inject PostDao postDao;
     @Inject ThemeDao themeDao;
     @Inject LabelDao labelDao;
+    @Inject ReactionDao reactionDao;
+
+    public List<Post> feedSearchForUser(User user, String sort, String direction, Integer themeId, String labels, Integer page, Integer nbPosts) throws Exception {
+        List<Post> result = new ArrayList<>();
+
+        for (Post post : feedSearch(sort, direction, themeId, labels, page, nbPosts)) {
+            result.add(reactionDao.get(user.id, post.id).map(
+                    reaction -> new Post(
+                            post.title,
+                            post.date,
+                            reaction.reaction.name(),
+                            post.reactions,
+                            post.reactionsUser,
+                            post.author,
+                            post.label,
+                            post.theme,
+                            post.photo,
+                            post.photoDelete,
+                            post.score,
+                            post.nbVote,
+                            post.nbComment,
+                            post.id
+                    )
+            ).orElse(post));
+        }
+
+        return result;
+    }
 
     public List<Post> feedSearch(String sort, String direction, Integer themeId, String labels, Integer page, Integer nbPosts) throws Exception {
         Theme theme = getArgTheme(themeId);

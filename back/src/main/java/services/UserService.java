@@ -26,7 +26,6 @@ public class UserService {
         return getUserByName(username);
     }
 
-
     public Optional<User> getById(int id) {
         User user;
 

@@ -9,6 +9,7 @@ export class User {
         public victories: number,
         public score: number,
         public participations: number,
+        public rank: number,
         public photo: string,
         public photoDelete: string,
         public settings: Map <string, UserSetting>
@@ -22,10 +23,19 @@ export class User {
             userJson.victories,
             userJson.score,
             userJson.participations,
+            userJson.rank,
             userJson.photo,
             userJson.photoDelete,
-            new Map(Object.entries(userJson.settings))
+            userJson.settings
         );
+    }
+
+    public getSetting(settingName: string): string{
+        return this.settings[settingName].value;
+    }
+
+    public setSetting(settingName: string, value: string): void{
+        this.settings[settingName].value = value;
     }
 
     // public getSetting(settingName: string) : string {
@@ -38,7 +48,7 @@ export class User {
     //         if(setting !== value){
     //             console.log(`error while comparing user's settings : ${setting} not equals ${value}`);
     //             return false;
-    //         }    
+    //         }
     //     });
 
     //     return this.id === user.id

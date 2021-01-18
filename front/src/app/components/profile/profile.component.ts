@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {User} from '../../models/User.model';
 import {AuthService} from '../../services/auth.service';
 import {UserService} from "../../services/user.service";
+import {Post} from "../../models/Post.model";
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +12,9 @@ import {UserService} from "../../services/user.service";
 export class ProfileComponent implements OnInit {
 
     public currentUser: User = null;
+    public listPosts: Array<Post> = null;
+    public listImgs: Array<string> = null;
+    public edited = false;
 
     constructor(
         private authService: AuthService,
@@ -18,10 +22,26 @@ export class ProfileComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.authService.me.subscribe(
-             currentUser => this.currentUser = currentUser
-        );
-        //this.userService.getMe().subscribe(user => this.currentUser = user);
+        this.userService.getMe().subscribe(user => {
+            this.currentUser = user;
+            this.userService.getPostsById(user.id).subscribe(
+                (userPosts) => {
+                    this.listPosts = userPosts;
+                    this.listImgs = new Array<string>();
+                    for (const post of userPosts){
+                        this.listImgs.unshift(post.photo);
+                    }
+                }
+            );
+        });
+    }
+
+    showAll(): void {
+        if (this.edited === true) {
+            this.edited = false;
+            return;
+        }
+        this.edited = true;
     }
 
 }

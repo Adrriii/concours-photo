@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class SqlPostDao extends SqlDao<Post> implements PostDao {
@@ -20,7 +21,9 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
         int themeId = resultSet.getInt("theme");
         Theme theme = new SqlThemeDao().getById(themeId).orElseThrow(SQLException::new);
 
+        
         int postId = resultSet.getInt("id");
+        Map<String, List<UserPublic>> reactionsUser = new SqlReactionsDao().getSampleUsersForReactions(postId);
         List<Reactions> reactions = new SqlReactionsDao().getAllReactionsForPost(postId);
 
         return new Post(
@@ -28,6 +31,7 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
                 resultSet.getDate("d").toString(),
                 null,
                 reactions,
+                reactionsUser,
                 author,
                 new Label(resultSet.getString("label")),
                 theme,
@@ -95,6 +99,8 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
 
     @Override
     public List<Post> getFeedSearch(String sort, String direction, Theme theme, Set<Label> labelSet, int offset, int limit) throws Exception {
+        String labelSubStatementFrom = null;
+        String labelSubStatementWhere = null;
         String labelSubStatement = null;
         List<Object> opt = new ArrayList<>();
         
@@ -102,13 +108,21 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
             if(labelSubStatement != null) labelSubStatement += " OR ";
             else labelSubStatement = "";
             labelSubStatement += "p.label = ?";
+            labelSubStatementFrom = ", label as l ";
+            labelSubStatementWhere = "p.label = l.label AND ";
             opt.add(label.label);
         }
-        if(labelSubStatement == null) labelSubStatement = " ";
-        else labelSubStatement = " AND ("+labelSubStatement+") ";
+        if(labelSubStatement == null) {
+            labelSubStatement = " ";
+            labelSubStatementFrom = " ";
+            labelSubStatementWhere = " ";
+        }
+        else {
+            labelSubStatement = " AND ("+labelSubStatement+") ";
+        }
 
-        String statement = "SELECT * FROM post as p, label as l, theme as t ";
-        statement += "WHERE p.label = l.label AND p.theme = t.id" + labelSubStatement;
+        String statement = "SELECT * FROM post as p, theme as t" + labelSubStatementFrom;
+        statement += "WHERE "+labelSubStatementWhere+"p.theme = t.id" + labelSubStatement;
         statement += "AND p.theme = ? ";
         opt.add(theme.id);
 

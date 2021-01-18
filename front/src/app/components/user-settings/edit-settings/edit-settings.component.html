@@ -16,15 +16,15 @@
         <div class="form-group col-sm-6">
             <label for="gender">Gender</label>
             <select class="form-control" formControlName="gender">
-                <option value="jus d\'orange" [selected]="isCurrentGender('Male')">Male</option>
-                <option value="jus de mangue" [selected]="isCurrentGender('Female')">Female</option>
-                <option value="jus de mangue" [selected]="isCurrentGender('Not provided')">Not defined</option>
+                <option value="Male" [selected]="isCurrentGender('Male')">Male</option>
+                <option value="Female" [selected]="isCurrentGender('Female')">Female</option>
+                <option value="Not defined" [selected]="isCurrentGender('Not provided')">Not defined</option>
             </select>
         </div>
     
         <div class="form-group col-sm-6">
             <label for="birthday">Birthday</label>
-            <input type="text" class="form-control" formControlName="birthday" [placeholder]="getSetting('BIRTHDAY')">
+            <input type="date" class="form-control" formControlName="birthday" [placeholder]="getSetting('BIRTHDAY')">
         </div>
     </div>
 

@@ -1,6 +1,7 @@
 package model;
 
 public class Theme {
+    
     public final Integer id;
     public final String title;
     public final String photo;

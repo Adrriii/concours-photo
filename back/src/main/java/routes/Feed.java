@@ -11,6 +11,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import filters.JWTTokenOptional;
 import model.Post;
 import model.User;
 import services.*;
@@ -27,6 +28,7 @@ public class Feed {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @JWTTokenOptional
     public Response feed(
             @Context ContainerRequestContext ctx,
             @DefaultValue("DESC") @QueryParam("direction") String direction,
@@ -45,7 +47,13 @@ public class Feed {
                         return Response.status(500).entity(e.getMessage()).build();
                     }
                 })
-                .orElse(Response.ok().entity(feedService.feedSearch(sort, direction, themeId, labels, page, nbPosts)).build());
+                .orElseGet(() -> {
+                    try {
+                        return Response.ok().entity(feedService.feedSearch(sort, direction, themeId, labels, page, nbPosts)).build();
+                    } catch (Exception e) {
+                        return Response.status(500).entity(e.getMessage()).build();
+                    }
+                });
         } catch (Exception e) {
             return Response.status(500).entity(e.getMessage()).build();
         }

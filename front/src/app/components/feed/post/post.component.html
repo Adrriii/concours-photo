@@ -28,14 +28,14 @@
                     <li><a><em class="mr-5">{{post.nbComment}}</em></a></li>
                 </ul>
                 <ul>
-                    <li><a><i class="fa fa-thumbs-up"></i></a></li>
+                    <li (click)="sendLike()"><a><i class="fa fa-thumbs-up"></i></a></li>
                     <li><a href="#"><img
                         src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
                         class="img-fluid rounded-circle" alt="User"></a></li>
-                    <li><a><span>1 Like</span></a></li>
+                    <li><a><span>{{getNumberLike()}} Like</span></a></li>
                 </ul>
                 <ul>
-                    <li><a><i class="fa fa-thumbs-down"></i></a></li>
+                    <li (click)="sendDislike()"><a><i class="fa fa-thumbs-down"></i></a></li>
                     <li><a href="#"><img
                         src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
                         class="img-fluid rounded-circle" alt="User"></a></li>
@@ -48,7 +48,7 @@
                     <li><a href="#"><img
                         src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
                         class="img-fluid rounded-circle" alt="User"></a></li>
-                    <li><a><span>242 Dislikes</span></a></li>
+                    <li><a><span>{{getNumberDislike()}} Dislikes</span></a></li>
                 </ul>
             </div><!--/ cardbox-base -->
 

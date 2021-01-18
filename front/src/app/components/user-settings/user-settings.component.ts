@@ -20,7 +20,6 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     currentUser: User = null;
     currentUserSubscription: Subscription;
     file: File;
-    public photo_url: string = 'https://i.imgur.com/0pRFULS.png';
 
     constructor(
         private dialog: MatDialog,
@@ -36,7 +35,6 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
               this.currentUser = user;
             }
         );
-        console.log('on init => ' + this.currentUser);
 
     }
 
@@ -84,6 +82,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
             .subscribe(
                 (user) => {
                     console.log('picture successfully uploaded : '+ JSON.stringify(user));
+                    location.reload();
                 },
                 (error) => {
                     this.toastr.error(error.message);

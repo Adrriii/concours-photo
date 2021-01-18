@@ -1,0 +1,47 @@
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+</head>
+
+<header>
+    <div class="overlay"></div>
+    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+        <source src="https://media.publit.io/file/video-f.mp4" type="video/mp4">
+    </video>
+    <div class="container h-100">
+        <div class="d-flex h-100 text-center align-items-center">
+            <div class="w-100 text-white">
+                <h2 class="display-3">Theme of the week</h2>
+                <p class="lead mb-0">{{currentThemeTitle}}</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="feed-container">
+    <div class="py-5 justify-content-center d-flex text-center">
+        <button class="create-post" (click)="openDialog()" *ngIf="isUserLoggedIn()"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create new post</button>
+        <a routerLink="/themes">
+            <button class="next-theme"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Next theme</button>
+        </a>
+        <div class="dropdown">
+            <button class="dropdown-filter" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-sort pr-2" aria-hidden="true"></i>Sort posts by
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li class="dropdown-item">Score</li>
+                <li class="dropdown-item">Most recent</li>
+                <li class="dropdown-item">Oldest</li>
+                <li class="dropdown-item">Most comments</li>
+                <li class="dropdown-item">Most votes</li>
+            </div>
+        </div>
+    </div>
+
+    <div class="feed">
+        <app-post *ngFor="let post of posts" [post]="post"></app-post>
+    </div>
+</div>
+

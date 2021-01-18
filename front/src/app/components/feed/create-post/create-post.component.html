@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>{{"Create a new post"}}</h2>
+
+<!--<mat-dialog-content [formGroup]="form">-->
+
+<!--    <mat-form-field>-->
+<!--        <mat-label>Test</mat-label>-->
+<!--        <input matInput-->
+<!--               placeholder="Title of the photo"-->
+<!--               formControlName="title">-->
+<!--    </mat-form-field>-->
+
+<!--</mat-dialog-content>-->
+<form class="center" [formGroup]="form">
+    <div class="input-container input-effect">
+        <input class="effect-button" type="text" placeholder="Title" formControlName="title">
+        <span class="focus-border"><i></i></span>
+    </div>
+    <ngx-file-drop dropZoneLabel="Drop files here"
+                   [dropZoneClassName]="'drop-zone'"
+                   [contentClassName]="'drop-content'"
+                   (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)"
+                   [hidden]="isFileSelected()">
+        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+            <div class="dropzone-content-container">
+                <div>Drag and drop your picture here</div>
+                <button type="button" class="btn-file mt-2" (click)="openFileSelector()">Browse Files</button>
+            </div>
+        </ng-template>
+    </ngx-file-drop>
+
+    <div class="container" align="center" [hidden]="!isFileSelected()">
+        <img [src]="imagePreview" class="preview-image">
+    </div>
+
+    <h2>Choose a tag</h2>
+    <div class="select">
+        <select name="format" id="format" formControlName="tag">
+            <option *ngFor="let label of labels" [value]="label.label">{{label.label}}</option>
+        </select>
+    </div>
+
+    <mat-dialog-actions>
+        <button class="button-self-made" (click)="close()">Close</button>
+        <button class="button-self-made" (click)="save()" type="submit" [disabled]="!isFromCorrect()">Save</button>
+    </mat-dialog-actions>
+</form>
+
+

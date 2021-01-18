@@ -1,1 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Damion|Muli:400,600');
+body{
+    font-family: 'Damion', sans-serif;
+    font-size: large;
+    background: url("https://www.toptal.com/designers/subtlepatterns/patterns/geometry2.png");
+}
+
+::-webkit-scrollbar{
+    width: 20px;
+}
+
+::-webkit-scrollbar-thumb{
+    border-radius:30px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#006ab1), to(#87bae1));
+    box-shadow: inset 2px 2px 2px rgba(255,255,255,0.25), inset -2px -2px -2px rgba(0,0,0,0.25);
+}
+
+::-webkit-scrollbar-track{
+    background: linear-gradient(to right, white, white 1px, white 1px, white);
+}
+
+.drop-zone {
+    height: 200px;
+    margin: auto;
+    border: 2px dotted #463f32;
+    border-radius: 30px;
+}
+
+.ngx-file-drop__drop-zone--over {
+    background-color: rgba(147, 147, 147, 0.5);
+}
+
+.drop-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    color: #463f32;
+}
+
+.ngx-file-drop__drop-zone-label {
+    text-align: center;
+}
+
+.ngx-file-drop__file-input {
+    display: none;
+}
+

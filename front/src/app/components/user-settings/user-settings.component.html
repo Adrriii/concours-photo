@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-lg-5 profile" id="profile-picture">
+
+      <img [src]="getPhoto()"
+          alt="Profile picture"
+          style="height: 100%; width: 100%;">
+
+      <div>
+        <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
+        <button (click)="fileInput.click()">Select File</button>
+        <button (click)="onUpload()">Upload!</button>
+      </div>
+
+    </div>
+    <div class="col-lg-7 profile card">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <span id="name"> {{ getUserName() }} </span>
+        </li>
+        <li class="list-group-item">Mail : {{ getSetting("MAIL") }}</li>
+        <li class="list-group-item">Gender : {{ getSetting("GENDER") }}</li>
+        <li class="list-group-item">Birthday : {{ getSetting("BIRTHDAY") }}</li>
+        <li class="list-group-item">Location : {{ getSetting("LOCATION") }}</li>
+        <li class="list-group-item">Bio : {{ getSetting("BIO") }}</li>
+        <li class="list-group-item">Victories : {{ getSetting("VICTORIES") }}</li>
+        <li class="list-group-item">Points : {{ getSetting("POINTS") }}</li>
+        <li class="list-group-item">
+            <button type="button" class="button-self-made" (click)="openDialog()">Update informations</button>
+        </li>
+      </ul>
+    </div>
+</div>

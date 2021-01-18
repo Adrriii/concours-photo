@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Post} from '../../../models/Post.model';
 import {ReactionsService} from '../../../services/reactions.service';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
     selector: 'app-post',
@@ -12,7 +13,8 @@ export class PostComponent implements OnInit {
     public isSelected = false;
 
     constructor(
-        private reactionService: ReactionsService
+        private reactionService: ReactionsService,
+        private authService: AuthService
     ) {
     }
 
@@ -29,10 +31,12 @@ export class PostComponent implements OnInit {
 
 
     sendLike(): void {
-        console.log('Sending like...');
-        this.reactionService.postReaction(this.post.id, 'Like').subscribe(
+        if (! this.authService.isAuth) {
+            return;
+        }
+
+        this.reactionService.postReaction(this.post.id, 'like').subscribe(
             () => {
-                console.log('Updating post score !');
                 this.post.nbVote += 1;
                 this.post.score += 1;
             }
@@ -40,10 +44,12 @@ export class PostComponent implements OnInit {
     }
 
     sendDislike(): void {
-        console.log('Sending dislike...');
-        this.reactionService.postReaction(this.post.id, 'Dislike').subscribe(
+        if (! this.authService.isAuth) {
+            return;
+        }
+
+        this.reactionService.postReaction(this.post.id, 'dislike').subscribe(
             () => {
-                console.log('Updating post score !');
                 this.post.nbVote += 1;
                 this.post.score -= 1;
             }

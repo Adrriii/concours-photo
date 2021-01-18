@@ -31,8 +31,8 @@ public class Feed {
     @JWTTokenOptional
     public Response feed(
             @Context ContainerRequestContext ctx,
-            @DefaultValue("DESC") @QueryParam("sort") String sort,
-            @DefaultValue("score") @QueryParam("direction") String direction,
+            @DefaultValue("DESC") @QueryParam("direction") String direction,
+            @DefaultValue("score") @QueryParam("sort") String sort,
             @DefaultValue("") @QueryParam("labels") String labels,
             @DefaultValue("1") @QueryParam("page") Integer page,
             @DefaultValue("15") @QueryParam("nbPosts") Integer nbPosts,

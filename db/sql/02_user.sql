@@ -7,7 +7,7 @@ CREATE TABLE user (
     theme int UNSIGNED,
     userlevel int UNSIGNED,
     victories int UNSIGNED,
-    score int UNSIGNED,
+    score int,
     rank int UNSIGNED,
     photo_url TEXT,
     delete_url TEXT,

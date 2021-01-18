@@ -28,7 +28,7 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
 
         return new Post(
                 resultSet.getString("title"),
-                resultSet.getDate("d").toString(),
+                resultSet.getTimestamp("d").toString(),
                 null,
                 reactions,
                 reactionsUser,
@@ -126,8 +126,7 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
         statement += "AND p.theme = ? ";
         opt.add(theme.id);
 
-        if(direction != "DESC" && direction != "ASC") throw new Exception("Invalid direction parameter");
-        statement += "ORDER BY ? "+direction;
+        if(!direction.equals("DESC") && !direction.equals("ASC")) throw new Exception("Invalid direction parameter "+direction);
 
         switch(sort) {
             case "score":
@@ -143,10 +142,9 @@ public class SqlPostDao extends SqlDao<Post> implements PostDao {
                 sort = "p.nb_votes";
                 break;
             default:
-                throw new Exception("Invalid sort parameter");
+                throw new Exception("Invalid sort parameter "+sort);
         }
-
-        opt.add(sort);
+        statement += "ORDER BY "+ sort +" "+direction;
 
         statement += " LIMIT ? OFFSET ?";
         opt.add(limit);

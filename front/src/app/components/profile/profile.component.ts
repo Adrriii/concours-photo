@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../models/User.model';
 import {AuthService} from '../../services/auth.service';
-import {UserService} from "../../services/user.service";
-import {Post} from "../../models/Post.model";
+import {UserService} from '../../services/user.service';
+import {Post} from '../../models/Post.model';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-profile',

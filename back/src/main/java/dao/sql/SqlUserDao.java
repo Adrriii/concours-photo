@@ -135,7 +135,7 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
     }
 
     public void updateUsersRanks() throws SQLException {
-        String statement = "SET @r=0;UPDATE user SET rank= @r:= (@r+1) ORDER BY score DESC;";
+        String statement = "CALL update_ranks()";
         exec(statement);
     }
 }

@@ -266,20 +266,6 @@ header .overlay {
     border: 2px solid #fff;
 }
 
-/* modify fa symbols */
-
-.fa-thumbs-up:hover {
-    color: blue !important;
-}
-
-.fa-thumbs-down:hover {
-    color: blue !important;
-}
-
-.fa-comments:hover {
-    color: blue !important;
-}
-
 .feed-container {
     display: flex;
     flex-direction: column;

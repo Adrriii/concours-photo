@@ -11,6 +11,7 @@ public class ReactionService {
     @Inject UserDao userDao;
 
     public boolean changeReactToPost(int postId, int userId, String reaction) {
+        cancelReactToPost(postId, userId);
         ReactionName reactionName = ReactionName.valueOf(reaction.toUpperCase());
 
         try {

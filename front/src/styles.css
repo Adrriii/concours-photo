@@ -23,7 +23,7 @@ body{
 .drop-zone {
     height: 200px;
     margin: auto;
-    border: 2px dotted #4caf50;
+    border: 2px dotted #463f32;
     border-radius: 30px;
 }
 
@@ -36,7 +36,7 @@ body{
     align-items: center;
     justify-content: center;
     height: 100px;
-    color: #4caf50;
+    color: #463f32;
 }
 
 .ngx-file-drop__drop-zone-label {

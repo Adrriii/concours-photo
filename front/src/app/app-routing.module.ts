@@ -17,6 +17,7 @@ const routes: Routes = [
     { path : 'home', component: HomeComponent },
     { path : 'login', component: LoginComponent },
     { path : 'me', component: ProfileComponent },
+    { path : 'user/:id', component: OtherProfileComponent },
     { path : 'register', component: RegisterComponent },
     { path : 'themes', component: ThemeComponent },
     { path : '', redirectTo: '/home', pathMatch: 'full'},

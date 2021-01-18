@@ -5,6 +5,7 @@ import {PostsService} from '../../services/posts.service';
 import {ThemeService} from '../../services/theme.service';
 import {ToastrService} from 'ngx-toastr';
 import {Post} from '../../models/Post.model';
+import {AuthService} from '../../services/auth.service';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class FeedComponent implements OnInit {
         private dialog: MatDialog,
         private postService: PostsService,
         private themeService: ThemeService,
+        private authService: AuthService
     ) {
     }
 
@@ -70,5 +72,9 @@ export class FeedComponent implements OnInit {
         dialogRef.afterClosed().subscribe(
             data => {}
         );
+    }
+
+    isUserLoggedIn(): boolean {
+        return this.authService.isAuth;
     }
 }

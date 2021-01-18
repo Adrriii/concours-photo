@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { User } from '../models/User.model';
+import {Post} from '../models/Post.model';
 
 @Injectable({
     providedIn: 'root'
@@ -26,6 +27,10 @@ export class UserService {
 
     updateProfilePicture(picture: FormData): Observable<User> {
         return this.httpClient.post<User>(environment.apiBaseUrl + 'user/me/avatar', picture);
+    }
+
+    getPostsById(id: number): Observable<Array<Post>> {
+        return this.httpClient.get<Array<Post>>(environment.apiBaseUrl + `user/${id}/posts`);
     }
 
 }

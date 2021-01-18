@@ -13,7 +13,7 @@
         <div class="d-flex h-100 text-center align-items-center">
             <div class="w-100 text-white">
                 <h2 class="display-3">Theme of the week</h2>
-                <p class="lead mb-0">Name of the theme</p>
+                <p class="lead mb-0">{{currentThemeTitle}}</p>
             </div>
         </div>
     </div>
@@ -21,18 +21,17 @@
 
 <div class="feed-container">
     <div class="py-5 justify-content-center d-flex text-center">
-        <button class="create-post" (click)="openDialog()">Create new post</button>
+        <button class="create-post" (click)="openDialog()" *ngIf="isUserLoggedIn()"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create new post</button>
         <a routerLink="/themes">
-            <button class="next-theme">Next theme</button>
+            <button class="next-theme"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Next theme</button>
         </a>
         <div class="dropdown">
-            <button class="dropdown-filter dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            <button class="dropdown-filter" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                Sort posts by
+                <i class="fa fa-sort pr-2" aria-hidden="true"></i>Sort posts by
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li class="dropdown-item">Score</li>
-                <li class="dropdown-item">Tag</li>
                 <li class="dropdown-item">Most recent</li>
                 <li class="dropdown-item">Oldest</li>
                 <li class="dropdown-item">Most comments</li>

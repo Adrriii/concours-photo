@@ -1,8 +1,8 @@
 package model;
 
 public enum ReactionName {
-    LIKE("like"),
-    DISLIKE("dislike");
+    LIKE("LIKE"),
+    DISLIKE("DISLIKE");
 
     String value;
 

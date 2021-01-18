@@ -26,6 +26,7 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
                         getParticipationCount(userId),
                         resultSet.getString("photo_url"),
                         resultSet.getString("delete_url"), 
+                        getInteger(resultSet, "rank"),
                         userId);
     }
 
@@ -55,7 +56,8 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
         int userId = doInsert(statement, opt);
         new SqlUserSettingDao().insertDefaultsForUser(userId);
         
-        return new User(user.username, new SqlUserSettingDao().getAllForUser(userId), user.victories, user.score, user.userlevel, user.participations, user.photo, user.photoDelete, userId);
+        updateUsersRanks();
+        return new User(user.username, new SqlUserSettingDao().getAllForUser(userId), user.victories, user.score, user.userlevel, user.participations, user.photo, user.photoDelete, user.rank, userId);
     }
 
     @Override
@@ -69,8 +71,10 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
             new SqlUserSettingDao().update(userSetting);
         }
 
+        
         exec(statement, opt);
-        return user;
+        updateUsersRanks();
+        return getById(user.id);
     }
 
     @Override
@@ -81,6 +85,7 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
         List<Object> opt = Arrays.asList(user.id);
 
         exec(statement, opt);
+        updateUsersRanks();
     }
 
     @Override
@@ -120,6 +125,18 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
             e.printStackTrace();
             return 0;
         }
+    }
+
+    public void updateUserScore(int id) throws SQLException {
+        String statement = "UPDATE user SET score = (SELECT SUM(score) FROM post WHERE author = ?) WHERE id = ?";
+        List<Object> opt = Arrays.asList(id, id);
+
+        exec(statement, opt);
+    }
+
+    public void updateUsersRanks() throws SQLException {
+        String statement = "CALL update_ranks()";
+        exec(statement);
     }
 }
 

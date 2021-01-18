@@ -33,10 +33,10 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.currentUserSubscription = this.authService.me.subscribe(
             user => {
-              this.currentUser = user
+              this.currentUser = user;
             }
         );
-        console.log("on init => " + this.currentUser);
+        console.log('on init => ' + this.currentUser);
 
     }
 

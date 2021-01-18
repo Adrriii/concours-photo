@@ -12,4 +12,6 @@ public interface PostDao extends Searchable<Post> {
     List<Post> getAllForUser(int userId) throws Exception;
     void delete(Post post) throws Exception;
     List<Post> getFeedSearch(String sort, String direction, Theme theme, Set<Label> labelSet, int offset, int limit) throws Exception;
+
+    void increaseNbCommentBy(int postId, int offset) throws Exception;
 }

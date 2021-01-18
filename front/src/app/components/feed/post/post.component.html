@@ -6,7 +6,7 @@
             <div class="cardbox-heading">
                 <div class="media m-0">
                     <div class="d-flex mr-3">
-                        <a href=""><img class="img-fluid rounded-circle"
+                        <a routerLink="/user/{{ post.author.id }}"><img class="img-fluid rounded-circle"
                                         src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
                                         alt="User"></a>
                     </div>
@@ -25,17 +25,17 @@
             <div class="cardbox-base">
                 <ul class="float-right" (click)="toggleSelected()">
                     <li><a><i class="fa fa-comments"></i></a></li>
-                    <li><a><em class="mr-5">12</em></a></li>
+                    <li><a><em class="mr-5">{{post.nbComment}}</em></a></li>
                 </ul>
                 <ul>
-                    <li><a><i class="fa fa-thumbs-up"></i></a></li>
+                    <li (click)="sendLike()"><a><i class="fa fa-thumbs-up"></i></a></li>
                     <li><a href="#"><img
                         src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
                         class="img-fluid rounded-circle" alt="User"></a></li>
-                    <li><a><span>1 Like</span></a></li>
+                    <li><a><span>{{getNumberLike()}} Like</span></a></li>
                 </ul>
                 <ul>
-                    <li><a><i class="fa fa-thumbs-down"></i></a></li>
+                    <li (click)="sendDislike()"><a><i class="fa fa-thumbs-down"></i></a></li>
                     <li><a href="#"><img
                         src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
                         class="img-fluid rounded-circle" alt="User"></a></li>
@@ -48,7 +48,7 @@
                     <li><a href="#"><img
                         src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
                         class="img-fluid rounded-circle" alt="User"></a></li>
-                    <li><a><span>242 Dislikes</span></a></li>
+                    <li><a><span>{{getNumberDislike()}} Dislikes</span></a></li>
                 </ul>
             </div><!--/ cardbox-base -->
 

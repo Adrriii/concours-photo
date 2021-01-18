@@ -1,0 +1,63 @@
+<div class="row py-5 px-4">
+    <div class="col-md-8 mx-auto">
+        <!-- Profile widget -->
+        <div class="bg-white shadow rounded overflow-hidden">
+            <div class="px-4 pt-0 pb-4 cover">
+                <div class="media align-items-end profile-head">
+                    <div class="profile mr-3"><img src="https://media.publit.io/file/ThX0JeH.png" alt="..."
+                                                   width="130" class="rounded mb-2 img-thumbnail"></div>
+                    <div class="media-body mb-5 text-white">
+                        <h4 class="mt-0 mb-0"><i class="fa fa-user mr-2"></i>{{UserQueried.username}}</h4>
+                        <p class="mb-4"> <i class="fa fa-map mr-2"></i>Bordeaux, France</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-light p-4 d-flex justify-content-end text-center">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item pr-5">
+                        <h5 class="font-weight-bold mb-0 d-block">{{UserQueried.victories}}</h5><small class="text-muted"> <i class="fa fa-trophy mr-1"></i>Victories</small>
+                    </li>
+                    <li class="list-inline-item pr-5">
+                        <h5 class="font-weight-bold mb-0 d-block">{{UserQueried.score}}</h5><small class="text-muted"> <i class="fa fa-star mr-1" aria-hidden="true"></i>Score</small>
+                    </li>
+                    <li class="list-inline-item pr-5">
+                        <h5 class="font-weight-bold mb-0 d-block">{{UserQueried.participations}}</h5><small class="text-muted"> <i class="fa fa-gavel mr-1"></i>Participations</small>
+                    </li>
+                    <li class="list-inline-item pr-5">
+                        <h5 class="font-weight-bold mb-0 d-block">{{UserQueried.rank}}</h5><small class="text-muted"> <i class="fa fa-graduation-cap mr-1"></i>Classement</small>
+                    </li>
+                </ul>
+            </div>
+            <div class="px-4 py-3">
+                <h5 class="mb-0">Bio</h5>
+                <div class="p-4 rounded shadow-sm bg-light">
+                    <p class="font-italic mb-0">Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
+                        ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum</p>
+                </div>
+            </div>
+            <div class="py-4 px-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="mb-0">Recent photos</h5><a class="btn btn-link text-muted" (click)="showAll()"><h5>Show all</h5></a>
+                </div>
+                <div class="row d-inline" *ngFor="let postImg of listImgs; index as i">
+                    <div *ngIf="i < 4">
+                        <div class="col-lg-6 mb-2 left-side-img">
+                            <img src="{{postImg}}" alt="" *ngIf="i % 2 == 0" class="img-sized img-fluid rounded shadow-sm">
+                        </div>
+                        <div class="col-lg-6 mb-2 right-side-img">
+                            <img src="{{postImg}}" alt="" *ngIf="i % 2 != 0" class="img-sized img-fluid rounded shadow-sm">
+                        </div>
+                    </div>
+                    <div *ngIf="i >= 4" [hidden]="!edited">
+                        <div class="col-lg-6 mb-2 left-side-img">
+                            <img src="{{postImg}}" alt="" *ngIf="i % 2 == 0" class="img-sized img-fluid rounded shadow-sm">
+                        </div>
+                        <div class="col-lg-6 mb-2 right-side-img">
+                            <img src="{{postImg}}" alt="" *ngIf="i % 2 != 0" class="img-sized img-fluid rounded shadow-sm">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

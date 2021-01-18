@@ -12,4 +12,4 @@ CREATE TABLE user (
     photo_url TEXT,
     delete_url TEXT,
     PRIMARY KEY (id)
-)
+);

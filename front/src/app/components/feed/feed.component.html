@@ -21,7 +21,7 @@
 
 <div class="feed-container">
     <div class="py-5 justify-content-center d-flex text-center">
-        <button class="create-post" (click)="openDialog()"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create new post</button>
+        <button class="create-post" (click)="openDialog()" *ngIf="isUserLoggedIn()"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create new post</button>
         <a routerLink="/themes">
             <button class="next-theme"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Next theme</button>
         </a>

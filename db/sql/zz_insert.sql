@@ -24,9 +24,9 @@ VALUES
 INSERT INTO theme (title, state, photo_url, winner, date)
 VALUES
     ("Current theme", "active", "url", null, "2020-12-24"),
-    ("Les chiens", "proposed", "url", null, "2020-12-24"),
-    ("Les chats", "proposed", "url", null, "2020-12-24"),
-    ("La cuisine", "proposed", "url", null, "2020-12-24"),
+    ("Les chiens", "proposal", "url", null, "2020-12-24"),
+    ("Les chats", "proposal", "url", null, "2020-12-24"),
+    ("La cuisine", "proposal", "url", null, "2020-12-24"),
     ("Ancient theme", "ended", "url", null, "2020-12-24");
 
 

@@ -19,14 +19,18 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
         User winner = (winnerId == null)? null : new SqlUserDao().getById(winnerId);
         User author = (authorId == null)? null : new SqlUserDao().getById(authorId);
 
+        Integer themeId = resultSet.getInt("id");
+        String state = resultSet.getString("state");
+
         return new Theme(
-                resultSet.getInt("id"),
-                resultSet.getString("title"),
-                resultSet.getString("photo_url"),
-                resultSet.getString("state"),
-                resultSet.getString("date"),
-                winner,
-                author
+            themeId,
+            resultSet.getString("title"),
+            resultSet.getString("photo_url"),
+            state,
+            resultSet.getString("date"),
+            winner,
+            author,
+            state.equals("proposal") ? getNbVotes(themeId) : null
         );
     }
 
@@ -82,7 +86,7 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
     }
 
     @Override
-    public Theme insert(Theme theme) throws Exception {
+    public Theme insert(Theme theme) throws SQLException {
         String statement = "INSERT INTO theme (title, state, photo_url, winner, date) VALUES (?, ?, ?, ?, ?)";
         List<Object> opt = Arrays.asList(
                 theme.title,
@@ -93,14 +97,23 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
         );
 
         int insertedId = doInsert(statement, opt);
-        return getById(insertedId).orElseThrow(Exception::new);
+        return getById(insertedId).orElseThrow(SQLException::new);
     }
 
     @Override
-    public void delete(int id) throws Exception {
+    public void delete(int id) throws SQLException {
         String statement = "DELETE FROM theme WHERE id=?";
         List<Object> opt = Arrays.asList(id);
 
         exec(statement, opt);
+    }
+
+    @Override
+    public Integer getNbVotes(int id) throws SQLException {
+
+        String statement = "SELECT COUNT(*) FROM user WHERE theme = ?";
+        List<Object> opt = Arrays.asList(id);
+
+        return queryFirstInt(statement, opt);
     }
 }

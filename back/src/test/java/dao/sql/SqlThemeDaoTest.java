@@ -20,7 +20,7 @@ class SqlThemeDaoTest {
 
         Theme inserted = assertDoesNotThrow(() -> sqlThemeDao.insert(theme));
         assertEquals(
-                new Theme(inserted.id, theme.title, theme.photo, theme.state, theme.date, theme.winner, theme.author),
+                new Theme(inserted.id, theme.title, theme.photo, theme.state, theme.date, theme.winner, theme.author, theme.nbVotes),
                 inserted
         );
         

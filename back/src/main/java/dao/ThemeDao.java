@@ -17,6 +17,7 @@ public interface ThemeDao {
     Optional<Theme> getUserThemeVote(User user) throws Exception;
 
     void setUserVote(User user, Integer themeId) throws Exception;
+    Integer getNbVotes(int id) throws Exception;
 
     Theme insert(Theme theme) throws Exception;
     void delete(int id) throws Exception;

@@ -31,7 +31,7 @@ public class SqlReactionsDao extends SqlDao<Reactions> implements ReactionsDao {
 
     @Override
     public Map<String, List<UserPublic>> getSampleUsersForReactions(int post) throws SQLException {
-        String statement = "SELECT * FROM post as p, user as u, reaction as r WHERE p.author = u.id AND u.id = r.user AND p.id = r.post AND p.id = ?";
+        String statement = "SELECT * FROM post as p, user as u, reaction as r WHERE u.id = r.user AND p.id = r.post AND p.id = ?";
         List<Object> opt = Arrays.asList(post);
 
         PreparedStatement preparedStatement = SqlDatabase.prepare(statement, opt);
@@ -40,22 +40,24 @@ public class SqlReactionsDao extends SqlDao<Reactions> implements ReactionsDao {
         Map<String, List<UserPublic>> results = new HashMap<String, List<UserPublic>>();
         while (resultSet.next()) {
             String reaction = resultSet.getString("r.value");
-            UserPublic user = new UserPublic(
-                resultSet.getString("u.username"),
-                null,
-                getInteger(resultSet, "u.victories"),
-                getInteger(resultSet, "u.score"),
-                null,
-                resultSet.getString("u.photo_url"),
-                getInteger(resultSet, "u.rank"),
-                getInteger(resultSet, "u.id")
-            );
 
             if(!results.containsKey(reaction)) {
                 results.put(reaction, new ArrayList<UserPublic>());
             }
-            if(results.get(reaction).size() < 5)
+            if(results.get(reaction).size() < 5) {
+                UserPublic user = new UserPublic(
+                    resultSet.getString("u.username"),
+                    null,
+                    getInteger(resultSet, "u.victories"),
+                    getInteger(resultSet, "u.score"),
+                    null,
+                    resultSet.getString("u.photo_url"),
+                    getInteger(resultSet, "u.rank"),
+                    getInteger(resultSet, "u.id")
+                );
+                
                 results.get(reaction).add(user);
+            }
         }
 
         resultSet.close();

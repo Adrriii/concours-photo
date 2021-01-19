@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 
@@ -47,12 +47,10 @@ export class LoginComponent implements OnInit {
 
         this.authService.logInUser(
             this.form.get('username').value,
-            this.form.get('password').value).then(
-            () => this.router.navigate(['feed'])
-        ).catch(
-            error => {
-                console.log('Error in log : ' + error);
-            }
+            this.form.get('password').value
+        ).subscribe(
+            () => this.router.navigate(['feed']),
+            error => console.log('Error while login : ' + error)
         );
     }
 }

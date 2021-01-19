@@ -5,6 +5,8 @@ import {UserAuth} from '../models/UserAuth.model';
 import {environment} from '../../environments/environment.prod';
 import {Subject, Subscription} from 'rxjs';
 import {User} from '../models/User.model';
+import {Observable} from 'rxjs/internal/Observable';
+import {catchError, map, tap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -33,30 +35,16 @@ export class AuthService {
 
         this.httpClient.get<User>(environment.apiBaseUrl + 'user/me').subscribe(
             user => {
-                console.log(user);
-                // let test : User = user;
-                // console.log(test);
-                // this.currentUser = user;
-                // console.log(user+"this -> "+user.settings['GENDER']);
-
-
-
                 this.currentUser = User.fromJson(user);
-                // console.log(this.currentUser.getSetting("bio"));
-                // console.log(Object.fromEntries(this.currentUser.settings));
-
-                // this.currentUser = user;
                 this.emitMe();
-
-                console.log('Successfully get current user : ' + JSON.stringify(this.currentUser));
-            }, error => {
-                console.log('Error while getting logged user : ' + error.message);
+            }, () => {
                 this.clearCurrentUser();
             }
         );
     }
 
     private clearCurrentUser(): void {
+        console.log('CLEAR YOLOLOLOLOLO');
         this.currentUser = null;
         this.isAuth = false;
         localStorage.clear();
@@ -64,72 +52,37 @@ export class AuthService {
         this.emitMe();
     }
 
-    createNewUser(username: string, password: string): Promise<void> {
-        return new Promise<void>(
-            (resolve, reject) => {
-                this.httpClient
-                    .post(environment.apiBaseUrl + 'register',
-                        {
-                            username,
-                            passwordHash: sha256(password)
-                        })
-                    .subscribe(
-                        () => {
-                            console.log('user created successfully !');
-                            resolve();
-                        },
-                        (error) => {
-                            console.log('error in create user : ' + error);
-                            reject(error);
-                        }
-                    );
-            }
-        );
+    createNewUser(username: string, password: string): Observable<any> {
+        return this.httpClient.post(
+            environment.apiBaseUrl + 'register',
+            {
+                username,
+                passwordHash: sha256(password)
+            });
     }
 
-    logInUser(username: string, password: string): Promise<void> {
-        return new Promise<void>(
-            (resolve, reject) => {
-                this.httpClient
-                    .post(environment.apiBaseUrl + 'login',
-                        {
-                            username,
-                            passwordHash: sha256(password)
-                        }, {
-                            responseType: 'text'
-                        })
-                    .subscribe(
-                        token => {
-                            this.setCurrentUser(token);
-                            resolve();
-                        },
-                        error => {
-                            console.log('Error in user log : ' + JSON.stringify(error));
-                            reject();
-                        }
-                    );
-            }
-        );
+    logInUser(username: string, password: string): Observable<any> {
+        return this.httpClient
+            .post(environment.apiBaseUrl + 'login',
+                {
+                    username,
+                    passwordHash: sha256(password)
+                }, {
+                    responseType: 'text'
+                })
+            .pipe(
+                tap(token => this.setCurrentUser(token))
+            );
     }
 
-    logOutUser(): Promise<void> {
-        return new Promise<void>(
-            (resolve, reject) => {
-                this.httpClient
-                    .get<any[]>(environment.apiBaseUrl + 'logout')
-                    .subscribe(
-                        () => {
-                            console.log('user logged out successfully');
-                            this.clearCurrentUser();
-                            resolve();
-                        },
-                        error => {
-                            console.log('Error in logout : ' + JSON.stringify(error));
-                            this.clearCurrentUser();
-                            reject(error);
-                        }
-                    );
-            }
-        );
+    logOutUser(): Observable<any> {
+        return this.httpClient
+            .get<any[]>(environment.apiBaseUrl + 'logout')
+            .pipe(
+                tap(
+                    () => this.clearCurrentUser(),
+                    () => this.clearCurrentUser()
+                )
+            );
     }
 }

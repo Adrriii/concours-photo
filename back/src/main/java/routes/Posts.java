@@ -25,12 +25,12 @@ import javax.ws.rs.core.Response;
 
 @Path("posts/")
 public class Posts {
-    @Inject PostService postService;
-    @Inject ReactionService reactionService;
-    @Inject UserService userService;
-    @Inject AbstractImageService imageService;
-    @Inject ThemeService themeService;
-    @Inject LabelService labelService;
+    @Inject public PostService postService;
+    @Inject public ReactionService reactionService;
+    @Inject public UserService userService;
+    @Inject public AbstractImageService imageService;
+    @Inject public ThemeService themeService;
+    @Inject public LabelService labelService;
 
     @Context private ResourceContext resourceContext;
 

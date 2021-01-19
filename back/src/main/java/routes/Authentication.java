@@ -21,8 +21,8 @@ import java.util.Date;
 
 @Path("")
 public class Authentication {
-    @Inject AuthenticationService authenticationService;
-    @Inject private KeyGenerator keyGenerator;
+    @Inject public AuthenticationService authenticationService;
+    @Inject public KeyGenerator keyGenerator;
 
     @Context
     private UriInfo uriInfo;

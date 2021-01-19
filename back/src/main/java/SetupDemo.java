@@ -12,6 +12,10 @@ import org.glassfish.jersey.server.ContainerRequest;
 import dao.sql.SqlDatabase;
 import model.*;
 import routes.*;
+import services.*;
+
+import services.implementation.imgur.ImgurImageService;
+import util.*;
 
 public class SetupDemo {
     static boolean done = false;
@@ -25,7 +29,7 @@ public class SetupDemo {
             return;
 
         try {
-
+            manualBinding();
             System.out.println("---- START DEMO INSERT ----");
 
             while(!SqlDatabase.isReady()) {
@@ -43,22 +47,18 @@ public class SetupDemo {
                 );
                 try {
                     if(future.get(1, TimeUnit.SECONDS)) break;
-                } catch(Exception e) {}
+                } catch(Exception e) {
+                    Thread.sleep(1000);
+                }
                 System.out.println("DB not ready");
             }
 
             System.out.println("---- DB Ready ----");
 
-            themesRoute = new Themes();
-            authenticationRoute = new Authentication();
-            postsRoute = new Posts();
-
             ContainerRequest adriCtx = createUser("Adri",
                     "ab628dfe91bd9afd73bc53e5e105da9e3a97a04dd8dab1a3ddea1d921848d68e");
             ContainerRequest coucouCtx = createUser("coucou",
                     "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
-
-            themesRoute.addTheme(adriCtx, new Theme("Architecture", "", "proposal", "2021-01-01"));
 
             done = true;
         } catch (Exception e) {
@@ -82,5 +82,24 @@ public class SetupDemo {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void manualBinding() {
+        themesRoute = new Themes();
+        authenticationRoute = new Authentication();
+        postsRoute = new Posts();
+
+        themesRoute.themeService = new ThemeService();
+        themesRoute.userService = new UserService();
+
+        authenticationRoute.authenticationService = new AuthenticationService();
+        authenticationRoute.keyGenerator = new SimpleKeyGenerator();
+
+        postsRoute.imageService = new ImgurImageService();
+        postsRoute.labelService = new LabelService();
+        postsRoute.postService = new PostService();
+        postsRoute.reactionService = new ReactionService();
+        postsRoute.themeService = new ThemeService();
+        postsRoute.userService = new UserService();
     }
 }

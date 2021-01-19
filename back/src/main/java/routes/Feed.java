@@ -21,10 +21,8 @@ import java.util.Optional;
 
 @Path("feed")
 public class Feed {
-    @Inject
-    FeedService feedService;
-    @Inject
-    UserService userService;
+    @Inject public FeedService feedService;
+    @Inject public UserService userService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -23,12 +23,10 @@ public class SqlDatabase {
         }
 
         try {
-            System.out.println("Connecting ...");
             connection = DriverManager.getConnection(
                     "jdbc:mariadb://" + DB_HOST + ":" + DB_PORT + "/" + DB_NAME + "?user="
                     + DB_USERNAME + "&password=" + DB_PASSWORD
             );
-            System.out.println("Got DB Connection");
         } catch (Exception ignored) {
             try {
                 connection = DriverManager.getConnection(

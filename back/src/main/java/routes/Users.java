@@ -23,9 +23,9 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 @Path("user/")
 @PermitAll
 public class Users {
-    @Inject UserService userService;
-    @Inject PostService postService;
-    @Inject AbstractImageService imageService;
+    @Inject public UserService userService;
+    @Inject public PostService postService;
+    @Inject public AbstractImageService imageService;
 
     @GET
     @Path("{id}")

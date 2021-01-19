@@ -8,7 +8,7 @@ import services.AbstractImageService;
 
 @Path("helloworld/")
 public class Hello {
-    @Inject AbstractImageService imageService;
+    @Inject public AbstractImageService imageService;
 
     @GET
     public String helloWorld() throws Exception {

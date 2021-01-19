@@ -10,8 +10,7 @@ import javax.ws.rs.core.Response;
 
 @Path("labels")
 public class Labels {
-    @Inject
-    LabelService labelService;
+    @Inject public LabelService labelService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

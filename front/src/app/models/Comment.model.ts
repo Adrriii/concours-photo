@@ -7,6 +7,7 @@ export class Comment {
         public post: Post,
         public parent: Comment,
         public content: string,
+        public date?: string,
         public id?: number
     ) {
     }

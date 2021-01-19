@@ -1,6 +1,8 @@
 package services;
 
 import dao.UserDao;
+
+import java.util.List;
 import java.util.Optional;
 import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -46,4 +48,8 @@ public class UserService {
 
         return Optional.of(userDao.update(user));
     }   
+
+    public List<User> getLeaderboard() throws Exception {
+        return userDao.getLeaderboard();
+    }
 }

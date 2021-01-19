@@ -67,7 +67,9 @@ public class SqlDatabase {
     }
 
     public static void exec(String statement, List<Object> items) throws SQLException {
-        prepare(statement, items).execute();
+        PreparedStatement preparedStatement = prepare(statement, items);
+        System.out.println(preparedStatement.toString());
+        preparedStatement.execute();
     }
 
     public static void exec(String statement) throws SQLException {

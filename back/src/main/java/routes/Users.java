@@ -101,9 +101,21 @@ public class Users {
 
             return userService.getById(userContext.id).map(
                 user -> {
-                    user = new User(user.username, user.settings, user.victories, 
-                                                user.score, user.userlevel, user.participations, 
-                                                image.url, image.delete_url, user.theme, user.rank, user.id);
+                    user = new User(
+                        user.username, 
+                        user.settings, 
+                        user.victories, 
+                        user.score, 
+                        user.theme_score, 
+                        user.userlevel, 
+                        user.participations, 
+                        image.url, 
+                        image.delete_url, 
+                        user.theme, 
+                        user.rank, 
+                        user.id
+                    );
+                    
                     try {
                         return userService.update(user).map(
                             updatedUser -> {
@@ -115,6 +127,18 @@ public class Users {
                     }
                 }
             ).orElse(Response.status(500).entity("Could not find the logged in user").build());
+        } catch(Exception e) {
+            e.printStackTrace();
+            return Response.status(500).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Path("leaderboard")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLeaderboard() {
+        try {
+            return Response.ok(userService.getLeaderboard()).build();
         } catch(Exception e) {
             e.printStackTrace();
             return Response.status(500).entity(e.getMessage()).build();

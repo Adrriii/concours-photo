@@ -107,6 +107,18 @@ public class Themes {
             return Response.ok().build();
         }).orElse(Response.status(400).entity("User not logged in!").build());
     }
+
+    @GET
+    @Path("next")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response nextTheme() {
+        try {
+            themeService.nextTheme();
+            return Response.ok("Next theme applied").build();
+        } catch (Exception e) {
+            return Response.status(500).entity(e.getMessage()).build();
+        }
+    }
 }
 
 

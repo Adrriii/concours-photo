@@ -22,4 +22,12 @@ export class ThemeService {
         return this.httpClient.get<Array<Theme>>(environment.apiBaseUrl + `themes/proposals`);
     }
 
+    voteTheme(themeId: number): void {
+        this.httpClient.post(environment.apiBaseUrl + `themes/proposals/${themeId}`, null)
+            .subscribe(
+                () => console.log('User voted theme successfully added'),
+                (error) => console.log('Error in voteTheme : '+error)
+            );
+    }
+
 }

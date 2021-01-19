@@ -1,6 +1,7 @@
 package routes;
 
 import filters.JWTTokenNeeded;
+import filters.JWTTokenOptional;
 import model.Theme;
 import services.ThemeService;
 import services.UserService;
@@ -13,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("themes")
+@JWTTokenOptional
 public class Themes {
     @Inject UserService userService;
     @Inject ThemeService themeService;

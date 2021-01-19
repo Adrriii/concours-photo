@@ -1,6 +1,5 @@
 <div class="row">
     <div class="col-lg-5 profile" id="profile-picture">
-
         <img
             class="bg-white shadow rounded overflow-hidden"
             [src]="getPhoto() !== null ? getPhoto() : '../../../assets/default-pp.png'"
@@ -12,7 +11,6 @@
             <button class="button-self-made-blue mt-4 py-1" (click)="fileInput.click()">Select File</button>
             <button class="button-self-made-red mt-4 py-1" (click)="deletePhoto()">Delete</button>
         </div>
-
     </div>
     <div class="col-lg-7 profile card bg-white shadow rounded overflow-hidden">
         <ul class="py-4">
@@ -52,10 +50,10 @@
                 </span>
                 Bio :
                 <div class="px-4 py-3">
-                <div class="p-4 rounded shadow-sm bg-light">
-                    <p class="font-italic mb-0">{{ getSetting("LOCATION") }}</p>
+                    <div class="p-4 rounded shadow-sm bg-light">
+                        <p class="font-italic mb-0">{{ getSetting("BIO") }}</p>
+                    </div>
                 </div>
-    </div>
             </li>
             <li>
             <span>

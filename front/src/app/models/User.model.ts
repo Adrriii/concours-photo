@@ -34,6 +34,10 @@ export class User {
         return this.settings[settingName].value;
     }
 
+    public isAttributeSettingAvailable(settingName: string): boolean {
+        return this.settings[settingName] !== undefined;
+    }
+
     public setSetting(settingName: string, value: string): void{
         this.settings[settingName].value = value;
     }

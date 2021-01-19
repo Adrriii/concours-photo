@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Post} from '../../../models/Post.model';
 import {ReactionsService} from '../../../services/reactions.service';
 import {AuthService} from '../../../services/auth.service';
+import {User} from '../../../models/User.model';
+import {UserPublic} from '../../../models/UserPublic.model';
 
 
 @Component({
@@ -46,6 +48,10 @@ export class PostComponent implements OnInit {
         );
     }
 
+    addToReaction(reaction: string, user: User): void {
+        this.post.reactionsUser[reaction].push(UserPublic.fromUser(user));
+    }
+
     sendLike(): void {
         if (! this.authService.isAuth) {
             return;
@@ -73,6 +79,7 @@ export class PostComponent implements OnInit {
                     }
 
                     this.post.reacted = 'like';
+                    this.addToReaction('like', this.authService.currentUser);
                 }
             );
         }
@@ -106,6 +113,7 @@ export class PostComponent implements OnInit {
                     }
 
                     this.post.reacted = 'dislike';
+                    this.addToReaction('dislike', this.authService.currentUser);
                 }
             );
         }

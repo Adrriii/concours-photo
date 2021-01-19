@@ -124,6 +124,7 @@ export class CreatePostComponent implements OnInit, OnDestroy {
                     this.form.value.tag,
                     null,
                     null,
+                    null,
                     null
                 );
 

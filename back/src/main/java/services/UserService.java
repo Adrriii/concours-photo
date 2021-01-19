@@ -10,8 +10,7 @@ import model.UserPublic;
 
 
 public class UserService {
-    @Inject
-    UserDao userDao;
+    @Inject public UserDao userDao;
 
     public Optional<User> getUserByName(String username) {
         try {

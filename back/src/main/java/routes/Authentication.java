@@ -82,6 +82,7 @@ public class Authentication {
                 .map(userRegister -> Response.ok().build())
                 .orElse(Response.status(400).entity("This username is already taken !").build());
         } catch (Exception e) {
+            e.printStackTrace();
             return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }

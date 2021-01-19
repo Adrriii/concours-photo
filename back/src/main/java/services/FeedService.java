@@ -8,10 +8,10 @@ import dao.*;
 import model.*;
 
 public class FeedService {
-    @Inject PostDao postDao;
-    @Inject ThemeDao themeDao;
-    @Inject LabelDao labelDao;
-    @Inject ReactionDao reactionDao;
+    @Inject public PostDao postDao;
+    @Inject public ThemeDao themeDao;
+    @Inject public LabelDao labelDao;
+    @Inject public ReactionDao reactionDao;
 
     public List<Post> feedSearchForUser(User user, String sort, String direction, Integer themeId, String labels, Integer page, Integer nbPosts) throws Exception {
         List<Post> result = new ArrayList<>();

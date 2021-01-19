@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class ThemeService {
-    @Inject ThemeDao themeDao;
-    @Inject AuthenticationService authenticationService;
+    @Inject public ThemeDao themeDao;
+    @Inject public AuthenticationService authenticationService;
 
     public List<Theme> getAll() throws Exception {
         return themeDao.getAll();

@@ -46,7 +46,6 @@ public class Posts {
             @FormDataParam("post") String postJson
     ) {
         try {
-            System.out.println("TTTTTTTTT Context object : "+ctx.getClass().toString());
             Optional<User> userOpt = userService.getUserFromRequestContext(ctx);
             User user = userOpt.orElseThrow(
                     () -> new Exception("User logged in but can't find username in context")

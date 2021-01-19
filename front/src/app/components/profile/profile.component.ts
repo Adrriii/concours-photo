@@ -13,6 +13,8 @@ import {RouterLink} from '@angular/router';
 export class ProfileComponent implements OnInit {
 
     public currentUser: User = null;
+    public location: string = null;
+    public bio: string = null;
     public listPosts: Array<Post> = null;
     public listImgs: Array<string> = null;
     public edited = false;
@@ -23,18 +25,17 @@ export class ProfileComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.userService.getMe().subscribe(user => {
-            this.currentUser = user;
-            this.userService.getPostsById(user.id).subscribe(
-                (userPosts) => {
-                    this.listPosts = userPosts;
-                    this.listImgs = new Array<string>();
-                    for (const post of userPosts){
-                        this.listImgs.unshift(post.photo);
-                    }
+        this.currentUser = this.authService.currentUser;
+        this.setBio();
+        this.setLocation();
+        this.userService.getPostsById(this.currentUser.id).subscribe(
+            (userPosts) => {
+                this.listPosts = userPosts;
+                this.listImgs = new Array<string>();
+                for (const post of userPosts){
+                    this.listImgs.unshift(post.photo);
                 }
-            );
-        });
+            });
     }
 
     showAll(): void {
@@ -43,6 +44,22 @@ export class ProfileComponent implements OnInit {
             return;
         }
         this.edited = true;
+    }
+
+    setLocation(): void{
+        if (this.authService.currentUser.isAttributeSettingAvailable('LOCATION')) {
+            this.location = this.authService.currentUser.getSetting('LOCATION');
+        } else {
+            this.location = 'Undefined location';
+        }
+    }
+
+    setBio(): void {
+        if (this.authService.currentUser.isAttributeSettingAvailable('BIO')) {
+            this.bio = this.authService.currentUser.getSetting('BIO');
+        } else {
+            this.bio = 'Currently no description provided';
+        }
     }
 
 }

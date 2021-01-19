@@ -22,12 +22,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.currentUserSubscription = this.authService.me.subscribe(
             user => {
-                console.log(user)
-                this.currentUser = user
+                this.currentUser = user;
             }
         );
     }
-
 
     ngOnDestroy(): void {
         this.currentUserSubscription.unsubscribe();
@@ -38,11 +36,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     logout(): void {
-        this.authService.logOutUser()
-            .then(() => {
-                console.log('Logout successfully');
-                this.router.navigate(['login']);
-            })
-            .catch(error => console.log('Error while logging out : ' + error));
+        this.authService.logOutUser().subscribe(
+            () => this.router.navigate(['login']),
+            error => console.log('Error while logging out : ' + error)
+        );
     }
 }

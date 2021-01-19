@@ -16,8 +16,8 @@ import javax.ws.rs.core.Response;
 @Path("themes")
 @JWTTokenOptional
 public class Themes {
-    @Inject UserService userService;
-    @Inject ThemeService themeService;
+    @Inject public UserService userService;
+    @Inject public ThemeService themeService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

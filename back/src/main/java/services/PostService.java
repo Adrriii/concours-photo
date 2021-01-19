@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class PostService {
-    @Inject PostDao postDao;
+    @Inject public PostDao postDao;
 
     public Optional<Post> addOne(Post post) throws Exception {
         if (post.id != null)

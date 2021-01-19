@@ -58,7 +58,7 @@ public abstract class SqlDao<T> {
 
     protected List<T> queryAllObjects(String statement, List<Object> opt) throws SQLException {
         PreparedStatement preparedStatement = SqlDatabase.prepare(statement, opt);
-        System.out.println(preparedStatement.toString());
+        //System.out.println(preparedStatement.toString());
         ResultSet resultSet = preparedStatement.executeQuery();
         List<T> items = new ArrayList<>();
 

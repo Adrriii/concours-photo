@@ -15,7 +15,7 @@ public class SqlDatabase {
 
     private static Connection connection;
 
-    private static void openConnection() {
+    public static void openConnection() throws SQLException {
         try {
             Class.forName ("org.mariadb.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -39,11 +39,15 @@ public class SqlDatabase {
         }
     }
 
-    public static Connection getConnection() {
+    public static Connection getConnection() throws SQLException {
         if (connection == null)
             openConnection();
 
         return connection;
+    }
+
+    public static boolean isReady() {
+        return connection != null;
     }
 
     public static PreparedStatement prepare(String statement, List<Object> items) throws SQLException {

@@ -10,6 +10,7 @@ import {ProfileComponent} from './components/profile/profile.component';
 import {OtherProfileComponent} from './components/other-profile/other-profile.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import {LeaderboardComponent} from "./components/leaderboard/leaderboard.component";
 
 const routes: Routes = [
     { path : 'feed', component: FeedComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
     { path : 'me', component: ProfileComponent },
     { path : 'user/:id', component: OtherProfileComponent },
     { path : 'register', component: RegisterComponent },
+    { path : 'leaderboard', component: LeaderboardComponent},
     { path : 'themes', component: ThemeComponent },
     { path : '', redirectTo: '/feed', pathMatch: 'full'},
     { path : '**', component: PageNotFoundComponent }

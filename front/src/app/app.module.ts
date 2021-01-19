@@ -32,6 +32,7 @@ import { CommentFormComponent } from './components/feed/post/comments/comment-fo
 import { ProfileComponent } from './components/profile/profile.component';
 import { OtherProfileComponent } from './components/other-profile/other-profile.component';
 import { UserService} from './services/user.service';
+import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
 
 @NgModule({
     declarations: [
@@ -51,6 +52,7 @@ import { UserService} from './services/user.service';
         CommentsComponent,
         CommentComponent,
         CommentFormComponent,
+        LeaderboardComponent,
     ],
     imports: [
         BrowserModule,

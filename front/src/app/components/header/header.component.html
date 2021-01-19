@@ -1,13 +1,9 @@
 <nav class="navbar navbar-expand-md navbar-light py-3 nav-custom">
-    <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" routerLink="home">Home <span class="sr-only">(current)</span></a>
-            </li>
             <li class="nav-item">
                 <a class="nav-item nav-link" routerLink="feed">Feed</a>
             </li>
@@ -32,18 +28,18 @@
                        data-toggle="dropdown"
                        aria-expanded="false">
                         <img
-                            src="https://media.publit.io/file/ThX0JeH.png"
+                            [src]="currentUser.photo !== null ? currentUser.photo : '../../../assets/default-pp.png'"
                             class="rounded-circle"
-                            height="40"
+                            height="50"
                             alt=""
                             loading="lazy"
                         />
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="nav-item nav-link" routerLink="me">My Profile</a>
-                        <a class="nav-item nav-link" routerLink="settings">Settings</a>
+                        <a class="nav-item nav-link" routerLink="me"><i class="fa fa-user-circle pr-1" aria-hidden="true" width="50%"></i>My Profile</a>
+                        <a class="nav-item nav-link" routerLink="settings"><i class="fa fa-cogs pr-1" aria-hidden="true" width="50%"></i>Settings</a>
                         <li><hr class="dropdown-divider" /></li>
-                        <a class="nav-item nav-link" routerLink="login" (click)="logout()">Logout</a>
+                        <a class="nav-item nav-link" routerLink="login" (click)="logout()"><i class="fa fa-sign-out pr-1" aria-hidden="true" width="50%"></i>Logout</a>
                     </ul>
                 </div>
             </li>

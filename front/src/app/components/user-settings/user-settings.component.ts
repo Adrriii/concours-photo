@@ -7,7 +7,7 @@ import { User } from 'src/app/models/User.model';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { EditSettingsComponent } from './edit-settings/edit-settings.component';
-import { CommonModule } from '@angular/common';  
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
@@ -58,17 +58,19 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
         );
     }
 
-    getUserName() : string {
-        if(this.authService.currentUser)
+    getUserName(): string {
+        if (this.authService.currentUser) {
             return this.authService.currentUser.username;
-        return "Undefined";
+        }
+        return 'Undefined';
     }
 
     getSetting(settingName: string): string{
-        if(this.authService.currentUser)
+        if (this.authService.currentUser) {
           return this.authService.currentUser.getSetting(settingName);
-        return null
-    } 
+        }
+        return null;
+    }
 
     onFileSelect(event): void{
         this.file = event.target.files[0];
@@ -81,7 +83,7 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
         this.userService.updateProfilePicture(uploadPicture)
             .subscribe(
                 (user) => {
-                    console.log('picture successfully uploaded : '+ JSON.stringify(user));
+                    console.log('picture successfully uploaded : ' + JSON.stringify(user));
                     location.reload();
                 },
                 (error) => {
@@ -91,13 +93,14 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
     }
 
     getPhoto(): string {
-        if(this.authService.currentUser)
+        if (this.authService.currentUser) {
           return this.authService.currentUser.photo;
+        }
         return null;
     }
 
     deletePhoto(): void {
-        if(this.authService.currentUser){
+        if (this.authService.currentUser){
           this.authService.currentUser.photo = null;
           this.authService.currentUser.photoDelete = null;
         }

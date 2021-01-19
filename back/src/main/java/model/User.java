@@ -63,7 +63,7 @@ public class User {
                 publicSettings.put(setting, userSetting);
         });
 
-        return new UserPublic(this.username, publicSettings, this.victories, this.score, this.participations, this.photo, this.id);
+        return new UserPublic(this.username, publicSettings, this.victories, this.score, this.participations, this.photo, this.rank, this.id);
     }
 }
 

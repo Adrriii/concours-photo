@@ -23,10 +23,10 @@ export class ThemeService {
     }
 
     voteTheme(themeId: number): void {
-        this.httpClient.post(environment.apiBaseUrl + `themes/proposals/${themeId}`, null)
+        this.httpClient.post(environment.apiBaseUrl + `themes/proposals/${themeId}`, {})
             .subscribe(
                 () => console.log('User voted theme successfully added'),
-                (error) => console.log('Error in voteTheme : '+error)
+                (error) => console.log('Error in voteTheme : ' + error.message)
             );
     }
 

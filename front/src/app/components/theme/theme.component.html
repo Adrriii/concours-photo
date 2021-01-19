@@ -5,16 +5,25 @@
     <br>      
 </div>
 
-<mat-radio-group
-  aria-labelledby="example-radio-group-label"
-  [(ngModel)]="chosenTheme">
-  <div class="row">
-    <mat-radio-button class="example-radio-button col" *ngFor="let theme of nextThemes" 
-    [value]="theme.id">
-    {{ theme.title }}
-    </mat-radio-button>
-  </div>
-</mat-radio-group>
+<div *ngIf="isAuth()">
+  <mat-radio-group 
+    aria-labelledby="example-radio-group-label" 
+    [(ngModel)]="chosenTheme">
+    <div class="row">
+      <mat-radio-button 
+        class="example-radio-button col" 
+        *ngFor="let theme of nextThemes" 
+        [value]="theme.id">
+        {{ theme.title }}
+      </mat-radio-button>
+    </div>
+  </mat-radio-group>
 
-<button type="button" class="button-self-made" (click)="vote()"
-    *ngIf="hasVoted()">Update informations</button>
+  <button 
+    type="button" 
+    class="button-self-made" 
+    (click)="vote()" 
+    *ngIf="hasVoted()">
+    Update informations
+  </button>
+</div>

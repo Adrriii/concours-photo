@@ -117,3 +117,4 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
         return queryFirstInt(statement, opt);
     }
 }
+

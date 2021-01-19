@@ -33,8 +33,16 @@ export class ThemeComponent implements OnInit {
 
     vote(): void {
         if(this.chosenTheme){
-            this.themeService.voteTheme(this.chosenTheme);
+            this.themeService.voteTheme(this.chosenTheme)
+                .subscribe(
+                    () => console.log("sucessfully voted"),
+                    (error) => console.log("an error " + error.message)
+                );
         }
+    }
+
+    isAuth(): boolean {
+        return this.authService.isAuth;
     }
 
     hasVoted(): boolean {

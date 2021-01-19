@@ -22,12 +22,29 @@ export class ThemeService {
         return this.httpClient.get<Array<Theme>>(environment.apiBaseUrl + `themes/proposals`);
     }
 
-    voteTheme(themeId: number): void {
-        this.httpClient.post(environment.apiBaseUrl + `themes/proposals/${themeId}`, {})
-            .subscribe(
-                () => console.log('User voted theme successfully added'),
-                (error) => console.log('Error in voteTheme : ' + error.message)
-            );
+    voteTheme(themeId: number): Observable<void> {
+        return this.httpClient.post<void>(environment.apiBaseUrl + `themes/proposals/vote/${themeId}`, null);
+            // .subscribe(
+            //     () => console.log('User voted theme successfully added'),
+            //     (error) => console.log('Error in voteTheme : ' + error.message)
+            // );
     }
+
+    // voteTheme(themeId: number): void {
+    //     this.httpClient.post(environment.apiBaseUrl + `themes/proposals/vote/${themeId}`, null)
+    //         .subscribe(
+    //             () => console.log('User voted theme successfully added'),
+    //             (error) => console.log('Error in voteTheme : ' + error.message)
+    //         );
+    // }
+
+    // this.httpClient.get<User>(environment.apiBaseUrl + 'user/me').subscribe(
+    //     user => {
+    //         this.currentUser = User.fromJson(user);
+    //         this.emitMe();
+    //     }, () => {
+    //         this.clearCurrentUser();
+    //     }
+    // );
 
 }

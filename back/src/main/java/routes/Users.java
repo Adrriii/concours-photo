@@ -80,7 +80,7 @@ public class Users {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     @JWTTokenNeeded
-    public Response addPost(
+    public Response changeAvatar(
             @Context ContainerRequestContext ctx,
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetails
@@ -90,11 +90,15 @@ public class Users {
             User userContext = userOpt.orElseThrow(
                     () -> new Exception("User logged in but can't find him in the context")
             );
-            String image64 = Base64.encodeBase64String(
-                    IOUtils.toByteArray(uploadedInputStream)
-            );
 
-            Image image = imageService.postImage(image64);
+            String imageString = new String(IOUtils.toByteArray(uploadedInputStream));
+            if(!fileDetails.getFileName().equals("url")) {
+                imageString = Base64.encodeBase64String(
+                    IOUtils.toByteArray(uploadedInputStream)
+                );
+            }
+
+            Image image = imageService.postImage(imageString);
 
             return userService.getById(userContext.id).map(
                 user -> {

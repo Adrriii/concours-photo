@@ -38,11 +38,15 @@ public class ThemeService {
             if(themeDao.getUserProposal(currentUser).isPresent())
                 return Optional.empty();
 
-            Theme theme = new Theme(proposed.title, 
-                                        proposed.photo,
-                                        "proposal", 
-                                        proposed.date, 
-                                        proposed.winner);
+            Theme theme = new Theme(null,
+                proposed.title, 
+                proposed.photo,
+                "proposal", 
+                proposed.date, 
+                proposed.winner,
+                currentUser,
+                0
+            );
 
             return Optional.of(themeDao.insert(theme));
         } catch (Exception e) {

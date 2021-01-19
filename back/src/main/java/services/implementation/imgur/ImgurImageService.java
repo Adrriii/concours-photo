@@ -17,7 +17,7 @@ public class ImgurImageService implements AbstractImageService {
         List<NameValuePair> params = Arrays.asList(new BasicNameValuePair("image", image));
         
         JSONObject response = HttpImgur.post("image", params);
-
+        
         return new Image(response.getString("link"), response.getString("deletehash"));
     }
 

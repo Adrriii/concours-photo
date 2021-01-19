@@ -87,13 +87,14 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
 
     @Override
     public Theme insert(Theme theme) throws SQLException {
-        String statement = "INSERT INTO theme (title, state, photo_url, winner, date) VALUES (?, ?, ?, ?, ?)";
+        String statement = "INSERT INTO theme (title, state, photo_url, winner, date, author) VALUES (?, ?, ?, ?, ?, ?)";
         List<Object> opt = Arrays.asList(
                 theme.title,
                 theme.state,
                 theme.photo,
                 (theme.winner == null)? null : theme.winner.id,
-                theme.date
+                theme.date,
+                theme.author != null ? theme.author.id : null
         );
 
         int insertedId = doInsert(statement, opt);

@@ -18,5 +18,6 @@ VALUES
 INSERT INTO label (label) 
 VALUES 
     ("Portrait"),
-    ("Paysage"),
+    ("Landscape"),
+    ("Building"),
     ("Macro");

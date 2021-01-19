@@ -59,11 +59,16 @@ public class Posts {
             Label label = labelService.get(post.label).orElseThrow(
                 () -> new Exception("Label not found : "+post.label)
             );
-            String image64 = Base64.encodeBase64String(
-                    IOUtils.toByteArray(uploadedInputStream)
-            );
 
-            Image image = imageService.postImage(image64);
+            String imageString = new String(IOUtils.toByteArray(uploadedInputStream));
+            if(!fileDetails.getFileName().equals("url")) {
+                imageString = Base64.encodeBase64String(
+                    IOUtils.toByteArray(uploadedInputStream)
+                );
+            }
+             
+
+            Image image = imageService.postImage(imageString);
             System.out.println("Image posted ! Link is : " + image.url);
             Post newPost = new Post(
                     post.title,
@@ -75,8 +80,6 @@ public class Posts {
                     image.url,
                     image.delete_url
             );
-
-            System.out.println("Create post : " + newPost);
 
             try {
                 return postService.addOne(newPost)

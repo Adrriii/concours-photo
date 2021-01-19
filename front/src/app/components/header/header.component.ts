@@ -12,6 +12,7 @@ import {User} from '../../models/User.model';
 export class HeaderComponent implements OnInit, OnDestroy {
     currentUserSubscription: Subscription;
     currentUser: User = null;
+    photoUser: string = null;
 
     constructor(
         private authService: AuthService,
@@ -23,6 +24,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.currentUserSubscription = this.authService.me.subscribe(
             user => {
                 this.currentUser = user;
+                if (user != null){
+                    this.photoUser = user.photo;
+                }
             }
         );
     }

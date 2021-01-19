@@ -57,7 +57,7 @@ export class OtherProfileComponent implements OnInit {
         if (user.isAttributeSettingAvailable('LOCATION')) {
             this.location = user.getSetting('LOCATION');
         } else {
-            this.location = 'Undefined location';
+            this.location = 'Unknown location';
         }
     }
 

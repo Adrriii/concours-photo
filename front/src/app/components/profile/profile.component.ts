@@ -50,7 +50,7 @@ export class ProfileComponent implements OnInit {
         if (this.authService.currentUser.isAttributeSettingAvailable('LOCATION')) {
             this.location = this.authService.currentUser.getSetting('LOCATION');
         } else {
-            this.location = 'Undefined location';
+            this.location = 'Unknown location';
         }
     }
 

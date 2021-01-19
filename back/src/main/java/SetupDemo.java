@@ -81,6 +81,7 @@ public class SetupDemo {
         changeAvatar(adriCtx, "https://a.ppy.sh/4579132?1594553960.png");
 
         // Create themes
+        System.out.println("---- INSERT THEMES ----");
         themesRoute.themeService.themeDao.insert(new Theme("Architecture", "", "active", "2021-01-04"));
         themesRoute.addTheme(adriCtx, new Theme("Les Chiens", "", null, "2021-01-11"));
         themesRoute.addTheme(coucouCtx, new Theme("Les Chats", "", null, "2021-01-11"));
@@ -88,12 +89,14 @@ public class SetupDemo {
         themesRoute.addTheme(JDCtx, new Theme("Les Oiseaux", "", null, "2021-01-11"));
 
         // Make users vote
+        System.out.println("---- THEME VOTE ----");
         themesRoute.setUserProposal(adriCtx, 5);
         themesRoute.setUserProposal(coucouCtx, 5);
         themesRoute.setUserProposal(alexandreCtx, 4);
         themesRoute.setUserProposal(JDCtx, 3);
 
         // Creates posts
+        System.out.println("---- INSERT POSTS ----");
         createPost(adriCtx, "https://whc.unesco.org/uploads/thumbs/site_0252_0008-1200-630-20151104113424.jpg", "Le Taj Mahal", "Building");
         createPost(adriCtx, "https://www.bautrip.com/images/what-to-visit/burj-khalifa.jpg", "Le Burj Khalifa", "Building");
         createPost(adriCtx, "https://cdn.paris.fr/paris/2020/05/12/huge-67a65318e89c13e2b63ddbe2bb89cc3c.jpg", "La Tour Eiffel", "Building");
@@ -101,6 +104,7 @@ public class SetupDemo {
         createPost(coucouCtx, "https://static.wikia.nocookie.net/lotr/images/e/e4/Minas_Tirith.jpg/revision/latest/scale-to-width-down/1000?cb=20141228214636", "Minas Tirith", "Building");
 
         // React to posts
+        System.out.println("---- INSERT REACTIONS ----");
         postsRoute.addReactToPost(adriCtx, 1, "like");
         postsRoute.addReactToPost(adriCtx, 2, "like");
         postsRoute.addReactToPost(adriCtx, 3, "like");

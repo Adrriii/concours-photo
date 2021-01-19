@@ -2,6 +2,7 @@ package routes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import filters.JWTTokenNeeded;
+import javassist.bytecode.ByteArray;
 import model.*;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
@@ -60,11 +61,10 @@ public class Posts {
                 () -> new Exception("Label not found : "+post.label)
             );
 
-            String imageString = new String(IOUtils.toByteArray(uploadedInputStream));
+            byte[] bytes = IOUtils.toByteArray(uploadedInputStream);
+            String imageString = new String(bytes);
             if(!fileDetails.getFileName().equals("url")) {
-                imageString = Base64.encodeBase64String(
-                    IOUtils.toByteArray(uploadedInputStream)
-                );
+                imageString = Base64.encodeBase64String(bytes);
             }
              
 

@@ -91,11 +91,10 @@ public class Users {
                     () -> new Exception("User logged in but can't find him in the context")
             );
 
-            String imageString = new String(IOUtils.toByteArray(uploadedInputStream));
+            byte[] bytes = IOUtils.toByteArray(uploadedInputStream);
+            String imageString = new String(bytes);
             if(!fileDetails.getFileName().equals("url")) {
-                imageString = Base64.encodeBase64String(
-                    IOUtils.toByteArray(uploadedInputStream)
-                );
+                imageString = Base64.encodeBase64String(bytes);
             }
 
             Image image = imageService.postImage(imageString);

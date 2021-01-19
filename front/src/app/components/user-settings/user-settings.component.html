@@ -61,9 +61,14 @@
                 </span>
                 Victories : {{ getSetting("VICTORIES") }}
             </li>
-            <button type="button" class="btn btn-outline-dark btn-sm btn-block col-lg-3 mt-4 py-2"
-                    (click)="openDialog()">Update informations
-            </button>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-outline-dark btn-sm btn-block col-lg-3 mt-4 py-2 mr-3"
+                        (click)="openDialog()">Update informations
+                </button>
+                <button type="button" class="btn btn-outline-dark btn-sm btn-block col-lg-3 mt-4 py-2 ml-3"
+                        routerLink="/me">View my profile
+                </button>
+            </div>
         </ul>
     </div>
 </div>

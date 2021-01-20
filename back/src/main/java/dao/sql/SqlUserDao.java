@@ -49,7 +49,7 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
     }
 
     @Override
-    public User insert(User user, String hash) throws SQLException {
+    public User insert(User user, String hash, String email) throws SQLException {
         if(user.id != null) throw new SQLException(String.valueOf(UserDaoException.ID_PROVIDED));
 
         String statement = "INSERT INTO user (username, victories, score, theme_score, userlevel, sha) VALUES (?,?,?,?,?,?)";
@@ -59,7 +59,10 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
         new SqlUserSettingDao().insertDefaultsForUser(userId);
         
         updateUsersRanks();
-        return new User(user.username, new SqlUserSettingDao().getAllForUser(userId), user.victories, user.score, user.theme_score, user.userlevel, user.participations, user.theme_participations, user.photo, user.photoDelete, user.theme, user.rank, userId);
+        User created = new User(user.username, new SqlUserSettingDao().getAllForUser(userId), user.victories, user.score, user.theme_score, user.userlevel, user.participations, user.theme_participations, user.photo, user.photoDelete, user.theme, user.rank, userId);
+        new SqlUserSettingDao().update(new UserSetting(created.id, true, email, SettingName.MAIL));
+
+        return created;
     }
 
     @Override

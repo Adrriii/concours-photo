@@ -52,12 +52,13 @@ export class AuthService {
         this.emitMe();
     }
 
-    createNewUser(username: string, password: string): Observable<any> {
+    createNewUser(username: string, password: string, email: string): Observable<any> {
         return this.httpClient.post(
             environment.apiBaseUrl + 'register',
             {
                 username,
-                passwordHash: sha256(password)
+                passwordHash: sha256(password),
+                email
             });
     }
 

@@ -23,7 +23,7 @@ class SqlUserSettingDaoTest {
         userDao = new SqlUserDao();
 
         User toInsert = new User("testUser");
-        testUser = userDao.insert(toInsert, "null");
+        testUser = userDao.insert(toInsert, "null", "null");
     }
 
     @Test

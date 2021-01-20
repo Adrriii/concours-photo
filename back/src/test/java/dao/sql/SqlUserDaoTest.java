@@ -12,7 +12,7 @@ class SqlUserDaoTest {
     void testSimpleInsertDelete() {
         SqlUserDao dao = new SqlUserDao();
 
-        User user = assertDoesNotThrow(() -> dao.insert(new User("testuser"+System.currentTimeMillis()), "test"));
+        User user = assertDoesNotThrow(() -> dao.insert(new User("testuser"+System.currentTimeMillis()), "test", "null"));
         assertDoesNotThrow(() -> dao.delete(user));
     }
 }

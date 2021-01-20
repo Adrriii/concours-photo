@@ -38,6 +38,7 @@
     <div class="filter-options"
          [class.display-filter-form]="displayFilterForm"
          [class.hide-filter-form]="!displayFilterForm"
+         [hidden]="hideFilterForm"
     >
         <form [formGroup]="sortForm" (ngSubmit)="onSubmitForm()">
             <div class="filter-options-container">

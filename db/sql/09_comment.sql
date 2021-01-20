@@ -7,6 +7,7 @@ CREATE TABLE comment (
     post int UNSIGNED NOT NULL,
     parent int UNSIGNED,
     content TEXT NOT NULL,
+    d TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (id)
 )

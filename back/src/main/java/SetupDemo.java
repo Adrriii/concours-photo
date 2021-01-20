@@ -75,7 +75,7 @@ public class SetupDemo {
         // Set avatars
         changeAvatar(adriCtx, "https://i.imgur.com/0BVIfZB.png");
         changeAvatar(coucouCtx, "https://i.imgur.com/mUeb66G.png");
-        changeAvatar(alexandreCtx, "https://i.imgur.com/eWIkRqz.png");
+        changeAvatar(alexandreCtx, "https://i.imgur.com/oFLS2Nx.jpg");
         changeAvatar(JDCtx, "https://i.imgur.com/jTuJbys.png");
         changeAvatar(h1, "https://i.imgur.com/mPTBqn3.jpg");
         changeAvatar(h2, "https://i.imgur.com/tsF9hV8.jpg");
@@ -99,7 +99,7 @@ public class SetupDemo {
         createPost(alexandreCtx, "https://i.imgur.com/VZ7bqit.jpg", "Orange", "Nature");
         createPost(coucouCtx, "https://i.imgur.com/6gt1Zpn.jpg", "Bleu", "Nature");
         createPost(JDCtx, "https://i.imgur.com/iE4McQ8.jpg", "Violet", "Nature");
-        createPost(h1, "https://i.imgur.com/242E6T5.jpg", "Chelou lui", "Nature");
+        createPost(h1, "https://i.imgur.com/dCsg1Cj.jpg", "Chelou lui", "Nature");
         createPost(adriCtx, "https://i.imgur.com/uirY6ai.jpg", "Toutes les couleurs", "Nature");
         createPost(coucouCtx, "https://i.imgur.com/Nim4H1G.jpg", "Test nouvel appareil photo", "Nature");
 

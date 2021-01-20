@@ -6,8 +6,8 @@ import {ThemeService} from '../../services/theme.service';
 import {ToastrService} from 'ngx-toastr';
 import {Post} from '../../models/Post.model';
 import {AuthService} from '../../services/auth.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import {MatExpansionModule} from '@angular/material/expansion';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
 
 
 @Component({
@@ -20,9 +20,16 @@ export class FeedComponent implements OnInit {
     private currentThemeId: number;
     public currentCommentSection: Array<Comment>;
     sortForm: FormGroup;
+
     public isCollapsed = false;
 
     public posts: Array<Post> = null;
+
+    public displayFilterForm = false;
+    public hideFilterForm = true;
+    public displaySwitcherForm = false;
+
+    public currentPage = 1;
 
     constructor(
         private toastr: ToastrService,
@@ -52,8 +59,8 @@ export class FeedComponent implements OnInit {
             direction: 'DESC',
             sort: 'score',
             labels: '',
-            page: 1,
-            nbPosts: 15
+            page: [1, Validators.min(1)],
+            nbPosts: [15, Validators.min(1)]
         });
     }
 
@@ -93,5 +100,43 @@ export class FeedComponent implements OnInit {
 
     onSubmitForm(): void {
         this.updatePostsForCurrentTheme();
+    }
+
+    toggleDisplayFilterForm(): void {
+        if (!this.displayFilterForm) {
+            this.hideFilterForm = false;
+            setTimeout(() => this.displayFilterForm = !this.displayFilterForm, 100);
+        } else {
+            setTimeout(() => this.hideFilterForm = true, 1000);
+            this.displayFilterForm = !this.displayFilterForm;
+        }
+
+    }
+
+    toggleDisplaySwitcherForm(): void {
+        setTimeout(() => scrollTo(0, 10000));
+        this.displaySwitcherForm = !this.displaySwitcherForm;
+    }
+
+    previousPage(): void {
+        const newPage = this.sortForm.value.page - 1;
+
+        if (newPage > 0) {
+            this.displaySwitcherForm = false;
+            this.currentPage = newPage;
+
+            this.sortForm.value.page = newPage;
+            this.updatePostsForCurrentTheme();
+            setTimeout(() => scrollTo(0, 0));
+        }
+    }
+
+    nextPage(): void {
+        this.displaySwitcherForm = false;
+        const newPage = this.sortForm.value.page + 1;
+        this.currentPage = newPage;
+        this.sortForm.value.page = newPage;
+        this.updatePostsForCurrentTheme();
+        setTimeout(() => scrollTo(0, 0));
     }
 }

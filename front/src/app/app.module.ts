@@ -66,6 +66,8 @@ import { MatRadioModule } from '@angular/material/radio';
         BrowserAnimationsModule,
         MatDialogModule,
         MatFormFieldModule,
+        MatRadioModule,
+        MatProgressBarModule,
         NgxFileDropModule,
         ToastrModule.forRoot()
     ],

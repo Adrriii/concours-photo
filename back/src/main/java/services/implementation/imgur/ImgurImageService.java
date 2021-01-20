@@ -26,7 +26,12 @@ public class ImgurImageService implements AbstractImageService {
             return new Image(response.getString("link"), response.getString("deletehash"));
         } catch(Exception e) {
             System.out.println("Communication with imgur failed "+response.toString());
-            return new Image(image,"");
+
+            if(image.contains("https://")) {
+                return new Image(image, "");
+            } else {
+                throw new Exception("Imgur failed to parse image.");
+            }
         }
     }
 

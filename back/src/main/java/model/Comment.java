@@ -1,5 +1,7 @@
 package model;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Comment {
     public final Integer id;
     public final User author;

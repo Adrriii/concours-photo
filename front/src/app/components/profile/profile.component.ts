@@ -18,6 +18,7 @@ export class ProfileComponent implements OnInit {
     public listPosts: Array<Post> = null;
     public listImgs: Array<string> = null;
     public edited = false;
+    public userRank: string;
 
     constructor(
         private authService: AuthService,
@@ -28,6 +29,7 @@ export class ProfileComponent implements OnInit {
         this.currentUser = this.authService.currentUser;
         this.setBio();
         this.setLocation();
+        this.setUserRank();
         this.userService.getPostsById(this.currentUser.id).subscribe(
             (userPosts) => {
                 this.listPosts = userPosts;
@@ -59,6 +61,14 @@ export class ProfileComponent implements OnInit {
             this.bio = this.authService.currentUser.getSetting('BIO');
         } else {
             this.bio = 'Currently no description provided';
+        }
+    }
+
+    setUserRank(): void {
+        if (this.authService.currentUser.rank === null){
+            this.userRank = 'n/a';
+        }else{
+            this.userRank = String(this.authService.currentUser.rank);
         }
     }
 

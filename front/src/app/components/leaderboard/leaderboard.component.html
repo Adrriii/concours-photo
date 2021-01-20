@@ -15,7 +15,7 @@
                 <th>Score</th>
             </tr>
             </thead>
-            <tbody *ngFor="let user of listUsersLeaderboard; index as i">
+            <tbody *ngFor="let user of listUsersGlobalLeaderboard; index as i">
             <tr [ngClass]="{'first': i === 0, 'second': i === 1, 'third': i === 2}">
                 <td>
                     <a routerLink="/user/{{ user.id }}">
@@ -48,33 +48,19 @@
                 <th>Score</th>
             </tr>
             </thead>
-            <tbody>
-            <tr style="">
-                <td><a><img class="img-fluid rounded-circle"
-                            [src]="'../../../assets/default-pp.png'"
-                            alt="User"></a></td>
-                <td>#4</td>
-                <td>Alexandre</td>
-                <td>35</td>
-                <td>135</td>
-            </tr>
-            <tr style="">
-                <td><a><img class="img-fluid rounded-circle"
-                            [src]="'../../../assets/default-pp.png'"
-                            alt="User"></a></td>
-                <td>#4</td>
-                <td>Alexandre</td>
-                <td>35</td>
-                <td>135</td>
-            </tr>
-            <tr style="">
-                <td><a><img class="img-fluid rounded-circle"
-                            [src]="'../../../assets/default-pp.png'"
-                            alt="User"></a></td>
-                <td>#4</td>
-                <td>Alexandre</td>
-                <td>35</td>
-                <td>135</td>
+            <tbody *ngFor="let user of listUsersCurrentLeaderboard; index as i">
+            <tr [ngClass]="{'first': i === 0, 'second': i === 1, 'third': i === 2}">
+                <td>
+                    <a routerLink="/user/{{ user.id }}">
+                        <img class="img-fluid rounded-circle"
+                             [src]="user.photo !== null ? user.photo : '../../../assets/default-pp.png'"
+                             alt="User">
+                    </a>
+                </td>
+                <td>#{{i+1}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.theme_participations}}</td>
+                <td>{{user.theme_score}}</td>
             </tr>
             </tbody>
         </table>

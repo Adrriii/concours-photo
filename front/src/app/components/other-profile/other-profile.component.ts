@@ -18,6 +18,7 @@ export class OtherProfileComponent implements OnInit {
     public edited = false;
     public location: string = null;
     public bio: string = null;
+    public userRank: string;
 
     constructor(
         private route: ActivatedRoute,
@@ -32,6 +33,7 @@ export class OtherProfileComponent implements OnInit {
             const userQueriedTmp = User.fromJson(userQueried);
             this.setLocation(userQueriedTmp);
             this.setBio(userQueriedTmp);
+            this.setUserRank(userQueriedTmp);
             this.userQueried = userQueriedTmp;
         });
         this.userService.getPostsById(this.id).subscribe(
@@ -66,6 +68,14 @@ export class OtherProfileComponent implements OnInit {
             this.bio = user.getSetting('BIO');
         } else {
             this.bio = 'Currently no description provided';
+        }
+    }
+
+    setUserRank(user: User): void {
+        if (user.rank === null){
+            this.userRank = 'n/a';
+        }else{
+            this.userRank = String(user.rank);
         }
     }
 }

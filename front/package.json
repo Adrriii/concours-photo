@@ -33,6 +33,7 @@
     "jquery": "^3.5.1",
     "js-sha256": "^0.9.0",
     "mdbootstrap": "^4.19.2",
+    "moment": "^2.29.1",
     "ngx-file-drop": "^10.1.1",
     "ngx-toastr": "^13.2.0",
     "popper.js": "^1.16.1",

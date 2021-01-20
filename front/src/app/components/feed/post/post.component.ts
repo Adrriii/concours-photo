@@ -4,16 +4,18 @@ import {ReactionsService} from '../../../services/reactions.service';
 import {AuthService} from '../../../services/auth.service';
 import {User} from '../../../models/User.model';
 import {UserPublic} from '../../../models/UserPublic.model';
-
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-post',
     templateUrl: './post.component.html',
     styleUrls: ['./post.component.css']
 })
+
 export class PostComponent implements OnInit {
     @Input() post: Post;
     public isSelected = false;
+    public datePost: string;
 
     constructor(
         private reactionService: ReactionsService,
@@ -22,6 +24,7 @@ export class PostComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.datePost = moment(this.post.date).format('D MMM YYYY');
     }
 
     getCurrentClass(): string {

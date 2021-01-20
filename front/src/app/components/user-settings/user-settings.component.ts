@@ -47,9 +47,9 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
 
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
-        dialogConfig.backdropClass = 'backdropBackground';
-        dialogConfig.width = '80%';
-        dialogConfig.maxHeight = '80vh';
+        dialogConfig.panelClass = 'custom-dialog-container';
+        dialogConfig.width = '30%';
+        dialogConfig.maxHeight = '50%';
 
         const dialogRef = this.dialog.open(EditSettingsComponent, dialogConfig);
 

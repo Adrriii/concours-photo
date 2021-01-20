@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class CommentService {
-    @Inject CommentDao commentDao;
-    @Inject PostDao postDao;
+    @Inject public CommentDao commentDao;
+    @Inject public PostDao postDao;
 
     private void addOneCommentInPost(int postId) throws Exception {
         postDao.increaseNbCommentBy(postId, 1);
@@ -39,6 +39,7 @@ public class CommentService {
                 comment.post,
                 parent,
                 comment.content,
+                comment.date,
                 comment.id
         );
 
@@ -60,15 +61,12 @@ public class CommentService {
                 post,
                 comment.parent,
                 comment.content,
+                comment.date,
                 comment.id
         ));
 
         addOneCommentInPost(comment.post.id);
 
-        System.out.println("Replying to post, increase comment");
-        post = postDao.getById(comment.post.id);
-        System.out.println("Now number of comment is " + post.nbComment);
-        System.out.println(post);
         return Optional.of(comment);
     }
 

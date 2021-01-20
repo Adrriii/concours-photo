@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 public class AuthenticationService {
-    @Inject UserDao userDao;
+    @Inject public UserDao userDao;
 
     public AuthenticationService() {}
 

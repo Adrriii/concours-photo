@@ -1,7 +1,7 @@
 <li class="comment" [ngClass]="getUserClass()">
     <div class="info">
         <a href="#">{{comment.author.username}}</a>
-        <span>4 hours ago</span>
+        <span>{{comment.date}}</span>
     </div>
     <a class="avatar" routerLink="/user/{{comment.author.id}}">
         <img [src]="comment.author.photo !== null ? comment.author.photo : '../../../assets/default-pp.png'" width="35" alt="Profile Avatar"

@@ -66,7 +66,7 @@ class SqlCommentDaoTest {
 
         comment = dao.insert(comment);
         comment = new Comment(
-                user, post, null, "new content !", comment.id
+                user, post, null, "new content !", comment.date, comment.id
         );
 
         Comment updated = dao.update(comment);

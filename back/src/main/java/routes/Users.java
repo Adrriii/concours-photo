@@ -23,9 +23,9 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 @Path("user/")
 @PermitAll
 public class Users {
-    @Inject UserService userService;
-    @Inject PostService postService;
-    @Inject AbstractImageService imageService;
+    @Inject public UserService userService;
+    @Inject public PostService postService;
+    @Inject public AbstractImageService imageService;
 
     @GET
     @Path("{id}")
@@ -80,7 +80,7 @@ public class Users {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     @JWTTokenNeeded
-    public Response addPost(
+    public Response changeAvatar(
             @Context ContainerRequestContext ctx,
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetails
@@ -90,17 +90,32 @@ public class Users {
             User userContext = userOpt.orElseThrow(
                     () -> new Exception("User logged in but can't find him in the context")
             );
-            String image64 = Base64.encodeBase64String(
-                    IOUtils.toByteArray(uploadedInputStream)
-            );
 
-            Image image = imageService.postImage(image64);
+            byte[] bytes = IOUtils.toByteArray(uploadedInputStream);
+            String imageString = new String(bytes);
+            if(!fileDetails.getFileName().equals("url")) {
+                imageString = Base64.encodeBase64String(bytes);
+            }
+
+            Image image = imageService.postImage(imageString);
 
             return userService.getById(userContext.id).map(
                 user -> {
-                    user = new User(user.username, user.settings, user.victories, 
-                                                user.score, user.userlevel, user.participations, 
-                                                image.url, image.delete_url, user.theme, user.rank, user.id);
+                    user = new User(
+                        user.username, 
+                        user.settings, 
+                        user.victories, 
+                        user.score, 
+                        user.theme_score, 
+                        user.userlevel, 
+                        user.participations, 
+                        image.url, 
+                        image.delete_url, 
+                        user.theme, 
+                        user.rank, 
+                        user.id
+                    );
+                    
                     try {
                         return userService.update(user).map(
                             updatedUser -> {
@@ -112,6 +127,18 @@ public class Users {
                     }
                 }
             ).orElse(Response.status(500).entity("Could not find the logged in user").build());
+        } catch(Exception e) {
+            e.printStackTrace();
+            return Response.status(500).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Path("leaderboard")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLeaderboard() {
+        try {
+            return Response.ok(userService.getLeaderboard()).build();
         } catch(Exception e) {
             e.printStackTrace();
             return Response.status(500).entity(e.getMessage()).build();

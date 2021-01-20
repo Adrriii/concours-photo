@@ -42,6 +42,7 @@ public abstract class SqlDao<T> {
     protected T queryFirstObject(String statement, List<Object> opt) throws SQLException {
         PreparedStatement preparedStatement = SqlDatabase.prepare(statement, opt);
         String sql = preparedStatement.toString();
+        System.out.println(preparedStatement.toString());
         ResultSet resultSet = preparedStatement.executeQuery();
 
         if (resultSet.next()) {

@@ -8,6 +8,7 @@ import model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class SqlCommentDao extends SqlDao<Comment> implements CommentDao {
@@ -20,12 +21,14 @@ public class SqlCommentDao extends SqlDao<Comment> implements CommentDao {
         User author = new SqlUserDao().getById(authorId);
         Post post = new SqlPostDao().getById(postId);
         Comment parent = (parentId == null)? null : getById(parentId);
+        Date date = resultSet.getDate("d");
 
         return new Comment(
                 author,
                 post,
                 parent,
                 resultSet.getString("content"),
+                date.toString(),
                 resultSet.getInt("id")
         );
     }
@@ -79,7 +82,7 @@ public class SqlCommentDao extends SqlDao<Comment> implements CommentDao {
 
         int commentId = doInsert(statement, opt);
 
-        return new Comment(comment.author, comment.post, comment.parent, comment.content, commentId);
+        return getById(commentId);
     }
 
     @Override

@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 
 @Path("comments/")
 public class Comments {
-    @Inject CommentService commentService;
+    @Inject public CommentService commentService;
 
     @GET
     @Path("{postId}")

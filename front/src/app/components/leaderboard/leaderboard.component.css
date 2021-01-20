@@ -7,7 +7,6 @@
 .leaderboard {
     max-width: 100%;
     height: 100vh !important;
-    background-color: #232323 !important;
     padding:50px;
 }
 
@@ -15,10 +14,10 @@
     display:flex;
     flex-wrap:wrap;
     align-items: center;
-    background:#5055CB;
+    background: rgba(26, 26, 26, 1);
     padding:10px 25px;
     border-radius:10px;
-    border: 2px solid #686EF9;
+    border: 2px solid white;
 }
 
 .ladder-title {
@@ -51,9 +50,9 @@
 
 .leaderboard-results tbody td {
     padding:15px 25px;
-    background:#1a1a1a;
+    background: rgba(26, 26, 26, 0.5);
     font-size:16px;
-    border-bottom:5px solid #232323;
+    border-bottom:5px solid rgba(35, 35, 35, 0.5);
 }
 
 .leaderboard-results tbody td:nth-of-type(7) {
@@ -61,7 +60,7 @@
 }
 
 .leaderboard-results tbody tr:hover td {
-    background:#1d1d1d;
+    background: rgba(29, 29, 29, 0.5);
 }
 
 .leaderboard-results tbody tr {

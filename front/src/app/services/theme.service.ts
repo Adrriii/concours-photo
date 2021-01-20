@@ -22,6 +22,10 @@ export class ThemeService {
         return this.httpClient.get<Array<Theme>>(environment.apiBaseUrl + `themes/proposals`);
     }
 
+    getAvailableThemes(): Observable<Array<Theme>> {
+        return this.httpClient.get<Array<Theme>>(environment.apiBaseUrl + `themes/available`);
+    }
+
     voteTheme(themeId: number): Observable<void> {
         return this.httpClient.post<void>(environment.apiBaseUrl + `themes/proposals/vote/${themeId}`, null);
     }

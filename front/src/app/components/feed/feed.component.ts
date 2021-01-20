@@ -7,6 +7,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Post} from '../../models/Post.model';
 import {AuthService} from '../../services/auth.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Theme} from 'src/app/models/Theme.model';
 
 
 
@@ -24,6 +25,7 @@ export class FeedComponent implements OnInit {
     public isCollapsed = false;
 
     public posts: Array<Post> = null;
+    public availableThemes: Array<Theme> = null;
 
     public displayFilterForm = false;
     public hideFilterForm = true;
@@ -55,7 +57,17 @@ export class FeedComponent implements OnInit {
             }
         );
 
+
+        this.themeService.getAvailableThemes().subscribe(
+            themes => {
+                this.availableThemes = themes;
+            }, error => {
+                console.log('Error when getting available themes : ' + error.message);
+            }
+        )
+
         this.sortForm = this.formBuilder.group({
+            theme: 0,
             direction: 'DESC',
             sort: 'score',
             labels: '',
@@ -65,7 +77,7 @@ export class FeedComponent implements OnInit {
     }
 
     updatePostsForCurrentTheme(): void {
-        this.postService.getPostsByTheme(this.currentThemeId, this.sortForm.value).subscribe(
+        this.postService.getPostsByTheme(this.sortForm.value.theme, this.sortForm.value).subscribe(
             posts => {
                 this.posts = posts.map(p => Post.fromJson(p));
             }, error => {

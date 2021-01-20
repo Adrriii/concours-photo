@@ -20,8 +20,16 @@ export class PostsService {
     }
 
     getPostsByTheme(themeId: number, filter: FeedFilter): Observable<Post[]> {
+        let themeQuery = "";
+        
+        if(themeId !== 0) {
+            themeQuery = `theme=${themeId}&`;
+        }
+        
         return this.httpClient.get<Post[]>(environment.apiBaseUrl 
-            + `feed?theme=${themeId}&direction=${filter.direction}&sort=${filter.sort}&labels=${filter.labels}&page=${filter.page}&nbPosts=${filter.nbPosts}`);
+            + `feed?`
+            + themeQuery
+            + `direction=${filter.direction}&sort=${filter.sort}&labels=${filter.labels}&page=${filter.page}&nbPosts=${filter.nbPosts}`);
     }
 
     post(data: FormData): Observable<Post> {

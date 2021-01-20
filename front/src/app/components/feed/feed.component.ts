@@ -7,6 +7,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Post} from '../../models/Post.model';
 import {AuthService} from '../../services/auth.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class FeedComponent implements OnInit {
     private currentThemeId: number;
     public currentCommentSection: Array<Comment>;
     sortForm: FormGroup;
+    public isCollapsed = false;
 
     public posts: Array<Post> = null;
 

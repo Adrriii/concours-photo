@@ -19,6 +19,7 @@ public interface UserDao extends Searchable<User> {
     void updateUsersRanks() throws Exception;
 
     List<User> getLeaderboard() throws Exception;
+    List<User> getCurrentLeaderboard() throws Exception;
     Optional<User> getCurrentThemeWinner() throws Exception;
     void resetThemeScore() throws Exception;
     void resetThemeVote() throws Exception;

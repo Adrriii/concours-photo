@@ -56,6 +56,7 @@ public class SqlReactionsDao extends SqlDao<Reactions> implements ReactionsDao {
                     getInteger(resultSet, "u.score"),
                     getInteger(resultSet, "u.theme_score"),
                     null,
+                    null,
                     resultSet.getString("u.photo_url"),
                     getInteger(resultSet, "u.rank"),
                     getInteger(resultSet, "u.id")

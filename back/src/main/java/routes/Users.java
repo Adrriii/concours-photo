@@ -109,6 +109,7 @@ public class Users {
                         user.theme_score, 
                         user.userlevel, 
                         user.participations, 
+                        user.theme_participations, 
                         image.url, 
                         image.delete_url, 
                         user.theme, 
@@ -139,6 +140,18 @@ public class Users {
     public Response getLeaderboard() {
         try {
             return Response.ok(userService.getLeaderboard()).build();
+        } catch(Exception e) {
+            e.printStackTrace();
+            return Response.status(500).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Path("leaderboard/current")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCurrentLeaderboard() {
+        try {
+            return Response.ok(userService.getCurrentLeaderboard()).build();
         } catch(Exception e) {
             e.printStackTrace();
             return Response.status(500).entity(e.getMessage()).build();

@@ -24,6 +24,7 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
                         getInteger(resultSet, "theme_score"), 
                         getInteger(resultSet, "userlevel"),
                         getParticipationCount(userId),
+                        getCurrentParticipationCount(userId),
                         resultSet.getString("photo_url"),
                         resultSet.getString("delete_url"), 
                         getInteger(resultSet, "theme"),
@@ -58,7 +59,7 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
         new SqlUserSettingDao().insertDefaultsForUser(userId);
         
         updateUsersRanks();
-        return new User(user.username, new SqlUserSettingDao().getAllForUser(userId), user.victories, user.score, user.theme_score, user.userlevel, user.participations, user.photo, user.photoDelete, user.theme, user.rank, userId);
+        return new User(user.username, new SqlUserSettingDao().getAllForUser(userId), user.victories, user.score, user.theme_score, user.userlevel, user.participations, user.theme_participations, user.photo, user.photoDelete, user.theme, user.rank, userId);
     }
 
     @Override
@@ -128,6 +129,18 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
         }
     }
 
+    private Integer getCurrentParticipationCount(Integer user) throws SQLException {
+        String statement = "SELECT COUNT(*) FROM post WHERE author = ? AND theme = (SELECT id FROM theme WHERE state = 'active')";
+        List<Object> opt = Arrays.asList(user);
+
+        try {
+            return queryFirstInt(statement, opt);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     public void updateUserScore(int id) throws SQLException {
         String statement = "UPDATE user SET score = (SELECT SUM(score) FROM post WHERE author = ?) WHERE id = ?";
         List<Object> opt = Arrays.asList(id, id);
@@ -153,6 +166,12 @@ public class SqlUserDao extends SqlDao<User> implements UserDao {
 
     public List<User> getLeaderboard() throws SQLException {
         String statement = "SELECT * FROM user ORDER BY rank ASC";
+
+        return queryAllObjects(statement);
+    }
+
+    public List<User> getCurrentLeaderboard() throws SQLException {
+        String statement = "SELECT * FROM user ORDER BY theme_score DESC";
 
         return queryAllObjects(statement);
     }

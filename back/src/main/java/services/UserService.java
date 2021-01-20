@@ -53,7 +53,17 @@ public class UserService {
     public List<UserPublic> getLeaderboard() throws Exception {
         List<UserPublic> users = new ArrayList<UserPublic>();
         for(User user: userDao.getLeaderboard()) {
-            users.add(user.getPublicProfile());
+            if(user.participations != 0)
+                users.add(user.getPublicProfile());
+        }
+        return users;
+    } 
+
+    public List<UserPublic> getCurrentLeaderboard() throws Exception {
+        List<UserPublic> users = new ArrayList<UserPublic>();
+        for(User user: userDao.getCurrentLeaderboard()) {
+            if(user.theme_participations != 0)
+                users.add(user.getPublicProfile());
         }
         return users;
     }

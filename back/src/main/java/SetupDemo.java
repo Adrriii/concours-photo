@@ -1,6 +1,8 @@
 import java.io.ByteArrayInputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -41,7 +43,7 @@ public class SetupDemo {
             waitForDB();
 
             createDemo();
-            
+
             done = true;
         } catch (Exception e) {
             System.out.println("Plante");
@@ -50,6 +52,18 @@ public class SetupDemo {
     }
 
     public void createDemo() throws Exception {
+
+        SqlDao<Integer> demo = new SqlDao<Integer>() {
+
+            @Override
+            protected Integer createObjectFromResult(ResultSet resultSet) throws SQLException {
+                return getInteger(resultSet, "id");
+            }
+            
+        };
+
+        if(!demo.queryAllObjects("SELECT * FROM demo").isEmpty()) return;
+
         System.out.println("---- START DEMO INSERT ----");
 
         ContainerRequest adriCtx = createUser("Adri",
@@ -58,24 +72,22 @@ public class SetupDemo {
                 "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
         ContainerRequest alexandreCtx = createUser("Alexandre",
                 "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
-        ContainerRequest JDCtx = createUser("JD",
-                "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
+        ContainerRequest JDCtx = createUser("JD", "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
 
         ContainerRequest h1 = createUser("Photo Lover",
-        "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
-        ContainerRequest h2 = createUser("jleauvo",
-        "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
+                "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
+        ContainerRequest h2 = createUser("jleauvo", "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
         ContainerRequest h3 = createUser("Lampadaire974",
-        "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
+                "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
         ContainerRequest h4 = createUser("4857485516",
-        "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
+                "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
         ContainerRequest h5 = createUser("__image__",
-        "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
+                "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
 
         // Set avatars
         changeAvatar(adriCtx, "https://i.imgur.com/0BVIfZB.png");
         changeAvatar(coucouCtx, "https://i.imgur.com/mUeb66G.png");
-        changeAvatar(alexandreCtx, "https://i.imgur.com/eWIkRqz.png");
+        changeAvatar(alexandreCtx, "https://i.imgur.com/oFLS2Nx.jpg");
         changeAvatar(JDCtx, "https://i.imgur.com/jTuJbys.png");
         changeAvatar(h1, "https://i.imgur.com/mPTBqn3.jpg");
         changeAvatar(h2, "https://i.imgur.com/tsF9hV8.jpg");
@@ -99,7 +111,7 @@ public class SetupDemo {
         createPost(alexandreCtx, "https://i.imgur.com/VZ7bqit.jpg", "Orange", "Nature");
         createPost(coucouCtx, "https://i.imgur.com/6gt1Zpn.jpg", "Bleu", "Nature");
         createPost(JDCtx, "https://i.imgur.com/iE4McQ8.jpg", "Violet", "Nature");
-        createPost(h1, "https://i.imgur.com/242E6T5.jpg", "Chelou lui", "Nature");
+        createPost(h1, "https://i.imgur.com/dCsg1Cj.jpg", "Chelou lui", "Nature");
         createPost(adriCtx, "https://i.imgur.com/uirY6ai.jpg", "Toutes les couleurs", "Nature");
         createPost(coucouCtx, "https://i.imgur.com/Nim4H1G.jpg", "Test nouvel appareil photo", "Nature");
 
@@ -219,8 +231,9 @@ public class SetupDemo {
         themesRoute.setUserProposal(h4, nextThemeIdStart + 2);
         themesRoute.setUserProposal(h5, nextThemeIdStart + 4);
 
-
         System.out.println("---- DEMO INSERTED ----");
+
+        demo.exec("INSERT INTO demo (id) VALUES (1)");
     }
 
     public ContainerRequest createUser(String username, String frontHash) {

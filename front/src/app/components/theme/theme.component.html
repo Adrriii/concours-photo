@@ -1,29 +1,36 @@
 <div *ngFor="let theme of nextThemes">
-    <p>{{ theme.title }}</p>
+    <p>{{ theme.title }} - {{ theme.nbVotes }} votes({{ votePercentage(theme.nbVotes) }}%)</p>
     <mat-progress-bar mode="determinate"  
-        [value]="theme.nbVotes"></mat-progress-bar>
+        [value]="votePercentage(theme.nbVotes)"></mat-progress-bar>
     <br>      
 </div>
 
 <div *ngIf="isAuth()">
   <mat-radio-group 
-    aria-labelledby="example-radio-group-label" 
+    aria-labelledby="radio-group-label" 
     [(ngModel)]="chosenTheme">
     <div class="row">
-      <mat-radio-button 
-        class="example-radio-button col" 
-        *ngFor="let theme of nextThemes" 
-        [value]="theme.id">
+      <div
+      class="col centered"
+      *ngFor="let theme of nextThemes">
+        <mat-radio-button 
+        class="" 
+        [value]="theme"
+        [checked]="isActualChoice(theme.id)">
         {{ theme.title }}
       </mat-radio-button>
+      </div>
     </div>
   </mat-radio-group>
-
-  <button 
-    type="button" 
-    class="button-self-made" 
-    (click)="vote()" 
-    *ngIf="hasVoted()">
-    Update informations
-  </button>
+<br>
+  <div class="row centered">
+    <button 
+      *ngIf="isVotable()" 
+      type="button" 
+      class="button-self-made" 
+      (click)="vote()">
+      Send vote
+    </button>
+  </div>
+  
 </div>

@@ -82,7 +82,7 @@ public class SqlCommentDao extends SqlDao<Comment> implements CommentDao {
 
         int commentId = doInsert(statement, opt);
 
-        return new Comment(comment.author, comment.post, comment.parent, comment.content, comment.date, commentId);
+        return getById(commentId);
     }
 
     @Override

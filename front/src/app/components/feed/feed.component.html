@@ -25,54 +25,48 @@
         <a routerLink="/themes">
             <button class="next-theme"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Next theme</button>
         </a>
-        <div class="dropdown">
-            <button class="dropdown-filter" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-sort pr-2" aria-hidden="true"></i>Sort posts by
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li class="dropdown-item">Score</li>
-                <li class="dropdown-item">Most recent</li>
-                <li class="dropdown-item">Oldest</li>
-                <li class="dropdown-item">Most comments</li>
-                <li class="dropdown-item">Most votes</li>
-            </div>
-        </div>
     </div>
 
-    <form [formGroup]="sortForm" (ngSubmit)="onSubmitForm()">
-        <div class="row">
-            <div class="form-group col">
-                <label for="direction">Order</label>
-                <select class="form-control" formControlName="direction">
-                  <option value="DESC">Descending</option>
-                  <option value="ASC">Ascending</option>
-                </select>
-              </div>
-              <div class="form-group col">
-                <label for="sort">Sorte By</label>
-                <select class="form-control" formControlName="sort">
-                  <option value="score">Score</option>
-                  <option value="date">Date</option>
-                  <option value="nbComment">Number of comments</option>
-                  <option value="nbVotes">Number of votes</option>
-                </select>
-              </div>
-              <div class="form-group col">
-                  <label for="labels">Labels (label1,label2,...)</label>
-                  <input type="text" class="form-control" formControlName="labels">
-              </div>
-              <div class="form-group col">
-                <label for="page">Page</label>
-                <input type="number" class="form-control" formControlName="page">
-              </div>
-              <div class="form-group col">
-                  <label for="nbPosts">Number of post</label>
-                  <input type="number" class="form-control" formControlName="nbPosts">
-              </div>
-        </div>
-        <button type="submit" class="button-self-made" >Apply</button>
-    </form>
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Add filters
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form [formGroup]="sortForm" (ngSubmit)="onSubmitForm()">
+            <div class="row">
+                <div class="form-group col">
+                    <label for="direction">Order</label>
+                    <select class="form-control" formControlName="direction">
+                        <option value="DESC">Descending</option>
+                        <option value="ASC">Ascending</option>
+                    </select>
+                    </div>
+                    <div class="form-group col">
+                    <label for="sort">Sorte By</label>
+                    <select class="form-control" formControlName="sort">
+                        <option value="score">Score</option>
+                        <option value="date">Date</option>
+                        <option value="nbComment">Number of comments</option>
+                        <option value="nbVotes">Number of votes</option>
+                    </select>
+                    </div>
+                    <div class="form-group col">
+                        <label for="labels">Labels</label>
+                        <input type="text" class="form-control" formControlName="labels" placeholder="Ex : label1,label2,...">
+                    </div>
+                    <div class="form-group col">
+                    <label for="page">Page</label>
+                    <input type="number" class="form-control" formControlName="page">
+                    </div>
+                    <div class="form-group col">
+                        <label for="nbPosts">Number of post</label>
+                        <input type="number" class="form-control" formControlName="nbPosts">
+                    </div>
+            </div>
+            <button type="submit" class="button-self-made" >Apply</button>
+        </form>
+    </mat-expansion-panel>
 
     <div class="feed">
         <app-post *ngFor="let post of posts" [post]="post"></app-post>

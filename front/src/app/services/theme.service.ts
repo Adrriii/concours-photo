@@ -25,4 +25,8 @@ export class ThemeService {
     voteTheme(themeId: number): Observable<void> {
         return this.httpClient.post<void>(environment.apiBaseUrl + `themes/proposals/vote/${themeId}`, null);
     }
+
+    deleteVoteTheme(): Observable<void> {
+        return this.httpClient.delete<void>(environment.apiBaseUrl + `themes/proposals/vote/0`);
+    }
 }

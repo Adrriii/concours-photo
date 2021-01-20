@@ -7,8 +7,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Post} from '../../models/Post.model';
 import {AuthService} from '../../services/auth.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {Scroll} from '@angular/router';
+
 
 
 @Component({
@@ -27,6 +26,7 @@ export class FeedComponent implements OnInit {
     public posts: Array<Post> = null;
 
     public displayFilterForm = false;
+    public hideFilterForm = true;
     public displaySwitcherForm = false;
 
     public currentPage = 1;
@@ -103,7 +103,14 @@ export class FeedComponent implements OnInit {
     }
 
     toggleDisplayFilterForm(): void {
-        this.displayFilterForm = !this.displayFilterForm;
+        if (!this.displayFilterForm) {
+            this.hideFilterForm = false;
+            setTimeout(() => this.displayFilterForm = !this.displayFilterForm, 100);
+        } else {
+            setTimeout(() => this.hideFilterForm = true, 1000);
+            this.displayFilterForm = !this.displayFilterForm;
+        }
+
     }
 
     toggleDisplaySwitcherForm(): void {
@@ -115,17 +122,21 @@ export class FeedComponent implements OnInit {
         const newPage = this.sortForm.value.page - 1;
 
         if (newPage > 0) {
+            this.displaySwitcherForm = false;
             this.currentPage = newPage;
 
             this.sortForm.value.page = newPage;
             this.updatePostsForCurrentTheme();
+            setTimeout(() => scrollTo(0, 0));
         }
     }
 
     nextPage(): void {
+        this.displaySwitcherForm = false;
         const newPage = this.sortForm.value.page + 1;
         this.currentPage = newPage;
         this.sortForm.value.page = newPage;
         this.updatePostsForCurrentTheme();
+        setTimeout(() => scrollTo(0, 0));
     }
 }

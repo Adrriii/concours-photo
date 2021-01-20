@@ -299,7 +299,6 @@ header .overlay {
     max-height: 0;
     opacity: 0;
     transition: max-height 1s, opacity 0.5s;
-
 }
 
 .pageSwitcherForm {

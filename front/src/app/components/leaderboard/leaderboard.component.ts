@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {User} from "../../models/User.model";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-leaderboard',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LeaderboardComponent implements OnInit {
 
-  constructor() { }
+    public listUsersLeaderboard: Array<User>;
 
-  ngOnInit(): void {
-  }
+    constructor(
+        private userService: UserService
+    ) {
+    }
+
+    ngOnInit(): void {
+        this.userService.getUsersGlobalLeaderboard().subscribe((users) => {
+            this.listUsersLeaderboard = users;
+        });
+    }
 
 }

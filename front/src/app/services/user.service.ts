@@ -33,4 +33,8 @@ export class UserService {
         return this.httpClient.get<Array<Post>>(environment.apiBaseUrl + `user/${id}/posts`);
     }
 
+    getUsersGlobalLeaderboard(): Observable<Array<User>> {
+        return this.httpClient.get<Array<User>>(environment.apiBaseUrl + 'user/leaderboard');
+    }
+
 }

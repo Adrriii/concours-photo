@@ -51,6 +51,7 @@ import { MatRadioModule } from '@angular/material/radio';
         UserSettingsComponent,
         EditSettingsComponent,
         PostComponent,
+        LeaderboardComponent,
         CommentsComponent,
         CommentComponent,
         CommentFormComponent,

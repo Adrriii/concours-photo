@@ -6,6 +6,7 @@ export class UserPublic {
         public username,
         public victories,
         public score,
+        public theme_score,
         public participations,
         public rank,
         public photo
@@ -17,6 +18,7 @@ export class UserPublic {
             user.id,
             user.username,
             user.victories,
+            user.theme_score,
             user.score,
             user.participations,
             user.rank,

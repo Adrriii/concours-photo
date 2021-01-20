@@ -20,4 +20,5 @@ VALUES
     ("Portrait"),
     ("Landscape"),
     ("Building"),
-    ("Macro");
+    ("Macro"),
+    ("Nature");

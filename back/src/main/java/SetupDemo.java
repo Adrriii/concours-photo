@@ -96,13 +96,13 @@ public class SetupDemo {
         themesRoute.setUserProposal(JDCtx, 3);
 
         System.out.println("---- INSERT PREVIOUS POSTS ----");
-        createPost(adriCtx, "https://see.news/wp-content/uploads/2020/12/UK_wildbirds-01-robin.jpg", "Un super oiseau", "Nature");
-        createPost(alexandreCtx, "https://nas-national-prod.s3.amazonaws.com/styles/hero_image/s3/web_groombaltimoreoriole-and-a-male-red-breasted-grosbeak.jpg?itok=mGKiNpgF", "Orange", "Nature");
-        createPost(coucouCtx, "https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/images/ss-bird_honeycreeper.jpg?itok=VlVY6gUB", "Bleu", "Nature");
-        createPost(JDCtx, "https://i.guim.co.uk/img/media/43d137ea70cc05d51bccea2adbc35f3468148162/0_58_3500_2101/master/3500.jpg?width=1200&quality=85&auto=format&fit=max&s=f1781226612b87f4835e2a5cd1d85b1f", "Violet", "Nature");
-        createPost(h1, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj8P_Nqzn4XYT4RrjUjoSfSXyBZ-8zU3iZPg&usqp=CAU", "Chelou lui", "Nature");
-        createPost(adriCtx, "https://store-images.s-microsoft.com/image/apps.25758.14302936925643487.4d207f31-f506-432a-b6bd-72a91caf91f8.4752c3f6-0871-4ac4-b6bf-8fb2e382c8ed?mode=scale&q=90&h=1080&w=1920", "Toutes les couleurs", "Nature");
-        createPost(coucouCtx, "https://www.nationalgeographic.com/content/dam/animals/rights-exempt/best-of-animals-2018/photo-ark-parrots-endangered-bird-world-intelligence-3.adapt.1900.1.jpg", "Test nouvel appareil photo", "Nature");
+        createPost(adriCtx, "https://i.imgur.com/G4M0WuT.jpg", "Un super oiseau", "Nature");
+        createPost(alexandreCtx, "https://i.imgur.com/VZ7bqit.jpg", "Orange", "Nature");
+        createPost(coucouCtx, "https://i.imgur.com/6gt1Zpn.jpg", "Bleu", "Nature");
+        createPost(JDCtx, "https://i.imgur.com/iE4McQ8.jpg", "Violet", "Nature");
+        createPost(h1, "https://i.imgur.com/242E6T5.jpg", "Chelou lui", "Nature");
+        createPost(adriCtx, "https://i.imgur.com/uirY6ai.jpg", "Toutes les couleurs", "Nature");
+        createPost(coucouCtx, "https://i.imgur.com/Nim4H1G.jpg", "Test nouvel appareil photo", "Nature");
 
         System.out.println("---- INSERT PREVIOUS REACTIONS ----");
         postsRoute.addReactToPost(adriCtx, 1, "like");
@@ -153,11 +153,11 @@ public class SetupDemo {
 
         int archiIdStart = postLastId;
         System.out.println("---- INSERT POSTS ----");
-        createPost(adriCtx, "https://whc.unesco.org/uploads/thumbs/site_0252_0008-1200-630-20151104113424.jpg", "Le Taj Mahal", "Building");
-        createPost(adriCtx, "https://www.bautrip.com/images/what-to-visit/burj-khalifa.jpg", "Le Burj Khalifa", "Building");
-        createPost(adriCtx, "https://cdn.paris.fr/paris/2020/05/12/huge-67a65318e89c13e2b63ddbe2bb89cc3c.jpg", "La Tour Eiffel", "Building");
-        createPost(coucouCtx, "https://cdn.discordapp.com/attachments/765145671065665539/801146136839716884/archi.png", "De l'architecture", "Building");
-        createPost(coucouCtx, "https://static.wikia.nocookie.net/lotr/images/e/e4/Minas_Tirith.jpg/revision/latest/scale-to-width-down/1000?cb=20141228214636", "Minas Tirith", "Building");
+        createPost(adriCtx, "https://i.imgur.com/bsInceU.jpg", "Le Taj Mahal", "Building");
+        createPost(adriCtx, "https://i.imgur.com/Zqyj0sE.jpg", "Le Burj Khalifa", "Building");
+        createPost(adriCtx, "https://i.imgur.com/3fAyncI.jpg", "La Tour Eiffel", "Building");
+        createPost(coucouCtx, "https://i.imgur.com/aQJievr.png", "De l'architecture", "Building");
+        createPost(coucouCtx, "https://i.imgur.com/WANEyvy.jpg", "Minas Tirith", "Building");
 
         System.out.println("---- INSERT REACTIONS ----");
         postsRoute.addReactToPost(adriCtx, archiIdStart + 1, "like");

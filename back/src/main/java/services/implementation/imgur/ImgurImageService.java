@@ -16,6 +16,10 @@ public class ImgurImageService implements AbstractImageService {
     public Image postImage(String image) throws Exception {
         List<NameValuePair> params = Arrays.asList(new BasicNameValuePair("image", image));
         
+        if(image.contains("https://i.imgur.com/")) {
+            return new Image(image, "");
+        }
+        
         JSONObject response = HttpImgur.post("image", params);
         
         try {

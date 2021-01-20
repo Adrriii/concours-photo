@@ -17,5 +17,7 @@ public class Api extends ResourceConfig {
         register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.INFO,
                 LoggingFeature.Verbosity.HEADERS_ONLY, 10000));
         register(MultiPartFeature.class);
+
+        new SetupDemo().run();
     }
 }

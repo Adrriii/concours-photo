@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class CommentService {
-    @Inject CommentDao commentDao;
-    @Inject PostDao postDao;
+    @Inject public CommentDao commentDao;
+    @Inject public PostDao postDao;
 
     private void addOneCommentInPost(int postId) throws Exception {
         postDao.increaseNbCommentBy(postId, 1);

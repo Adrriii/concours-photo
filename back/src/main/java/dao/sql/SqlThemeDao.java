@@ -19,7 +19,7 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
         User winner = (winnerId == null)? null : new SqlUserDao().getById(winnerId);
         User author = (authorId == null)? null : new SqlUserDao().getById(authorId);
 
-        Integer themeId = resultSet.getInt("id");
+        Integer themeId = getInteger(resultSet, "id");
         String state = resultSet.getString("state");
 
         return new Theme(
@@ -87,13 +87,14 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
 
     @Override
     public Theme insert(Theme theme) throws SQLException {
-        String statement = "INSERT INTO theme (title, state, photo_url, winner, date) VALUES (?, ?, ?, ?, ?)";
+        String statement = "INSERT INTO theme (title, state, photo_url, winner, date, author) VALUES (?, ?, ?, ?, ?, ?)";
         List<Object> opt = Arrays.asList(
                 theme.title,
                 theme.state,
                 theme.photo,
                 (theme.winner == null)? null : theme.winner.id,
-                theme.date
+                theme.date,
+                theme.author != null ? theme.author.id : null
         );
 
         int insertedId = doInsert(statement, opt);
@@ -109,6 +110,36 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
     }
 
     @Override
+    public Theme setThemeState(Theme theme, String state) throws SQLException {
+        if(theme.id == null) throw new SQLException("No ID provided for theme");
+
+        String statement = "UPDATE theme SET state = ? WHERE id = ?";
+        List<Object> opt = Arrays.asList(state, theme.id);
+
+        exec(statement, opt);
+        return getById(theme.id).get();
+    }
+
+    @Override
+    public Theme setThemeWinner(Theme theme, User winner) throws SQLException {
+        if(theme.id == null) throw new SQLException("No ID provided for theme");
+        if(winner.id == null) throw new SQLException("No ID provided for theme winner");
+
+        String statement = "UPDATE theme SET winner = ? WHERE id = ?";
+        List<Object> opt = Arrays.asList(winner.id, theme.id);
+
+        exec(statement, opt);
+        return getById(theme.id).get();
+    }
+
+    @Override
+    public void refuseCurrentProposals() throws SQLException {
+        String statement = "UPDATE theme SET state = 'refused' WHERE state = 'proposal'";
+
+        exec(statement);
+    }
+
+    @Override
     public Integer getNbVotes(int id) throws SQLException {
 
         String statement = "SELECT COUNT(*) FROM user WHERE theme = ?";
@@ -116,4 +147,12 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
 
         return queryFirstInt(statement, opt);
     }
+
+    @Override
+    public Optional<Theme> getMostVotedProposal() throws SQLException {
+        String statement = "SELECT t.*,COUNT(theme) as nb FROM user as u, theme as t WHERE u.theme = t.id AND t.state = 'proposal' GROUP BY u.theme ORDER BY nb DESC LIMIT 1";
+
+        return queryFirstOptional(statement);
+    }
 }
+

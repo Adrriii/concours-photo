@@ -1,49 +1,29 @@
-<p>Exemple de thème (en cours, y a clairement plein de choses à changer encore, là j'ai fait du custom barre pur donc c'est pas forcément au point)</p>
-
-<div class="graph-cont">
-    <div class="bar theme1">Les lapins (15%)</div>
-    <div class="bar theme2">Les canards (25%)</div>
-    <div class="bar theme3">Les lions (10%)</div>
-    <div class="bar theme4">Les licornes (35%)</div>
-    <div class="bar theme5">Les lamas (15%)</div>
+<div *ngFor="let theme of nextThemes">
+    <p>{{ theme.title }}</p>
+    <mat-progress-bar mode="determinate"  
+        [value]="theme.nbVotes"></mat-progress-bar>
+    <br>      
 </div>
 
-<div class="justify-content-center d-flex">
-    <button class="vote-theme v-theme1 px-4 ml-4"><span class="fa-stack">
-    <span class="fa fa-circle-o fa-stack-2x"></span>
-    <strong class="fa-stack-1x">
-        1
-    </strong>
-</span> Les lapins
-    </button>
+<div *ngIf="isAuth()">
+  <mat-radio-group 
+    aria-labelledby="example-radio-group-label" 
+    [(ngModel)]="chosenTheme">
+    <div class="row">
+      <mat-radio-button 
+        class="example-radio-button col" 
+        *ngFor="let theme of nextThemes" 
+        [value]="theme.id">
+        {{ theme.title }}
+      </mat-radio-button>
+    </div>
+  </mat-radio-group>
 
-    <button class="vote-theme v-theme2 px-4 ml-4"><span class="fa-stack">
-    <span class="fa fa-circle-o fa-stack-2x"></span>
-    <strong class="fa-stack-1x">
-        2
-    </strong>
-</span> Les canards
-    </button>
-    <button class="vote-theme v-theme3 px-4 ml-4"><span class="fa-stack">
-    <span class="fa fa-circle-o fa-stack-2x"></span>
-    <strong class="fa-stack-1x">
-        3
-    </strong>
-</span> Les lions
-    </button>
-    <button class="vote-theme v-theme4 px-4 ml-4"><span class="fa-stack">
-    <span class="fa fa-circle-o fa-stack-2x"></span>
-    <strong class="fa-stack-1x">
-        4
-    </strong>
-</span> Les licornes
-    </button>
-
-    <button class="vote-theme v-theme5 px-4 ml-4"><span class="fa-stack">
-    <span class="fa fa-circle-o fa-stack-2x"></span>
-    <strong class="fa-stack-1x">
-        5
-    </strong>
-</span> Les lamas
-    </button>
+  <button 
+    type="button" 
+    class="button-self-made" 
+    (click)="vote()" 
+    *ngIf="hasVoted()">
+    Update informations
+  </button>
 </div>

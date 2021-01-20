@@ -37,25 +37,19 @@
                 </ul>
                 <ul>
                     <li (click)="sendLike()"><a><i class="fa fa-thumbs-up" [class.selected]="isPostLiked()"></i></a></li>
-                    <li><a href="#"><img
-                        src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
+
+                    <li *ngFor="let user of this.post.reactionsUser.like"><a href="#"><img
+                        src="{{user.photo}}"
                         class="img-fluid rounded-circle" alt="User"></a></li>
                     <li><a><span>{{getNumberLike()}} Like</span></a></li>
                 </ul>
                 <ul>
                     <li (click)="sendDislike()"><a><i class="fa fa-thumbs-down" [class.selected]="isPostDisliked()"></i></a></li>
-                    <li><a href="#"><img
-                        src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
+
+                    <li *ngFor="let user of this.post.reactionsUser.dislike"><a href="#"><img
+                        src="{{user.photo}}"
                         class="img-fluid rounded-circle" alt="User"></a></li>
-                    <li><a href="#"><img
-                        src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
-                        class="img-fluid rounded-circle" alt="User"></a></li>
-                    <li><a href="#"><img
-                        src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
-                        class="img-fluid rounded-circle" alt="User"></a></li>
-                    <li><a href="#"><img
-                        src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg"
-                        class="img-fluid rounded-circle" alt="User"></a></li>
+
                     <li><a><span>{{getNumberDislike()}} Dislikes</span></a></li>
                 </ul>
             </div><!--/ cardbox-base -->

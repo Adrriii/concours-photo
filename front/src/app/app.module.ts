@@ -33,6 +33,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { OtherProfileComponent } from './components/other-profile/other-profile.component';
 import { UserService} from './services/user.service';
 import { LeaderboardComponent } from './components/leaderboard/leaderboard.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
     declarations: [
@@ -52,7 +54,6 @@ import { LeaderboardComponent } from './components/leaderboard/leaderboard.compo
         CommentsComponent,
         CommentComponent,
         CommentFormComponent,
-        LeaderboardComponent,
     ],
     imports: [
         BrowserModule,

@@ -15,8 +15,8 @@ import javax.ws.rs.core.Response;
 @Path("search/")
 @PermitAll
 public class Search {
-    @Inject SearchService searchService;
-    @Inject AuthenticationService authenticationService;
+    @Inject public SearchService searchService;
+    @Inject public AuthenticationService authenticationService;
 
     @Context private ResourceContext resourceContext;
 

@@ -6,8 +6,9 @@ import {ThemeService} from '../../services/theme.service';
 import {ToastrService} from 'ngx-toastr';
 import {Post} from '../../models/Post.model';
 import {AuthService} from '../../services/auth.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {Scroll} from '@angular/router';
 
 
 @Component({
@@ -20,9 +21,15 @@ export class FeedComponent implements OnInit {
     private currentThemeId: number;
     public currentCommentSection: Array<Comment>;
     sortForm: FormGroup;
+
     public isCollapsed = false;
 
     public posts: Array<Post> = null;
+
+    public displayFilterForm = false;
+    public displaySwitcherForm = false;
+
+    public currentPage = 1;
 
     constructor(
         private toastr: ToastrService,
@@ -52,8 +59,8 @@ export class FeedComponent implements OnInit {
             direction: 'DESC',
             sort: 'score',
             labels: '',
-            page: 1,
-            nbPosts: 15
+            page: [1, Validators.min(1)],
+            nbPosts: [15, Validators.min(1)]
         });
     }
 
@@ -92,6 +99,33 @@ export class FeedComponent implements OnInit {
     }
 
     onSubmitForm(): void {
+        this.updatePostsForCurrentTheme();
+    }
+
+    toggleDisplayFilterForm(): void {
+        this.displayFilterForm = !this.displayFilterForm;
+    }
+
+    toggleDisplaySwitcherForm(): void {
+        setTimeout(() => scrollTo(0, 10000));
+        this.displaySwitcherForm = !this.displaySwitcherForm;
+    }
+
+    previousPage(): void {
+        const newPage = this.sortForm.value.page - 1;
+
+        if (newPage > 0) {
+            this.currentPage = newPage;
+
+            this.sortForm.value.page = newPage;
+            this.updatePostsForCurrentTheme();
+        }
+    }
+
+    nextPage(): void {
+        const newPage = this.sortForm.value.page + 1;
+        this.currentPage = newPage;
+        this.sortForm.value.page = newPage;
         this.updatePostsForCurrentTheme();
     }
 }

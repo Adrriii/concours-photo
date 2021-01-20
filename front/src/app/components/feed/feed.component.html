@@ -21,28 +21,36 @@
 
 <div class="feed-container">
     <div class="py-5 justify-content-center d-flex text-center">
-        <button class="create-post" (click)="openDialog()" *ngIf="isUserLoggedIn()"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create new post</button>
-        <a routerLink="/themes">
-            <button class="next-theme"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Next theme</button>
-        </a>
+        <button class="create-post" (click)="openDialog()" *ngIf="isUserLoggedIn()">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i> Create new post
+        </button>
+
+        <button class="next-theme" routerLink="/themes">
+            <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> Next theme
+        </button>
+
+
+        <button class="dropdown-filter" type="button" id="dropdownMenuButton" (click)="toggleDisplayFilterForm()">
+            <i class="fa fa-sort pr-2" aria-hidden="true"></i> Filter
+        </button>
     </div>
 
-    <mat-expansion-panel hideToggle>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Add filters
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+    <div class="filter-options"
+         [class.display-filter-form]="displayFilterForm"
+         [class.hide-filter-form]="!displayFilterForm"
+    >
         <form [formGroup]="sortForm" (ngSubmit)="onSubmitForm()">
-            <div class="row">
+            <div class="filter-options-container">
+
                 <div class="form-group col">
                     <label for="direction">Order</label>
                     <select class="form-control" formControlName="direction">
                         <option value="DESC">Descending</option>
                         <option value="ASC">Ascending</option>
                     </select>
-                    </div>
-                    <div class="form-group col">
+                </div>
+
+                <div class="form-group col">
                     <label for="sort">Sorte By</label>
                     <select class="form-control" formControlName="sort">
                         <option value="score">Score</option>
@@ -50,26 +58,50 @@
                         <option value="nbComment">Number of comments</option>
                         <option value="nbVotes">Number of votes</option>
                     </select>
-                    </div>
-                    <div class="form-group col">
-                        <label for="labels">Labels</label>
-                        <input type="text" class="form-control" formControlName="labels" placeholder="Ex : label1,label2,...">
-                    </div>
-                    <div class="form-group col">
-                    <label for="page">Page</label>
-                    <input type="number" class="form-control" formControlName="page">
-                    </div>
-                    <div class="form-group col">
-                        <label for="nbPosts">Number of post</label>
-                        <input type="number" class="form-control" formControlName="nbPosts">
-                    </div>
+                </div>
+
+                <div class="form-group col">
+                    <label for="labels">Labels</label>
+                    <input type="text" class="form-control" formControlName="labels"
+                           placeholder="Ex : label1,label2,...">
+                </div>
+                <div class="break"></div>
+
+                <button type="submit" class="btn bg-light">Apply</button>
+
             </div>
-            <button type="submit" class="button-self-made" >Apply</button>
         </form>
-    </mat-expansion-panel>
+    </div>
+
+
 
     <div class="feed">
         <app-post *ngFor="let post of posts" [post]="post"></app-post>
+    </div>
+
+
+    <div class="pageSwitcherForm align-self-center"
+         [hidden]="!displaySwitcherForm"
+    >
+        <form [formGroup]="sortForm" (ngSubmit)="onSubmitForm()">
+            <div class="form-group col">
+                <label for="page">Page</label>
+                <input type="number" class="form-control" formControlName="page" id="page">
+            </div>
+
+            <div class="form-group col">
+                <label for="nbPosts">Number of post</label>
+                <input type="number" class="form-control" formControlName="nbPosts" id="nbPosts">
+            </div>
+
+            <button class="btn align-self-center" type="submit">Apply</button>
+        </form>
+    </div>
+
+    <div class="pageSwitcher align-self-center">
+        <span class="switchButton switchButtonLeft" (click)="previousPage()">&lt;</span>
+        <span class="mx-3 currentPage" (click)="toggleDisplaySwitcherForm()">{{currentPage}}</span>
+        <span class="switchButton switchButtonLeft" (click)="nextPage()">&gt;</span>
     </div>
 </div>
 

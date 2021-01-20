@@ -78,7 +78,7 @@ public class Authentication {
             UserAuth user
     ) {
         try {
-            return authenticationService.registerUser(user.username, user.passwordHash)
+            return authenticationService.registerUser(user.username, user.passwordHash, user.email)
                 .map(userRegister -> Response.ok().build())
                 .orElse(Response.status(400).entity("This username is already taken !").build());
         } catch (Exception e) {

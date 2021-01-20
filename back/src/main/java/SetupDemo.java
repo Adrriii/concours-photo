@@ -237,7 +237,7 @@ public class SetupDemo {
     }
 
     public ContainerRequest createUser(String username, String frontHash) {
-        UserAuth userAuth = new UserAuth(username, frontHash);
+        UserAuth userAuth = new UserAuth(username, frontHash, "me@example.com");
 
         authenticationRoute.register(userAuth);
 

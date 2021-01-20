@@ -25,21 +25,15 @@ export class RegisterComponent implements OnInit {
     ngOnInit(): void {
         this.form = this.formBuilder.group({
             username: ['', Validators.required],
-            password: ['', Validators.required]
+            password: ['', Validators.required],
+            email: ['', Validators.required, Validators.email]
         });
-    }
-
-    get getForm(): any {
-        return this.form.controls;
     }
 
     onSubmit(): void {
         this.submitted = true;
 
-        // stop here if form is invalid
         if (this.form.invalid) {
-            // Garder submitted a true ?
-            console.log('Invalid form values !');
             return;
         }
 
@@ -47,7 +41,8 @@ export class RegisterComponent implements OnInit {
 
         this.authService.createNewUser(
             this.form.get('username').value,
-            this.form.get('password').value).subscribe(
+            this.form.get('password').value,
+            this.form.get('email').value).subscribe(
             () => this.router.navigate(['login']),
             error => {
                 console.log('Error while creating new user : ' + error);

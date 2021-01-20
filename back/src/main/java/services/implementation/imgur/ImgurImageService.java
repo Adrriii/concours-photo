@@ -18,7 +18,12 @@ public class ImgurImageService implements AbstractImageService {
         
         JSONObject response = HttpImgur.post("image", params);
         
-        return new Image(response.getString("link"), response.getString("deletehash"));
+        try {
+            return new Image(response.getString("link"), response.getString("deletehash"));
+        } catch(Exception e) {
+            System.out.println("Communication with imgur failed "+response.toString());
+            return new Image(image,"");
+        }
     }
 
     @Override

@@ -38,16 +38,16 @@
                 <ul>
                     <li (click)="sendLike()"><a><i class="fa fa-thumbs-up" [class.selected]="isPostLiked()"></i></a></li>
 
-                    <li *ngFor="let user of this.post.reactionsUser.like"><a href="#"><img
-                        src="{{user.photo}}"
+                    <li *ngFor="let user of this.post.reactionsUser.like"><a routerLink="/user/{{user.id}}"><img
+                        [src]="user.photo !== null ? user.photo : '../../../assets/default-pp.png'"
                         class="img-fluid rounded-circle" alt="User"></a></li>
                     <li><a><span>{{getNumberLike()}} Like</span></a></li>
                 </ul>
                 <ul>
                     <li (click)="sendDislike()"><a><i class="fa fa-thumbs-down" [class.selected]="isPostDisliked()"></i></a></li>
 
-                    <li *ngFor="let user of this.post.reactionsUser.dislike"><a href="#"><img
-                        src="{{user.photo}}"
+                    <li *ngFor="let user of this.post.reactionsUser.dislike"><a routerLink="/user/{{user.id}}"><img
+                        [src]="user.photo !== null ? user.photo : '../../../assets/default-pp.png'"
                         class="img-fluid rounded-circle" alt="User"></a></li>
 
                     <li><a><span>{{getNumberDislike()}} Dislikes</span></a></li>

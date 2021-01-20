@@ -91,20 +91,31 @@ public class Users {
                     () -> new Exception("User logged in but can't find him in the context")
             );
 
-            String imageString = new String(IOUtils.toByteArray(uploadedInputStream));
+            byte[] bytes = IOUtils.toByteArray(uploadedInputStream);
+            String imageString = new String(bytes);
             if(!fileDetails.getFileName().equals("url")) {
-                imageString = Base64.encodeBase64String(
-                    IOUtils.toByteArray(uploadedInputStream)
-                );
+                imageString = Base64.encodeBase64String(bytes);
             }
 
             Image image = imageService.postImage(imageString);
 
             return userService.getById(userContext.id).map(
                 user -> {
-                    user = new User(user.username, user.settings, user.victories, 
-                                                user.score, user.userlevel, user.participations, 
-                                                image.url, image.delete_url, user.theme, user.rank, user.id);
+                    user = new User(
+                        user.username, 
+                        user.settings, 
+                        user.victories, 
+                        user.score, 
+                        user.theme_score, 
+                        user.userlevel, 
+                        user.participations, 
+                        image.url, 
+                        image.delete_url, 
+                        user.theme, 
+                        user.rank, 
+                        user.id
+                    );
+                    
                     try {
                         return userService.update(user).map(
                             updatedUser -> {
@@ -116,6 +127,18 @@ public class Users {
                     }
                 }
             ).orElse(Response.status(500).entity("Could not find the logged in user").build());
+        } catch(Exception e) {
+            e.printStackTrace();
+            return Response.status(500).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Path("leaderboard")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getLeaderboard() {
+        try {
+            return Response.ok(userService.getLeaderboard()).build();
         } catch(Exception e) {
             e.printStackTrace();
             return Response.status(500).entity(e.getMessage()).build();

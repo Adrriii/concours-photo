@@ -131,6 +131,8 @@ public class SetupDemo {
         postsRoute.addReactToPost(h4, 5, "like");
         postsRoute.addReactToPost(h5, 5, "dislike");
 
+        //themesRoute.nextTheme();
+
         System.out.println("---- DEMO INSERTED ----");
     }
 
@@ -187,6 +189,7 @@ public class SetupDemo {
         AbstractImageService imageService = new ImgurImageService();
 
         themeService.themeDao = new SqlThemeDao();
+        themeService.userDao = new SqlUserDao();
         userService.userDao = new SqlUserDao();
         authenticationService.userDao = new SqlUserDao();
         labelService.labelDao = new SqlLabelDao();

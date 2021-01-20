@@ -10,15 +10,15 @@ public class Theme {
     public final String photo;
     public final String state; // Enum ?
     public final String date;
-    public final User winner;
-    public final User author;
+    public final UserPublic winner;
+    public final UserPublic author;
     public final Integer nbVotes;
 
     public Theme() {
         this(null, null, null, null);
     }
 
-    public Theme(Integer id, String title, String photo, String state, String date, User winner, User author, Integer nbVotes) {
+    public Theme(Integer id, String title, String photo, String state, String date, UserPublic winner, UserPublic author, Integer nbVotes) {
         this.id = id;
         this.title = title;
         this.photo = photo;
@@ -29,7 +29,7 @@ public class Theme {
         this.nbVotes = nbVotes;
     }
 
-    public Theme(String title, String photo, String state, String date, User winner) {
+    public Theme(String title, String photo, String state, String date, UserPublic winner) {
         this(null, title, photo, state, date, winner, null, null);
     }
 

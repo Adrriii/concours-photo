@@ -13,6 +13,7 @@ public interface ThemeDao {
     Optional<Theme> getMostVotedProposal() throws Exception;
 
     List<Theme> getProposals() throws Exception;
+    List<Theme> getAvailableThemes() throws Exception;
 
     Optional<Theme> getUserProposal(User user) throws Exception;
     Optional<Theme> getUserThemeVote(User user) throws Exception;

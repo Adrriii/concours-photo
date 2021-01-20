@@ -1,8 +1,7 @@
 package dao.sql;
 
 import dao.ThemeDao;
-import model.Theme;
-import model.User;
+import model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,8 +15,8 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
         Integer winnerId = getInteger(resultSet, "winner");
         Integer authorId = getInteger(resultSet, "author");
 
-        User winner = (winnerId == null)? null : new SqlUserDao().getById(winnerId);
-        User author = (authorId == null)? null : new SqlUserDao().getById(authorId);
+        UserPublic winner = (winnerId == null)? null : new SqlUserDao().getById(winnerId).getPublicProfile();
+        UserPublic author = (authorId == null)? null : new SqlUserDao().getById(authorId).getPublicProfile();
 
         Integer themeId = getInteger(resultSet, "id");
         String state = resultSet.getString("state");
@@ -50,6 +49,12 @@ public class SqlThemeDao extends SqlDao<Theme> implements ThemeDao {
     @Override
     public List<Theme> getProposals() throws SQLException {
         String statement = "SELECT * FROM theme WHERE state='proposal'";
+        return queryAllObjects(statement);
+    }
+
+    @Override
+    public List<Theme> getAvailableThemes() throws SQLException {
+        String statement = "SELECT * FROM theme WHERE state='active' OR state='ended'";
         return queryAllObjects(statement);
     }
 

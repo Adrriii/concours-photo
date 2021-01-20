@@ -44,7 +44,7 @@ public class ThemeService {
                 "proposal", 
                 proposed.date, 
                 proposed.winner,
-                currentUser,
+                currentUser.getPublicProfile(),
                 0
             );
 
@@ -81,6 +81,10 @@ public class ThemeService {
 
     public List<Theme> getProposals() throws Exception {
         return themeDao.getProposals();
+    }
+
+    public List<Theme> getAvailableThemes() throws Exception {
+        return themeDao.getAvailableThemes();
     }
 
     public Optional<Theme> getCurrentUserVote(User user) throws Exception {

@@ -53,6 +53,17 @@ public class Themes {
     }
 
     @GET
+    @Path("available")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAvailableThemes() {
+        try {
+            return Response.ok(themeService.getAvailableThemes()).build();
+        } catch (Exception e) {
+            return Response.status(500).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
     @Path("proposals")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProposals() {

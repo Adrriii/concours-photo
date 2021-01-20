@@ -1,13 +1,10 @@
 import java.io.ByteArrayInputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-
-import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,12 +12,7 @@ import org.glassfish.jersey.internal.MapPropertiesDelegate;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.server.ContainerRequest;
 
-import dao.sql.SqlDatabase;
-import dao.sql.SqlLabelDao;
-import dao.sql.SqlPostDao;
-import dao.sql.SqlReactionDao;
-import dao.sql.SqlThemeDao;
-import dao.sql.SqlUserDao;
+import dao.sql.*;
 import model.*;
 import routes.*;
 import services.*;
@@ -35,6 +27,7 @@ public class SetupDemo {
     Authentication authenticationRoute;
     Posts postsRoute;
     Users usersRoute;
+    Comments commentsRoute;
 
     int postLastId = 0;
     int themeLastId = 1;
@@ -80,7 +73,13 @@ public class SetupDemo {
         "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
 
         // Set avatars
-        changeAvatar(adriCtx, "https://a.ppy.sh/4579132?1594553960.png");
+        changeAvatar(adriCtx, "https://i.imgur.com/0BVIfZB.png");
+        changeAvatar(coucouCtx, "https://i.imgur.com/mUeb66G.png");
+        changeAvatar(alexandreCtx, "https://i.imgur.com/eWIkRqz.png");
+        changeAvatar(JDCtx, "https://i.imgur.com/jTuJbys.png");
+        changeAvatar(h1, "https://i.imgur.com/mPTBqn3.jpg");
+        changeAvatar(h2, "https://i.imgur.com/tsF9hV8.jpg");
+        changeAvatar(h3, "https://i.imgur.com/O4jHpkN.png");
 
         System.out.println("---- INSERT PREVIOUS THEMES ----");
         themesRoute.themeService.themeDao.insert(new Theme("Les Oiseaux", "", "active", "2021-01-11"));
@@ -103,6 +102,16 @@ public class SetupDemo {
         createPost(h1, "https://i.imgur.com/242E6T5.jpg", "Chelou lui", "Nature");
         createPost(adriCtx, "https://i.imgur.com/uirY6ai.jpg", "Toutes les couleurs", "Nature");
         createPost(coucouCtx, "https://i.imgur.com/Nim4H1G.jpg", "Test nouvel appareil photo", "Nature");
+
+        System.out.println("---- INSERT COMMENTS ----");
+        createComment(adriCtx, 2, "Pas terrible :/");
+        createComment(adriCtx, 6, "Ah ouais trop beau :O");
+        createComment(h1, 1, "mdr nul");
+        createComment(h1, 2, "mdr nul");
+        createComment(h1, 3, "mdr nul");
+        createComment(h1, 5, "TROP BIEN!!!");
+        createComment(h1, 6, "mdr nul");
+        createComment(h1, 7, "mdr nul");
 
         System.out.println("---- INSERT PREVIOUS REACTIONS ----");
         postsRoute.addReactToPost(adriCtx, 1, "like");
@@ -158,6 +167,13 @@ public class SetupDemo {
         createPost(adriCtx, "https://i.imgur.com/3fAyncI.jpg", "La Tour Eiffel", "Building");
         createPost(coucouCtx, "https://i.imgur.com/aQJievr.png", "De l'architecture", "Building");
         createPost(coucouCtx, "https://i.imgur.com/WANEyvy.jpg", "Minas Tirith", "Building");
+
+        System.out.println("---- INSERT COMMENTS ----");
+        createComment(adriCtx, archiIdStart + 1, "Photo que j'ai prise en vacances ...");
+        createComment(adriCtx, archiIdStart + 2, "Petite photo que j'ai prise pendant mon voyage d'affaires ...");
+        createComment(adriCtx, archiIdStart + 3, "De retour à la maison");
+        createComment(coucouCtx, archiIdStart + 4, "Je l'ai faite moi même :)");
+        createComment(adriCtx, archiIdStart + 4, "... j'imagine que c'est valide x)");
 
         System.out.println("---- INSERT REACTIONS ----");
         postsRoute.addReactToPost(adriCtx, archiIdStart + 1, "like");
@@ -250,13 +266,28 @@ public class SetupDemo {
         System.out.println("Changed "+userCtx.getProperty("username")+"'s avatar");
     }
 
+    public void createComment(ContainerRequest authorCtx, int postId, String content) throws Exception {
+        commentsRoute.replyToPost(
+            authorCtx, 
+            postId, 
+            new Comment(
+                usersRoute.userService.getUserFromRequestContext(authorCtx).get(), 
+                postsRoute.postService.getById(postId).get(), 
+                null, 
+                content
+            )
+        );
+    }
+
     public void manualBinding() {
         themesRoute = new Themes();
         authenticationRoute = new Authentication();
         postsRoute = new Posts();
         usersRoute = new Users();
+        commentsRoute = new Comments();
 
         ThemeService themeService = new ThemeService();
+        CommentService commentService = new CommentService();
         UserService userService = new UserService();
         AuthenticationService authenticationService = new AuthenticationService();
         LabelService labelService = new LabelService();
@@ -274,6 +305,8 @@ public class SetupDemo {
         reactionService.postDao = new SqlPostDao();
         reactionService.reactionDao = new SqlReactionDao();
         reactionService.userDao = new SqlUserDao();
+        commentService.commentDao = new SqlCommentDao();
+        commentService.postDao = new SqlPostDao();
 
         themesRoute.themeService = themeService;
         themesRoute.userService = userService;
@@ -291,6 +324,9 @@ public class SetupDemo {
         usersRoute.imageService = imageService;
         usersRoute.postService = postService;
         usersRoute.userService = userService;
+
+        commentsRoute.commentService = commentService;
+        commentsRoute.userService = userService;
     }
 
     public void waitForDB() throws Exception {

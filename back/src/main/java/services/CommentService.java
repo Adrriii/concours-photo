@@ -2,10 +2,11 @@ package services;
 
 import dao.CommentDao;
 import dao.PostDao;
-import model.Comment;
-import model.Post;
+import model.*;
 
 import javax.inject.Inject;
+import javax.ws.rs.container.ContainerRequestContext;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +22,15 @@ public class CommentService {
         return commentDao.getAllForPost(postId);
     }
 
-    public Optional<Comment> replyToComment(int parentId, Comment comment) throws Exception {
+    public Optional<Comment> getById(int id) throws Exception {
+        try {
+            return Optional.of(commentDao.getById(id));
+        } catch(Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Comment> replyToComment(User author, int parentId, Comment comment) throws Exception {
         Comment parent;
 
         try {
@@ -35,7 +44,7 @@ public class CommentService {
         }
 
         comment = new Comment(
-                comment.author,
+                author,
                 comment.post,
                 parent,
                 comment.content,
@@ -47,7 +56,7 @@ public class CommentService {
         return Optional.of(commentDao.update(comment));
     }
 
-    public Optional<Comment> replyToPost(int postId, Comment comment) throws Exception {
+    public Optional<Comment> replyToPost(User author, int postId, Comment comment) throws Exception {
         Post post;
 
         try {
@@ -57,7 +66,7 @@ public class CommentService {
         }
 
         comment = commentDao.insert(new Comment(
-                comment.author,
+                author,
                 post,
                 comment.parent,
                 comment.content,
@@ -70,16 +79,19 @@ public class CommentService {
         return Optional.of(comment);
     }
 
-    public void deleteComment(int commentId) throws Exception {
-        commentDao.delete(commentId);
+    public void deleteComment(User author, Comment comment) throws Exception {
+        if(author.id != comment.author.id) return;
+        commentDao.delete(comment.id);
     }
 
-    public Optional<Comment> updateComment(Comment comment) throws Exception {
+    public Optional<Comment> updateComment(User author, Comment comment) throws Exception {
         try {
             commentDao.getById(comment.id);
         } catch (Exception e) {
             return Optional.empty();
         }
+
+        if(author.id != comment.author.id) return Optional.empty();
 
         return Optional.of(commentDao.update(comment));
     }

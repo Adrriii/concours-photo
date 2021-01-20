@@ -168,22 +168,25 @@ public class Posts {
 
     @POST
     @Path("{id}/comments")
+    @JWTTokenNeeded
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addComment(@PathParam("id") int id, Comment comment) {
-        return resourceContext.getResource(Comments.class).replyToPost(id, comment);
+    public Response addComment(@Context ContainerRequestContext ctx, @PathParam("id") int id, Comment comment) {
+        return resourceContext.getResource(Comments.class).replyToPost(ctx, id, comment);
     }
 
     @PUT
     @Path("{id}/comments/{commentId}")
+    @JWTTokenNeeded
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modifyComment(@PathParam("id") int id, Comment comment) {
-        return resourceContext.getResource(Comments.class).modify(id, comment);
+    public Response modifyComment(@Context ContainerRequestContext ctx, @PathParam("id") int id, Comment comment) {
+        return resourceContext.getResource(Comments.class).modify(ctx, id, comment);
     }
 
     @DELETE
     @Path("{id}/comments/{commentId}")
+    @JWTTokenNeeded
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modifyComment(@PathParam("id") int id) {
-        return resourceContext.getResource(Comments.class).delete(id);
+    public Response modifyComment(@Context ContainerRequestContext ctx, @PathParam("id") int id) {
+        return resourceContext.getResource(Comments.class).delete(ctx, id);
     }
 }

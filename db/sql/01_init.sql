@@ -9,3 +9,8 @@ BEGIN
     UPDATE user SET `rank`= @r:= (@r+1) WHERE id IN (SELECT author FROM post) ORDER BY score DESC;
 END$
 DELIMITER ;
+
+CREATE TABLE demo (
+    id int UNSIGNED AUTO_INCREMENT,
+    PRIMARY KEY (id)
+);

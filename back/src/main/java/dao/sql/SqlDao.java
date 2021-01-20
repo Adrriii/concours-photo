@@ -9,7 +9,7 @@ public abstract class SqlDao<T> {
 
     protected abstract T createObjectFromResult(ResultSet resultSet) throws SQLException;
 
-    protected Integer queryFirstInt(String statement, List<Object> opt) throws SQLException {
+    public Integer queryFirstInt(String statement, List<Object> opt) throws SQLException {
         PreparedStatement preparedStatement = SqlDatabase.prepare(statement, opt);
         String sql = preparedStatement.toString();
         
@@ -39,7 +39,7 @@ public abstract class SqlDao<T> {
         throw new SQLException("Could not get result : " + sql);
     }
 
-    protected T queryFirstObject(String statement, List<Object> opt) throws SQLException {
+    public T queryFirstObject(String statement, List<Object> opt) throws SQLException {
         PreparedStatement preparedStatement = SqlDatabase.prepare(statement, opt);
         String sql = preparedStatement.toString();
         //System.out.println(preparedStatement.toString());
@@ -57,7 +57,7 @@ public abstract class SqlDao<T> {
         throw new SQLException("Could not query : " + sql);
     }
 
-    protected List<T> queryAllObjects(String statement, List<Object> opt) throws SQLException {
+    public List<T> queryAllObjects(String statement, List<Object> opt) throws SQLException {
         PreparedStatement preparedStatement = SqlDatabase.prepare(statement, opt);
         //System.out.println(preparedStatement.toString());
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -73,15 +73,15 @@ public abstract class SqlDao<T> {
         return items;
     }
 
-    protected T queryFirstObject(String statement) throws SQLException {
+    public T queryFirstObject(String statement) throws SQLException {
         return queryFirstObject(statement, null);
     }
 
-    protected List<T> queryAllObjects(String statement) throws SQLException {
+    public List<T> queryAllObjects(String statement) throws SQLException {
         return queryAllObjects(statement, null);
     }
 
-    protected Optional<T> queryFirstOptional(String statement, List<Object> opt) throws SQLException {
+    public Optional<T> queryFirstOptional(String statement, List<Object> opt) throws SQLException {
         List<T> results = queryAllObjects(statement, opt);
 
         if (results.size() == 0)
@@ -90,19 +90,19 @@ public abstract class SqlDao<T> {
         return Optional.of(results.get(0));
     }
 
-    protected Optional<T> queryFirstOptional(String statement) throws SQLException {
+    public Optional<T> queryFirstOptional(String statement) throws SQLException {
         return queryFirstOptional(statement, null); 
     }
 
-    protected void exec(String statement, List<Object> items) throws SQLException {
+    public void exec(String statement, List<Object> items) throws SQLException {
         SqlDatabase.exec(statement, items);
     }
 
-    protected void exec(String statement) throws SQLException {
+    public void exec(String statement) throws SQLException {
         exec(statement, null);
     }
 
-    protected int doInsert(String statement, List<Object> opt) throws SQLException {
+    public int doInsert(String statement, List<Object> opt) throws SQLException {
         try {
             return queryFirstInt(statement, opt);
         } catch (SQLException SQLexception) {
@@ -124,7 +124,7 @@ public abstract class SqlDao<T> {
         }
     }
 
-    protected Integer getInteger(ResultSet set, String columnName) throws SQLException {
+    public Integer getInteger(ResultSet set, String columnName) throws SQLException {
         int value = set.getInt(columnName);
         return set.wasNull() ? null : value;
     }

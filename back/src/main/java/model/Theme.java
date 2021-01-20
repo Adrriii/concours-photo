@@ -1,5 +1,8 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Theme {
     
     public final Integer id;
@@ -7,14 +10,15 @@ public class Theme {
     public final String photo;
     public final String state; // Enum ?
     public final String date;
-    public final User winner;
-    public final User author;
+    public final UserPublic winner;
+    public final UserPublic author;
+    public final Integer nbVotes;
 
     public Theme() {
         this(null, null, null, null);
     }
 
-    public Theme(Integer id, String title, String photo, String state, String date, User winner, User author) {
+    public Theme(Integer id, String title, String photo, String state, String date, UserPublic winner, UserPublic author, Integer nbVotes) {
         this.id = id;
         this.title = title;
         this.photo = photo;
@@ -22,14 +26,15 @@ public class Theme {
         this.date = date;
         this.winner = winner;
         this.author = author;
+        this.nbVotes = nbVotes;
     }
 
-    public Theme(String title, String photo, String state, String date, User winner) {
-        this(null, title, photo, state, date, winner, null);
+    public Theme(String title, String photo, String state, String date, UserPublic winner) {
+        this(null, title, photo, state, date, winner, null, null);
     }
 
     public Theme(String title, String photo, String state, String date) {
-        this(null, title, photo, state, date, null, null);
+        this(null, title, photo, state, date, null, null, null);
     }
 
     @Override

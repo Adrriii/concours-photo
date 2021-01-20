@@ -2,6 +2,7 @@ package services;
 
 import dao.UserDao;
 import model.User;
+import model.UserSetting;
 
 import javax.inject.Inject;
 
@@ -11,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 public class AuthenticationService {
-    @Inject UserDao userDao;
+    @Inject public UserDao userDao;
 
     public AuthenticationService() {}
 
@@ -34,7 +35,7 @@ public class AuthenticationService {
         return bytesToHex(hashBytes);
     }
 
-    public Optional<User> registerUser(String username, String passwordHash) throws Exception {
+    public Optional<User> registerUser(String username, String passwordHash, String email) throws Exception {
         
         try {
             userDao.getByUsername(username);
@@ -42,7 +43,7 @@ public class AuthenticationService {
 
         } catch (Exception e) {
             User newUser = new User(username);
-            newUser = userDao.insert(newUser, hash(passwordHash));
+            newUser = userDao.insert(newUser, hash(passwordHash), email);
 
             return Optional.of(newUser);
         }

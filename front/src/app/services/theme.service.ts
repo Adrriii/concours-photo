@@ -18,4 +18,19 @@ export class ThemeService {
         return this.httpClient.get<Theme>(environment.apiBaseUrl + `themes/current`);
     }
 
+    getNextThemes(): Observable<Array<Theme>> {
+        return this.httpClient.get<Array<Theme>>(environment.apiBaseUrl + `themes/proposals`);
+    }
+
+    getAvailableThemes(): Observable<Array<Theme>> {
+        return this.httpClient.get<Array<Theme>>(environment.apiBaseUrl + `themes/available`);
+    }
+
+    voteTheme(themeId: number): Observable<void> {
+        return this.httpClient.post<void>(environment.apiBaseUrl + `themes/proposals/vote/${themeId}`, null);
+    }
+
+    deleteVoteTheme(): Observable<void> {
+        return this.httpClient.delete<void>(environment.apiBaseUrl + `themes/proposals/vote/0`);
+    }
 }

@@ -12,10 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchService {
-    @Inject
-    UserDao userDao;
-    CommentDao commentDao;
-    PostDao postDao;
+    @Inject public UserDao userDao;
+    @Inject public CommentDao commentDao;
+    @Inject public PostDao postDao;
 
     public List<User> searchUser(String searchString) {
         try {

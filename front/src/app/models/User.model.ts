@@ -8,10 +8,13 @@ export class User {
         public userLevel: number,
         public victories: number,
         public score: number,
+        public theme_score: number,
         public participations: number,
+        public theme_participations: number,
         public rank: number,
         public photo: string,
         public photoDelete: string,
+        public theme: number,
         public settings: Map <string, UserSetting>
     ) {}
 
@@ -22,10 +25,13 @@ export class User {
             userJson.userLevel,
             userJson.victories,
             userJson.score,
+            userJson.theme_score,
             userJson.participations,
+            userJson.theme_participations,
             userJson.rank,
             userJson.photo,
             userJson.photoDelete,
+            userJson.theme,
             userJson.settings
         );
     }
@@ -34,27 +40,11 @@ export class User {
         return this.settings[settingName].value;
     }
 
+    public isAttributeSettingAvailable(settingName: string): boolean {
+        return this.settings[settingName] !== undefined;
+    }
+
     public setSetting(settingName: string, value: string): void{
         this.settings[settingName].value = value;
     }
-
-    // public getSetting(settingName: string) : string {
-    //     return this.settings.get(settingName).value;
-    // }
-
-    // public compare(user : User) : boolean {
-    //     this.settings.forEach((value, key) => {
-    //         let setting : string = user.settings.get(key);
-    //         if(setting !== value){
-    //             console.log(`error while comparing user's settings : ${setting} not equals ${value}`);
-    //             return false;
-    //         }
-    //     });
-
-    //     return this.id === user.id
-    //         && this.username === user.username
-    //         && this.userLevel === user.userLevel
-    //         && this.victories === user.victories
-    //         && this.score === user.score;
-    // }
 }

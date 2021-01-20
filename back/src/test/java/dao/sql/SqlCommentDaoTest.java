@@ -25,7 +25,7 @@ class SqlCommentDaoTest {
         dao = new SqlCommentDao();
         // String title, String reacted, List<Reaction> reactions, User author, Label label, Theme theme, String photo, String photo_delete
         user = new User("Test User");
-        user = new SqlUserDao().insert(user, "coucoujesuisunhash");
+        user = new SqlUserDao().insert(user, "coucoujesuisunhash", "null");
 
         // String title, String photo, String state, String date, User winner
         Theme theme = new Theme("My super theme", "nop", "current", "jamais", null);
@@ -66,7 +66,7 @@ class SqlCommentDaoTest {
 
         comment = dao.insert(comment);
         comment = new Comment(
-                user, post, null, "new content !", comment.id
+                user, post, null, "new content !", comment.date, comment.id
         );
 
         Comment updated = dao.update(comment);

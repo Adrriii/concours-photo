@@ -1,5 +1,7 @@
 package model;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Reaction {
     public final Integer user;
     public final Integer post;

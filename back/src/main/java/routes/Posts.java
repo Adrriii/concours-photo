@@ -2,6 +2,7 @@ package routes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import filters.JWTTokenNeeded;
+import javassist.bytecode.ByteArray;
 import model.*;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
@@ -25,12 +26,12 @@ import javax.ws.rs.core.Response;
 
 @Path("posts/")
 public class Posts {
-    @Inject PostService postService;
-    @Inject ReactionService reactionService;
-    @Inject UserService userService;
-    @Inject AbstractImageService imageService;
-    @Inject ThemeService themeService;
-    @Inject LabelService labelService;
+    @Inject public PostService postService;
+    @Inject public ReactionService reactionService;
+    @Inject public UserService userService;
+    @Inject public AbstractImageService imageService;
+    @Inject public ThemeService themeService;
+    @Inject public LabelService labelService;
 
     @Context private ResourceContext resourceContext;
 
@@ -59,11 +60,15 @@ public class Posts {
             Label label = labelService.get(post.label).orElseThrow(
                 () -> new Exception("Label not found : "+post.label)
             );
-            String image64 = Base64.encodeBase64String(
-                    IOUtils.toByteArray(uploadedInputStream)
-            );
 
-            Image image = imageService.postImage(image64);
+            byte[] bytes = IOUtils.toByteArray(uploadedInputStream);
+            String imageString = new String(bytes);
+            if(!fileDetails.getFileName().equals("url")) {
+                imageString = Base64.encodeBase64String(bytes);
+            }
+             
+
+            Image image = imageService.postImage(imageString);
             System.out.println("Image posted ! Link is : " + image.url);
             Post newPost = new Post(
                     post.title,
@@ -75,8 +80,6 @@ public class Posts {
                     image.url,
                     image.delete_url
             );
-
-            System.out.println("Create post : " + newPost);
 
             try {
                 return postService.addOne(newPost)
@@ -165,22 +168,25 @@ public class Posts {
 
     @POST
     @Path("{id}/comments")
+    @JWTTokenNeeded
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addComment(@PathParam("id") int id, Comment comment) {
-        return resourceContext.getResource(Comments.class).replyToPost(id, comment);
+    public Response addComment(@Context ContainerRequestContext ctx, @PathParam("id") int id, Comment comment) {
+        return resourceContext.getResource(Comments.class).replyToPost(ctx, id, comment);
     }
 
     @PUT
     @Path("{id}/comments/{commentId}")
+    @JWTTokenNeeded
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modifyComment(@PathParam("id") int id, Comment comment) {
-        return resourceContext.getResource(Comments.class).modify(id, comment);
+    public Response modifyComment(@Context ContainerRequestContext ctx, @PathParam("id") int id, Comment comment) {
+        return resourceContext.getResource(Comments.class).modify(ctx, id, comment);
     }
 
     @DELETE
     @Path("{id}/comments/{commentId}")
+    @JWTTokenNeeded
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response modifyComment(@PathParam("id") int id) {
-        return resourceContext.getResource(Comments.class).delete(id);
+    public Response modifyComment(@Context ContainerRequestContext ctx, @PathParam("id") int id) {
+        return resourceContext.getResource(Comments.class).delete(ctx, id);
     }
 }

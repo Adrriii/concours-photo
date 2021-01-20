@@ -4,35 +4,34 @@
         <div class="bg-white shadow rounded overflow-hidden">
             <div class="px-4 pt-0 pb-4 cover">
                 <div class="media align-items-end profile-head">
-                    <div class="profile mr-3"><img src="https://media.publit.io/file/ThX0JeH.png" alt="..."
-                                                   width="130" class="rounded mb-2 img-thumbnail"></div>
+                    <div class="profile mr-3"><img [src]="userQueried.photo !== null ? userQueried.photo : '../../../assets/default-pp.png'" alt="..."
+                                                   class="rounded mb-2 img-thumbnail"></div>
                     <div class="media-body mb-5 text-white">
-                        <h4 class="mt-0 mb-0"><i class="fa fa-user mr-2"></i>{{UserQueried.username}}</h4>
-                        <p class="mb-4"> <i class="fa fa-map mr-2"></i>Bordeaux, France</p>
+                        <h4 class="mt-0 mb-0"><i class="fa fa-user mr-2"></i>{{userQueried.username}}</h4>
+                        <p class="mb-4"> <i class="fa fa-map mr-2"></i>{{location}}</p>
                     </div>
                 </div>
             </div>
             <div class="bg-light p-4 d-flex justify-content-end text-center">
                 <ul class="list-inline mb-0">
                     <li class="list-inline-item pr-5">
-                        <h5 class="font-weight-bold mb-0 d-block">{{UserQueried.victories}}</h5><small class="text-muted"> <i class="fa fa-trophy mr-1"></i>Victories</small>
+                        <h5 class="font-weight-bold mb-0 d-block">{{userQueried.victories}}</h5><small class="text-muted"> <i class="fa fa-trophy mr-1"></i>Victories</small>
                     </li>
                     <li class="list-inline-item pr-5">
-                        <h5 class="font-weight-bold mb-0 d-block">{{UserQueried.score}}</h5><small class="text-muted"> <i class="fa fa-star mr-1" aria-hidden="true"></i>Score</small>
+                        <h5 class="font-weight-bold mb-0 d-block">{{userQueried.score}}</h5><small class="text-muted"> <i class="fa fa-star mr-1" aria-hidden="true"></i>Score</small>
                     </li>
                     <li class="list-inline-item pr-5">
-                        <h5 class="font-weight-bold mb-0 d-block">{{UserQueried.participations}}</h5><small class="text-muted"> <i class="fa fa-gavel mr-1"></i>Participations</small>
+                        <h5 class="font-weight-bold mb-0 d-block">{{userQueried.participations}}</h5><small class="text-muted"> <i class="fa fa-gavel mr-1"></i>Participations</small>
                     </li>
                     <li class="list-inline-item pr-5">
-                        <h5 class="font-weight-bold mb-0 d-block">{{UserQueried.rank}}</h5><small class="text-muted"> <i class="fa fa-graduation-cap mr-1"></i>Classement</small>
+                        <h5 class="font-weight-bold mb-0 d-block">{{userRank}}</h5><small class="text-muted"> <i class="fa fa-graduation-cap mr-1"></i>Rank</small>
                     </li>
                 </ul>
             </div>
             <div class="px-4 py-3">
                 <h5 class="mb-0">Bio</h5>
                 <div class="p-4 rounded shadow-sm bg-light">
-                    <p class="font-italic mb-0">Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem
-                        ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum</p>
+                    <p class="font-italic mb-0">{{bio}}</p>
                 </div>
             </div>
             <div class="py-4 px-4">

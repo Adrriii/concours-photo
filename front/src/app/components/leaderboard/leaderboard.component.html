@@ -1,0 +1,68 @@
+<div class="container-wrap d-flex">
+    <section class="leaderboard">
+        <nav class="ladder-nav">
+            <div class="ladder-title">
+                <h1>Leaderboard</h1>Global
+            </div>
+        </nav>
+        <table class="leaderboard-results" width="100%">
+            <thead>
+            <tr>
+                <th>Profile</th>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Participations</th>
+                <th>Score</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let user of listUsersGlobalLeaderboard; index as i">
+            <tr [ngClass]="{'first': i === 0, 'second': i === 1, 'third': i === 2}">
+                <td>
+                    <a routerLink="/user/{{ user.id }}">
+                        <img class="img-fluid rounded-circle"
+                             [src]="user.photo !== null ? user.photo : '../../../assets/default-pp.png'"
+                             alt="User">
+                    </a>
+                </td>
+                <td>#{{user.rank}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.participations}}</td>
+                <td>{{user.score}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <section class="leaderboard">
+        <nav class="ladder-nav">
+            <div class="ladder-title">
+                <h1>Leaderboard</h1>Current theme
+            </div>
+        </nav>
+        <table class="leaderboard-results" width="100%">
+            <thead>
+            <tr>
+                <th>Profile</th>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Participations</th>
+                <th>Score</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let user of listUsersCurrentLeaderboard; index as i">
+            <tr [ngClass]="{'first': i === 0, 'second': i === 1, 'third': i === 2}">
+                <td>
+                    <a routerLink="/user/{{ user.id }}">
+                        <img class="img-fluid rounded-circle"
+                             [src]="user.photo !== null ? user.photo : '../../../assets/default-pp.png'"
+                             alt="User">
+                    </a>
+                </td>
+                <td>#{{i+1}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.theme_participations}}</td>
+                <td>{{user.theme_score}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</div>

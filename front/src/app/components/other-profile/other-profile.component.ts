@@ -12,10 +12,13 @@ import {Post} from '../../models/Post.model';
 
 export class OtherProfileComponent implements OnInit {
     private id: number;
-    public UserQueried: User = null;
+    public userQueried: User = null;
     public listPosts: Array<Post> = null;
     public listImgs: Array<string> = null;
     public edited = false;
+    public location: string = null;
+    public bio: string = null;
+    public userRank: string;
 
     constructor(
         private route: ActivatedRoute,
@@ -26,7 +29,13 @@ export class OtherProfileComponent implements OnInit {
     ngOnInit(): void {
         const stringId = this.route.snapshot.paramMap.get('id');
         this.id = Number(stringId);
-        this.userService.getById(this.id).subscribe((userQueried) => this.UserQueried = userQueried);
+        this.userService.getById(this.id).subscribe((userQueried) => {
+            const userQueriedTmp = User.fromJson(userQueried);
+            this.setLocation(userQueriedTmp);
+            this.setBio(userQueriedTmp);
+            this.setUserRank(userQueriedTmp);
+            this.userQueried = userQueriedTmp;
+        });
         this.userService.getPostsById(this.id).subscribe(
             (userPosts) => {
                 this.listPosts = userPosts;
@@ -44,5 +53,29 @@ export class OtherProfileComponent implements OnInit {
             return;
         }
         this.edited = true;
+    }
+
+    setLocation(user: User): void{
+        if (user.isAttributeSettingAvailable('LOCATION')) {
+            this.location = user.getSetting('LOCATION');
+        } else {
+            this.location = 'Unknown location';
+        }
+    }
+
+    setBio(user: User): void {
+        if (user.isAttributeSettingAvailable('BIO')) {
+            this.bio = user.getSetting('BIO');
+        } else {
+            this.bio = 'Currently no description provided';
+        }
+    }
+
+    setUserRank(user: User): void {
+        if (user.rank === null){
+            this.userRank = 'n/a';
+        }else{
+            this.userRank = String(user.rank);
+        }
     }
 }

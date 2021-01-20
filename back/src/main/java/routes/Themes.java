@@ -1,6 +1,7 @@
 package routes;
 
 import filters.JWTTokenNeeded;
+import filters.JWTTokenOptional;
 import model.Theme;
 import services.ThemeService;
 import services.UserService;
@@ -13,9 +14,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("themes")
+@JWTTokenOptional
 public class Themes {
-    @Inject UserService userService;
-    @Inject ThemeService themeService;
+    @Inject public UserService userService;
+    @Inject public ThemeService themeService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -45,6 +47,17 @@ public class Themes {
             return themeService.getCurrent()
                     .map(current -> Response.ok(current).build())
                     .orElse(Response.status(400).entity("No current theme").build());
+        } catch (Exception e) {
+            return Response.status(500).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Path("available")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAvailableThemes() {
+        try {
+            return Response.ok(themeService.getAvailableThemes()).build();
         } catch (Exception e) {
             return Response.status(500).entity(e.getMessage()).build();
         }
@@ -105,4 +118,20 @@ public class Themes {
             return Response.ok().build();
         }).orElse(Response.status(400).entity("User not logged in!").build());
     }
+
+    @GET
+    @Path("next")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response nextTheme() {
+        try {
+            themeService.nextTheme();
+            return Response.ok("Next theme applied").build();
+        } catch (Exception e) {
+            return Response.status(500).entity(e.getMessage()).build();
+        }
+    }
 }
+
+
+
+

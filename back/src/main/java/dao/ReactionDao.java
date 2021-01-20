@@ -2,8 +2,10 @@ package dao;
 
 import model.*;
 
+import java.util.Optional;
+
 public interface ReactionDao {
-    Reaction get(int user, int post) throws Exception;
+    Optional<Reaction> get(int user, int post) throws Exception;
     Reaction getForUser(int user) throws Exception;
     Reaction getForPost(int post) throws Exception;
 

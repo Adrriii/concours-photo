@@ -1,5 +1,7 @@
 package model;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Image {
     public final String url;
     public final String delete_url;

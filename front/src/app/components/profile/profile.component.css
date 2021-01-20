@@ -1,5 +1,5 @@
 .profile-head {
-    transform: translateY(5rem)
+    transform: translateY(5rem);
 }
 
 .cover {
@@ -19,4 +19,11 @@
 
 .right-side-img {
     float:right;
+}
+
+.img-thumbnail {
+    max-height: 130px;
+    height: 100%;
+    max-width: 130px;
+    width: 100%;
 }

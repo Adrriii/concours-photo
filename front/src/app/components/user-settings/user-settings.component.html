@@ -1,32 +1,74 @@
 <div class="row">
-    <div class="col-lg-5 profile" id="profile-picture">
+    <div class="col-lg-6 profile" id="profile-picture">
+        <img
+            class="bg-white shadow rounded overflow-hidden"
+            [src]="getPhoto() !== null ? getPhoto() : '../../../assets/default-pp.png'"
+            alt="Profile picture"
+            style="height: 89%; width: 100%;">
 
-      <img [src]="getPhoto()"
-          alt="Profile picture"
-          style="height: 100%; width: 100%;">
-
-      <div>
-        <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput>
-        <button (click)="fileInput.click()">Select File</button>
-        <button (click)="onUpload()">Upload!</button>
-      </div>
-
+        <div class="justify-content-center d-flex">
+            <input style="display: none" type="file" (change)="onFileSelect($event)" #fileInput>
+            <button class="button-self-made-blue mt-4 py-1" (click)="fileInput.click()">Upload avatar</button>
+            <button class="button-self-made-red mt-4 py-1" (click)="deletePhoto()">Clear avatar</button>
+        </div>
     </div>
-    <div class="col-lg-7 profile card">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <span id="name"> {{ getUserName() }} </span>
-        </li>
-        <li class="list-group-item">Mail : {{ getSetting("MAIL") }}</li>
-        <li class="list-group-item">Gender : {{ getSetting("GENDER") }}</li>
-        <li class="list-group-item">Birthday : {{ getSetting("BIRTHDAY") }}</li>
-        <li class="list-group-item">Location : {{ getSetting("LOCATION") }}</li>
-        <li class="list-group-item">Bio : {{ getSetting("BIO") }}</li>
-        <li class="list-group-item">Victories : {{ getSetting("VICTORIES") }}</li>
-        <li class="list-group-item">Points : {{ getSetting("POINTS") }}</li>
-        <li class="list-group-item">
-            <button type="button" class="button-self-made" (click)="openDialog()">Update informations</button>
-        </li>
-      </ul>
+    <div class="col-lg-6 profile card bg-white shadow rounded overflow-hidden">
+        <ul class="py-4">
+            <li>
+                <span>
+                  <i class="fa fa-user fa-fw mr-1" aria-hidden="true"></i>
+                </span>
+                Username : {{ getUserName() }}
+            </li>
+            <li>
+              <span>
+                  <i class="fa fa-envelope fa-fw mr-1" aria-hidden="true"></i>
+                </span>
+                Mail : {{ getSetting("MAIL") }}
+            </li>
+            <li>
+              <span>
+                  <i class="fa fa-venus-mars fa-fw mr-1" aria-hidden="true"></i>
+                </span>
+                Gender : {{ getSetting("GENDER") }}
+            </li>
+            <li>
+            <span>
+                  <i class="fa fa-birthday-cake fa-fw mr-1" aria-hidden="true"></i>
+                </span>
+                Birthday : {{ getSetting("BIRTHDAY") }}
+            </li>
+            <li>
+            <span>
+                  <i class="fa fa-map-marker fa-fw mr-1" aria-hidden="true"></i>
+                </span>
+                Location : {{ getSetting("LOCATION") }}
+            </li>
+            <li>
+              <span class="border-bottom-custom">
+                  <i class="fa fa-book fa-fw mr-1" aria-hidden="true"></i>
+                </span>
+                Bio :
+                <div class="px-4 py-3">
+                    <div class="p-4 rounded shadow-sm bg-light">
+                        <p class="font-italic mb-0">{{ getSetting("BIO") }}</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+            <span>
+                  <i class="fa fa-trophy fa-fw mr-1" aria-hidden="true"></i>
+                </span>
+                Victories : {{ getSetting("VICTORIES") }}
+            </li>
+            <div class="d-flex justify-content-center">
+                <button type="button" class="btn btn-outline-dark btn-sm btn-block col-lg-3 mt-4 py-2 mr-3"
+                        (click)="openDialog()">Update informations
+                </button>
+                <button type="button" class="btn btn-outline-dark btn-sm btn-block col-lg-3 mt-4 py-2 ml-3"
+                        routerLink="/me">View my profile
+                </button>
+            </div>
+        </ul>
     </div>
 </div>

@@ -2,7 +2,9 @@ package model;
 
 import java.util.List;
 import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Post {
     public final Integer id;
     public final String date;

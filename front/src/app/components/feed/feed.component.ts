@@ -6,6 +6,9 @@ import {ThemeService} from '../../services/theme.service';
 import {ToastrService} from 'ngx-toastr';
 import {Post} from '../../models/Post.model';
 import {AuthService} from '../../services/auth.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Theme} from 'src/app/models/Theme.model';
+
 
 
 @Component({
@@ -17,15 +20,26 @@ export class FeedComponent implements OnInit {
     public currentThemeTitle: string;
     private currentThemeId: number;
     public currentCommentSection: Array<Comment>;
+    sortForm: FormGroup;
+
+    public isCollapsed = false;
 
     public posts: Array<Post> = null;
+    public availableThemes: Array<Theme> = null;
+
+    public displayFilterForm = false;
+    public hideFilterForm = true;
+    public displaySwitcherForm = false;
+
+    public currentPage = 1;
 
     constructor(
         private toastr: ToastrService,
         private dialog: MatDialog,
         private postService: PostsService,
         private themeService: ThemeService,
-        private authService: AuthService
+        private authService: AuthService,
+        private formBuilder: FormBuilder
     ) {
     }
 
@@ -42,10 +56,28 @@ export class FeedComponent implements OnInit {
                 console.log('Error when getting posts for current theme: ' + error.message);
             }
         );
+
+
+        this.themeService.getAvailableThemes().subscribe(
+            themes => {
+                this.availableThemes = themes;
+            }, error => {
+                console.log('Error when getting available themes : ' + error.message);
+            }
+        )
+
+        this.sortForm = this.formBuilder.group({
+            theme: 0,
+            direction: 'DESC',
+            sort: 'score',
+            labels: '',
+            page: [1, Validators.min(1)],
+            nbPosts: [15, Validators.min(1)]
+        });
     }
 
     updatePostsForCurrentTheme(): void {
-        this.postService.getPostsByTheme(this.currentThemeId).subscribe(
+        this.postService.getPostsByTheme(this.sortForm.value.theme, this.sortForm.value).subscribe(
             posts => {
                 this.posts = posts.map(p => Post.fromJson(p));
             }, error => {
@@ -76,5 +108,47 @@ export class FeedComponent implements OnInit {
 
     isUserLoggedIn(): boolean {
         return this.authService.isAuth;
+    }
+
+    onSubmitForm(): void {
+        this.updatePostsForCurrentTheme();
+    }
+
+    toggleDisplayFilterForm(): void {
+        if (!this.displayFilterForm) {
+            this.hideFilterForm = false;
+            setTimeout(() => this.displayFilterForm = !this.displayFilterForm, 100);
+        } else {
+            setTimeout(() => this.hideFilterForm = true, 1000);
+            this.displayFilterForm = !this.displayFilterForm;
+        }
+
+    }
+
+    toggleDisplaySwitcherForm(): void {
+        setTimeout(() => scrollTo(0, 10000));
+        this.displaySwitcherForm = !this.displaySwitcherForm;
+    }
+
+    previousPage(): void {
+        const newPage = this.sortForm.value.page - 1;
+
+        if (newPage > 0) {
+            this.displaySwitcherForm = false;
+            this.currentPage = newPage;
+
+            this.sortForm.value.page = newPage;
+            this.updatePostsForCurrentTheme();
+            setTimeout(() => scrollTo(0, 0));
+        }
+    }
+
+    nextPage(): void {
+        this.displaySwitcherForm = false;
+        const newPage = this.sortForm.value.page + 1;
+        this.currentPage = newPage;
+        this.sortForm.value.page = newPage;
+        this.updatePostsForCurrentTheme();
+        setTimeout(() => scrollTo(0, 0));
     }
 }

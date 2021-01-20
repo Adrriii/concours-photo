@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class SqlReactionDao extends SqlDao<Reaction> implements ReactionDao {
 
@@ -18,11 +19,11 @@ public class SqlReactionDao extends SqlDao<Reaction> implements ReactionDao {
     }
 
     @Override
-    public Reaction get(int user, int post) throws SQLException {
+    public Optional<Reaction> get(int user, int post) throws SQLException {
         String statement = "SELECT * FROM reaction WHERE user=? AND post=?";
         List<Object> opt = Arrays.asList(user, post);
 
-        return queryFirstObject(statement, opt);
+        return queryFirstOptional(statement, opt);
     }
 
     @Override
@@ -42,12 +43,12 @@ public class SqlReactionDao extends SqlDao<Reaction> implements ReactionDao {
     }
 
     @Override
-    public void react(User user, Post post, ReactionName reaction) throws SQLException {
+    public void react(User user, Post post, ReactionName reactionName) throws SQLException {
         String statement = "REPLACE INTO reaction (user, post, value) VALUES (?,?,?)";
-        List<Object> opt = Arrays.asList(user.id, post.id, reaction.toString().toLowerCase());
+        List<Object> opt = Arrays.asList(user.id, post.id, reactionName.toString().toLowerCase());
 
         int score = 1;
-        if(reaction == ReactionName.DISLIKE) score = -1;
+        if(reactionName == ReactionName.DISLIKE) score = -1;
 
         String statementIncrement = "UPDATE post SET score = score + "+score+", nb_votes = nb_votes + 1 WHERE id = ?";
         List<Object> optIncrement = Arrays.asList(post.id);
@@ -56,18 +57,23 @@ public class SqlReactionDao extends SqlDao<Reaction> implements ReactionDao {
         exec(statementIncrement, optIncrement);
         
         SqlUserDao userDao = new SqlUserDao();
-        userDao.updateUserScore(user.id);
+        userDao.updateUserScore(post.author.id);
         userDao.updateUsersRanks();
     }
 
     @Override
     public void delete(User user, Post post) throws SQLException {
+        Optional<Reaction> reaction = get(user.id, post.id);
+
+        if (!reaction.isPresent()) {
+            return;
+        }
+
         String statement = "DELETE FROM reaction WHERE user=? AND post=?";
         List<Object> opt = Arrays.asList(user.id, post.id);
 
         int score = 1;
-        Reaction reaction = get(user.id, post.id);
-        if(reaction.reaction == ReactionName.DISLIKE) score = -1;
+        if (reaction.get().reaction == ReactionName.DISLIKE) score = -1;
 
         String statementIncrement = "UPDATE post SET score = score - "+score+", nb_votes = nb_votes - 1 WHERE id = ?";
         List<Object> optIncrement = Arrays.asList(post.id);
@@ -76,7 +82,7 @@ public class SqlReactionDao extends SqlDao<Reaction> implements ReactionDao {
         exec(statementIncrement, optIncrement);
         
         SqlUserDao userDao = new SqlUserDao();
-        userDao.updateUserScore(user.id);
+        userDao.updateUserScore(post.author.id);
         userDao.updateUsersRanks();
     }
 

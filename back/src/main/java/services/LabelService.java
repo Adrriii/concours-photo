@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class LabelService {
-    @Inject
-    LabelDao labelDao;
+    @Inject public LabelDao labelDao;
 
     public Label addOne(Label label) throws Exception {
         return labelDao.insert(label);

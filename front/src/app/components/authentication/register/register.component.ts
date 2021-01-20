@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
-import {sha256} from 'js-sha256';
-
 
 @Component({
     selector: 'app-register',
@@ -27,21 +25,15 @@ export class RegisterComponent implements OnInit {
     ngOnInit(): void {
         this.form = this.formBuilder.group({
             username: ['', Validators.required],
-            password: ['', Validators.required]
+            password: ['', Validators.required],
+            email: ['', Validators.required, Validators.email]
         });
-    }
-
-    get getForm(): any {
-        return this.form.controls;
     }
 
     onSubmit(): void {
         this.submitted = true;
 
-        // stop here if form is invalid
         if (this.form.invalid) {
-            // Garder submitted a true ?
-            console.log('Invalid form values !');
             return;
         }
 
@@ -49,11 +41,11 @@ export class RegisterComponent implements OnInit {
 
         this.authService.createNewUser(
             this.form.get('username').value,
-            this.form.get('password').value).then(
-            () => this.router.navigate(['login'])
-        ).catch(
+            this.form.get('password').value,
+            this.form.get('email').value).subscribe(
+            () => this.router.navigate(['login']),
             error => {
-                console.log('Error in log : ' + error);
+                console.log('Error while creating new user : ' + error);
             }
         );
     }

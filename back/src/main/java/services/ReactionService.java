@@ -6,11 +6,12 @@ import model.*;
 import javax.inject.Inject;
 
 public class ReactionService {
-    @Inject ReactionDao reactionDao;
-    @Inject PostDao postDao;
-    @Inject UserDao userDao;
+    @Inject public ReactionDao reactionDao;
+    @Inject public PostDao postDao;
+    @Inject public UserDao userDao;
 
     public boolean changeReactToPost(int postId, int userId, String reaction) {
+        cancelReactToPost(postId, userId);
         ReactionName reactionName = ReactionName.valueOf(reaction.toUpperCase());
 
         try {

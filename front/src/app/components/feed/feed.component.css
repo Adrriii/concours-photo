@@ -266,20 +266,6 @@ header .overlay {
     border: 2px solid #fff;
 }
 
-/* modify fa symbols */
-
-.fa-thumbs-up:hover {
-    color: blue !important;
-}
-
-.fa-thumbs-down:hover {
-    color: blue !important;
-}
-
-.fa-comments:hover {
-    color: blue !important;
-}
-
 .feed-container {
     display: flex;
     flex-direction: column;
@@ -289,4 +275,49 @@ header .overlay {
     display: flex;
     justify-content: center;
     flex-direction: column;
+}
+
+.filter-options-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.break {
+    flex-basis: 100%;
+    height: 0;
+}
+
+.display-filter-form {
+    max-height: 200px;
+    opacity: 1;
+    transition: max-height 0.5s, opacity 1s;
+}
+
+.hide-filter-form {
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 1s, opacity 0.5s;
+}
+
+.pageSwitcherForm {
+    width: 30%;
+}
+
+.pageSwitcher {
+    font-size: 1.2em;
+}
+
+.switchButton:hover {
+    color: blue;
+    cursor: pointer;
+}
+
+.currentPage {
+    font-size: 1.3em;
+}
+
+.currentPage:hover {
+    cursor: pointer;
 }

@@ -21,8 +21,8 @@ import java.util.Date;
 
 @Path("")
 public class Authentication {
-    @Inject AuthenticationService authenticationService;
-    @Inject private KeyGenerator keyGenerator;
+    @Inject public AuthenticationService authenticationService;
+    @Inject public KeyGenerator keyGenerator;
 
     @Context
     private UriInfo uriInfo;
@@ -78,10 +78,11 @@ public class Authentication {
             UserAuth user
     ) {
         try {
-            return authenticationService.registerUser(user.username, user.passwordHash)
+            return authenticationService.registerUser(user.username, user.passwordHash, user.email)
                 .map(userRegister -> Response.ok().build())
                 .orElse(Response.status(400).entity("This username is already taken !").build());
         } catch (Exception e) {
+            e.printStackTrace();
             return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }

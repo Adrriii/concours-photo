@@ -17,6 +17,7 @@ export class Post {
         public theme: Theme,
         public photo: string,
         public photoDelete: string,
+        public reactionsUser: any,
         public id?: number,
     ) {
     }
@@ -35,6 +36,7 @@ export class Post {
             json.theme,
             json.photo,
             json.photoDelete,
+            json.reactionsUser,
             json.id
         );
     }

@@ -468,13 +468,25 @@
 /* modify fa symbols */
 
 .fa-comments:hover {
-    color: blue !important;
+    color: #54a5f9 !important;
 }
 
 .fa-thumbs-up:hover, .fa-thumbs-up.selected {
-    color: blue !important;
+    color: #54a5f9 !important;
 }
 
 .fa-thumbs-down:hover, .fa-thumbs-down.selected {
-    color: red !important;
+    color: #ff6d6d !important;
+}
+
+.fa-star {
+    color: #ffe212 !important;
+}
+
+.fa-tag {
+    color: #a0ef81 !important;
+}
+
+.fa-clock-o {
+    color: dodgerblue !important;
 }

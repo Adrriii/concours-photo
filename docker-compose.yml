@@ -27,17 +27,6 @@ services:
             MARIADB_PASSWORD: 'photodb'
             MARIADB_ROOT_PASSWORD: 'photodb'
         ports: 
-            - "3306:3306"
+            - "3316:3306"
         volumes: 
             - ./db/sql:/docker-entrypoint-initdb.d
-
-    app:
-        depends_on:
-            - db
-        image: phpmyadmin/phpmyadmin
-        container_name: photo_phpmyadmin
-        restart: always
-        ports:
-            - '4242:80'
-        environment:
-            PMA_HOST: db

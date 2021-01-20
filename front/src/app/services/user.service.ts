@@ -37,4 +37,8 @@ export class UserService {
         return this.httpClient.get<Array<User>>(environment.apiBaseUrl + 'user/leaderboard');
     }
 
+    getUsersCurrentLeaderboard(): Observable<Array<User>> {
+        return this.httpClient.get<Array<User>>(environment.apiBaseUrl + 'user/leaderboard/current');
+    }
+
 }

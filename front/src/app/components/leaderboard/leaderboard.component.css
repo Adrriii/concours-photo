@@ -2,6 +2,7 @@
     margin:0;
     padding:0;
     font-family:Helvetica, Arial, sans-serif;
+    font-weight: bold;
 }
 
 .leaderboard {
@@ -14,10 +15,10 @@
     display:flex;
     flex-wrap:wrap;
     align-items: center;
-    background: rgba(26, 26, 26, 1);
+    background: rgba(255, 255, 255, 0.2);
     padding:10px 25px;
     border-radius:10px;
-    border: 2px solid white;
+    border: 2px solid rgb(83, 83, 83);
 }
 
 .ladder-title {
@@ -31,7 +32,7 @@
 
 .ladder-title {
     font-size:20px;
-    color:#DFE7EF !important;
+    color: rgb(42, 42, 42) !important;
     font-weight:bold;
     text-transform:uppercase;
 }
@@ -50,9 +51,9 @@
 
 .leaderboard-results tbody td {
     padding:15px 25px;
-    background: rgba(26, 26, 26, 0.5);
+    background: rgba(255, 255, 255, 0.2);
     font-size:16px;
-    border-bottom:5px solid rgba(35, 35, 35, 0.5);
+    border-bottom:2px solid #747474;
 }
 
 .leaderboard-results tbody td:nth-of-type(7) {
@@ -60,11 +61,11 @@
 }
 
 .leaderboard-results tbody tr:hover td {
-    background: rgba(29, 29, 29, 0.5);
+    background: rgba(184, 184, 184, 0.5);
 }
 
 .leaderboard-results tbody tr {
-    color:#747474;
+    color: #383838;
 }
 
 img {width: 50px;
@@ -84,15 +85,15 @@ img {width: 50px;
 /*}*/
 
 tr.first td{
-    color:gold;
+    color: #d7b800;
 }
 
 tr.second td{
-    color:silver;
+    color: #909090;
 }
 
 tr.third td{
-    color: #cd7f32;
+    color: #b6712c;
 }
 
 .leaderboard-results tbody span {

@@ -29,36 +29,37 @@ export class ThemeComponent implements OnInit {
             .subscribe(
                 (nextThemes) => {
                     this.nextThemes = nextThemes;
-                    if (this.authService.currentUser)
+                    if (this.authService.currentUser) {
                         this.currentUserTheme = this.authService.currentUser.theme;
+                    }
                 }
             );
     }
 
     vote(): void {
-        if(this.chosenTheme){
+        if (this.chosenTheme){
             this.deleteVote();
             this.chosenTheme.nbVotes++;
             this.themeService.voteTheme(this.chosenTheme.id)
                 .subscribe(
                     () => {
-                        console.log("Theme sucessfully voted");
+                        console.log('Theme sucessfully voted');
                         this.currentUserTheme = this.chosenTheme.id;
                         this.authService.currentUser.theme = this.chosenTheme.id;
                     },
-                    (error) => console.log("Error in vote() in theme component : " + error.message)
+                    (error) => console.log('Error in vote() in theme component : ' + error.message)
                 );
         }
     }
 
     deleteVote(): void {
-        if(this.currentUserTheme){
+        if (this.currentUserTheme){
             this.nextThemes.find(theme => theme.id === this.currentUserTheme)
                 .nbVotes--;
             this.themeService.deleteVoteTheme()
                 .subscribe(
-                    () => console.log("Vote sucessfully deleted"),
-                    (error) => console.log("Error in deleteVote() in theme component : " + error.message)
+                    () => console.log('Vote sucessfully deleted'),
+                    (error) => console.log('Error in deleteVote() in theme component : ' + error.message)
                 );
         }
     }

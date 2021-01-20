@@ -73,13 +73,13 @@ public class SetupDemo {
         "110812f67fa1e1f0117f6f3d70241c1a42a7b07711a93c2477cc516d9042f9db");
 
         // Set avatars
-        changeAvatar(adriCtx, "https://a.ppy.sh/4579132?1594553960.png");
-        changeAvatar(coucouCtx, "https://avatars1.githubusercontent.com/u/51917122?s=460&u=d08b9b9b05bfd85143e2789d3e75d37910aafb2f&v=4");
+        changeAvatar(adriCtx, "https://i.imgur.com/0BVIfZB.png");
+        changeAvatar(coucouCtx, "https://i.imgur.com/mUeb66G.png");
         changeAvatar(alexandreCtx, "https://i.imgur.com/eWIkRqz.png");
-        changeAvatar(JDCtx, "https://cdn.discordapp.com/avatars/310533826868674572/d9ef342d2a9ab22d634ab5de5f8a925f.png?size=128");
-        changeAvatar(h1, "https://data.whicdn.com/images/322027365/original.jpg?t=1541703413");
-        changeAvatar(h2, "https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80");
-        changeAvatar(h3, "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e1773fc5-4926-4a6f-940c-25645a1b3320/dctlyf9-b37b4f5b-45f8-4690-a244-a9e09462917a.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvZTE3NzNmYzUtNDkyNi00YTZmLTk0MGMtMjU2NDVhMWIzMzIwXC9kY3RseWY5LWIzN2I0ZjViLTQ1ZjgtNDY5MC1hMjQ0LWE5ZTA5NDYyOTE3YS5wbmcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.89AJtCEkFv-8Tqogf7vsFgxldxtEUSA7wlacyzDSm2I");
+        changeAvatar(JDCtx, "https://i.imgur.com/jTuJbys.png");
+        changeAvatar(h1, "https://i.imgur.com/mPTBqn3.jpg");
+        changeAvatar(h2, "https://i.imgur.com/tsF9hV8.jpg");
+        changeAvatar(h3, "https://i.imgur.com/O4jHpkN.png");
 
         System.out.println("---- INSERT PREVIOUS THEMES ----");
         themesRoute.themeService.themeDao.insert(new Theme("Les Oiseaux", "", "active", "2021-01-11"));

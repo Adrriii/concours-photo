@@ -44,7 +44,6 @@ export class AuthService {
     }
 
     private clearCurrentUser(): void {
-        console.log('CLEAR YOLOLOLOLOLO');
         this.currentUser = null;
         this.isAuth = false;
         localStorage.clear();

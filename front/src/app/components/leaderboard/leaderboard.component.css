@@ -68,6 +68,10 @@
     color:#747474;
 }
 
+img {width: 50px;
+    height: 45px;
+    margin: 0px !important; }
+
 /*.leaderboard-results tbody tr:first-child {*/
 /*    color:gold;*/
 /*}*/
